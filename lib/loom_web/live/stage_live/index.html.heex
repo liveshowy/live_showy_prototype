@@ -1,0 +1,20 @@
+<h1>Listing Stages</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal LoomWeb.StageLive.FormComponent,
+    id: @stage.id || :new,
+    title: @page_title,
+    action: @live_action,
+    stage: @stage,
+    return_to: Routes.stage_index_path(@socket, :index) %>
+<% end %>
+
+<dl>
+  <dt>X</dt>
+  <dd><%= @coords["clientX"] %></dd>
+
+  <dt>Y</dt>
+  <dd><%= @coords["clientY"] %></dd>
+</dl>
+
+<div phx-hook="TrackTouchEvents" phx-throttle="1000" style="width: 100%; min-width: 200px; aspect-ratio: 1 / 1; background-color: #dddddd;" id="touchpad"></div>
