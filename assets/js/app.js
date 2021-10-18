@@ -25,22 +25,33 @@ import "phoenix_html"
 import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
+import _ from 'underscore'
+
+let throttleMs = 50
 
 let Hooks = {
   TrackTouchEvents: {
     mounted() {
       console.log(`TrackTouchEvents mounted!`)
-      this.el.addEventListener('touchmove', e => {
+
+      // DOCS: https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Using_Touch_Events
+      const pushTouchEvents = _.throttle(e => {
         const {clientX, clientY} = e.touches[0]
         this.pushEvent("touch-event", {clientX, clientY})
-      })
-      this.el.addEventListener('mousemove', e => {
+      }, throttleMs)
+
+      // DOCS: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent
+      const pushMouseEvents = _.throttle(e => {
         const {clientX, clientY, buttons} = e
-        // ONLY SEND EVENTS IF A BUTTON IS PRESSED
+        // Only send events if a button is pressed
         if (buttons !== 0) {
           this.pushEvent("touch-event", {clientX, clientY})
         }
-      })
+      }, throttleMs)
+
+      this.el.addEventListener('touchmove', pushTouchEvents)
+
+      this.el.addEventListener('mousemove', pushMouseEvents)
     },
   }
 }
