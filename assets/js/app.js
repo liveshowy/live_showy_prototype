@@ -45,7 +45,7 @@ let Hooks = {
         const {clientX, clientY, buttons} = e
         // Only send events if a button is pressed
         if (buttons !== 0) {
-          this.pushEvent("touch-event", {clientX, clientY})
+          this.pushEvent("mouse-event", {clientX, clientY})
         }
       }, throttleMs)
 
