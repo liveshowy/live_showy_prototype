@@ -1,4 +1,4 @@
-<h1>Listing Stages</h1>
+<h1>Stage</h1>
 
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal LoomWeb.StageLive.FormComponent,
@@ -9,7 +9,7 @@
     return_to: Routes.stage_index_path(@socket, :index) %>
 <% end %>
 
-<dl>
+<dl class="flex flex-wrap gap-2">
   <dt>X</dt>
   <dd><%= @coords["clientX"] %></dd>
 
@@ -17,4 +17,14 @@
   <dd><%= @coords["clientY"] %></dd>
 </dl>
 
-<div phx-hook="TrackTouchEvents" phx-throttle="1000" style="width: 100%; min-width: 200px; aspect-ratio: 1 / 1; background-color: #dddddd;" id="touchpad"></div>
+<svg
+  class="w-full aspect-w-4 aspect-h-3 bg-gray-200 rounded-lg"
+  phx-hook="TrackTouchEvents"
+  viewBox="0 0 1000 1000"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <circle id="dot" cx="50" cy="50" r="20" />
+
+  <%= tag :use, href: "#dot", fill: "red", x: @coords["clientX"], y: @coords["clientY"] %>
+
+</svg>
