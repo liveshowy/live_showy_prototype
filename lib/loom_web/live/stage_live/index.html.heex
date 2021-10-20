@@ -25,6 +25,11 @@
 >
   <circle id="dot" cx="50" cy="50" r="20" />
 
-  <%= tag :use, href: "#dot", fill: "red", x: @coords["clientX"], y: @coords["clientY"] %>
+  <%= tag :use,
+    href: "#dot",
+    fill: "red",
+    x: @coords["clientX"],
+    y: @coords["clientY"]
+  %>
 
 </svg>
