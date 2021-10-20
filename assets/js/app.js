@@ -25,9 +25,42 @@ import "phoenix_html"
 import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
+import _ from 'underscore'
+
+let throttleMs = 50
+
+let Hooks = {
+  TrackTouchEvents: {
+    mounted() {
+      console.log(`TrackTouchEvents mounted!`)
+
+      // DOCS: https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Using_Touch_Events
+      const pushTouchEvents = _.throttle(e => {
+        const {clientX, clientY} = e.touches[0]
+        this.pushEvent("touch-event", {clientX, clientY})
+      }, throttleMs)
+
+      // DOCS: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent
+      const pushMouseEvents = _.throttle(e => {
+        const {clientX, clientY, buttons} = e
+        // Only send events if a button is pressed
+        if (buttons !== 0) {
+          this.pushEvent("mouse-event", {clientX, clientY})
+        }
+      }, throttleMs)
+
+      this.el.addEventListener('touchmove', pushTouchEvents)
+
+      this.el.addEventListener('mousemove', pushMouseEvents)
+    },
+  }
+}
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}})
+let liveSocket = new LiveSocket("/live", Socket, {
+  params: {_csrf_token: csrfToken},
+  hooks: Hooks,
+})
 
 // Show progress bar on live navigation and form submits
 topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})

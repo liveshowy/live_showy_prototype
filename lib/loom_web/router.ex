@@ -18,6 +18,8 @@ defmodule LoomWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    live "/stage", StageLive.Index, :index
   end
 
   # Other scopes may use custom stacks.
