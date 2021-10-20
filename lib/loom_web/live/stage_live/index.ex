@@ -20,13 +20,7 @@ defmodule LoomWeb.StageLive.Index do
   end
 
   @impl true
-  def handle_event("touch-event", params, socket) do
-    broadcast(:event, params)
-    {:noreply, assign(socket, :coords, params)}
-  end
-
-  @impl true
-  def handle_event("mouse-event", params, socket) do
+  def handle_event(_event, params, socket) do
     broadcast(:event, params)
     {:noreply, assign(socket, :coords, params)}
   end
