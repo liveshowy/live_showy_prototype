@@ -17,6 +17,10 @@
   <dd><%= @coords["clientY"] %></dd>
 </dl>
 
+  <!-- TODO:
+    - Compare SVG vs Canvas performance & cost.
+    - If using SVG, fix coord alignment (dynamic viewBox?)
+  -->
 <svg
   class="w-full aspect-w-4 aspect-h-3 bg-gray-200 rounded-lg"
   phx-hook="TrackTouchEvents"
