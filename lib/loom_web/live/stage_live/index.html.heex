@@ -1,20 +1,33 @@
-<h1>Listing Stages</h1>
+<h1>Stage</h1>
 
-<%= if @live_action in [:new, :edit] do %>
-  <%= live_modal LoomWeb.StageLive.FormComponent,
-    id: @stage.id || :new,
-    title: @page_title,
-    action: @live_action,
-    stage: @stage,
-    return_to: Routes.stage_index_path(@socket, :index) %>
-<% end %>
-
-<dl>
+<dl class="flex flex-wrap gap-2">
   <dt>X</dt>
-  <dd><%= @coords["clientX"] %></dd>
+  <dd><%= @coords["x"] %></dd>
 
   <dt>Y</dt>
-  <dd><%= @coords["clientY"] %></dd>
+  <dd><%= @coords["y"] %></dd>
 </dl>
 
-<div phx-hook="TrackTouchEvents" phx-throttle="1000" style="width: 100%; min-width: 200px; aspect-ratio: 1 / 1; background-color: #dddddd;" id="touchpad"></div>
+  <!-- TODO:
+    - Compare SVG vs Canvas performance & cost.
+    - If using SVG, fix coord alignment (dynamic viewBox?)
+  -->
+
+<svg
+  class="bg-purple-500 hover:bg-purple-700 hover:translate-y-0.5 transition rounded-lg"
+  style="width: 300px; height: 300px;"
+  id="touchpad"
+  phx-hook="TrackTouchEvents"
+  viewBox="0 0 300 300"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <circle id="dot" cx="20" cy="20" r="10" />
+
+  <%= tag :use,
+    href: "#dot",
+    class: "fill-current text-white",
+    x: @coords["x"],
+    y: @coords["y"]
+  %>
+
+</svg>

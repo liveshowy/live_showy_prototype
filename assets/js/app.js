@@ -1,6 +1,8 @@
 // We import the CSS which is extracted to its own file by esbuild.
 // Remove this line if you add a your own CSS build pipeline (e.g postcss).
-import "../css/app.css"
+// import "../css/app.css"
+
+import Alpine from "alpinejs"
 
 // If you want to use Phoenix channels, run `mix help phx.gen.channel`
 // to get started and then uncomment the line below.
@@ -27,6 +29,9 @@ import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import _ from 'underscore'
 
+window.Alpine = Alpine
+Alpine.start()
+
 let throttleMs = 50
 
 let Hooks = {
@@ -36,16 +41,16 @@ let Hooks = {
 
       // DOCS: https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Using_Touch_Events
       const pushTouchEvents = _.throttle(e => {
-        const {clientX, clientY} = e.touches[0]
-        this.pushEvent("touch-event", {clientX, clientY})
+        const {clientX: x, clientY: y} = e.targetTouches[0]
+        this.pushEvent("touch-event", {x, y})
       }, throttleMs)
 
       // DOCS: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent
       const pushMouseEvents = _.throttle(e => {
-        const {clientX, clientY, buttons} = e
         // Only send events if a button is pressed
-        if (buttons !== 0) {
-          this.pushEvent("mouse-event", {clientX, clientY})
+        if (e.buttons !== 0) {
+          const {offsetX: x, offsetY: y} = e
+          this.pushEvent("mouse-event", {x, y})
         }
       }, throttleMs)
 
@@ -60,6 +65,13 @@ let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("
 let liveSocket = new LiveSocket("/live", Socket, {
   params: {_csrf_token: csrfToken},
   hooks: Hooks,
+  dom: {
+    onBeforeElUpdated(from, to) {
+      if (from._x_dataStack) {
+        window.Alpine.clone(from, to)
+      }
+    },
+  },
 })
 
 // Show progress bar on live navigation and form submits
