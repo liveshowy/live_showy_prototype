@@ -41,16 +41,16 @@ let Hooks = {
 
       // DOCS: https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Using_Touch_Events
       const pushTouchEvents = _.throttle(e => {
-        const {clientX, clientY} = e.touches[0]
-        this.pushEvent("touch-event", {clientX, clientY})
+        const {clientX: x, clientY: y} = e.targetTouches[0]
+        this.pushEvent("touch-event", {x, y})
       }, throttleMs)
 
       // DOCS: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent
       const pushMouseEvents = _.throttle(e => {
-        const {clientX, clientY, buttons} = e
         // Only send events if a button is pressed
-        if (buttons !== 0) {
-          this.pushEvent("mouse-event", {clientX, clientY})
+        if (e.buttons !== 0) {
+          const {offsetX: x, offsetY: y} = e
+          this.pushEvent("mouse-event", {x, y})
         }
       }, throttleMs)
 
