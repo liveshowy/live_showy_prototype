@@ -1,4 +1,4 @@
-defmodule LoomWeb.ConnCase do
+defmodule LoomerWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -11,7 +11,7 @@ defmodule LoomWeb.ConnCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use LoomWeb.ConnCase, async: true`, although
+  by setting `use LoomerWeb.ConnCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -22,12 +22,12 @@ defmodule LoomWeb.ConnCase do
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
-      import LoomWeb.ConnCase
+      import LoomerWeb.ConnCase
 
-      alias LoomWeb.Router.Helpers, as: Routes
+      alias LoomerWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
-      @endpoint LoomWeb.Endpoint
+      @endpoint LoomerWeb.Endpoint
     end
   end
 

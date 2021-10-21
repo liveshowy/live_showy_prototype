@@ -1,12 +1,12 @@
-defmodule LoomWeb do
+defmodule LoomerWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, views, channels and so on.
 
   This can be used in your application as:
 
-      use LoomWeb, :controller
-      use LoomWeb, :view
+      use LoomerWeb, :controller
+      use LoomerWeb, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -19,19 +19,19 @@ defmodule LoomWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: LoomWeb
+      use Phoenix.Controller, namespace: LoomerWeb
 
       import Plug.Conn
-      import LoomWeb.Gettext
-      alias LoomWeb.Router.Helpers, as: Routes
+      import LoomerWeb.Gettext
+      alias LoomerWeb.Router.Helpers, as: Routes
     end
   end
 
   def view do
     quote do
       use Phoenix.View,
-        root: "lib/loom_web/templates",
-        namespace: LoomWeb
+        root: "lib/loomer_web/templates",
+        namespace: LoomerWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller,
@@ -45,7 +45,7 @@ defmodule LoomWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {LoomWeb.LayoutView, "live.html"}
+        layout: {LoomerWeb.LayoutView, "live.html"}
 
       unquote(view_helpers())
     end
@@ -72,7 +72,7 @@ defmodule LoomWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import LoomWeb.Gettext
+      import LoomerWeb.Gettext
     end
   end
 
@@ -83,14 +83,14 @@ defmodule LoomWeb do
 
       # Import LiveView and .heex helpers (live_render, live_patch, <.form>, etc)
       import Phoenix.LiveView.Helpers
-      import LoomWeb.LiveHelpers
+      import LoomerWeb.LiveHelpers
 
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
-      import LoomWeb.ErrorHelpers
-      import LoomWeb.Gettext
-      alias LoomWeb.Router.Helpers, as: Routes
+      import LoomerWeb.ErrorHelpers
+      import LoomerWeb.Gettext
+      alias LoomerWeb.Router.Helpers, as: Routes
     end
   end
 

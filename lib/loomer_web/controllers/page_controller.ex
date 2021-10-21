@@ -1,5 +1,5 @@
-defmodule LoomWeb.PageController do
-  use LoomWeb, :controller
+defmodule LoomerWeb.PageController do
+  use LoomerWeb, :controller
 
   def index(conn, _params) do
     render(conn, "index.html")

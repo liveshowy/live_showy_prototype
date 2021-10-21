@@ -1,5 +1,5 @@
-defmodule LoomWeb.ModalComponent do
-  use LoomWeb, :live_component
+defmodule LoomerWeb.ModalComponent do
+  use LoomerWeb, :live_component
 
   @impl true
   def render(assigns) do

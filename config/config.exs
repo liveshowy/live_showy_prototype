@@ -8,10 +8,10 @@
 import Config
 
 # Configures the endpoint
-config :loom, LoomWeb.Endpoint,
+config :loomer, LoomerWeb.Endpoint,
   url: [host: "localhost"],
-  render_errors: [view: LoomWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: Loom.PubSub,
+  render_errors: [view: LoomerWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: Loomer.PubSub,
   live_view: [signing_salt: "Cyk3GV4m"]
 
 # Configures the mailer
@@ -21,7 +21,7 @@ config :loom, LoomWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :loom, Loom.Mailer, adapter: Swoosh.Adapters.Local
+config :loomer, Loomer.Mailer, adapter: Swoosh.Adapters.Local
 
 # Swoosh API client is needed for adapters other than SMTP.
 config :swoosh, :api_client, false

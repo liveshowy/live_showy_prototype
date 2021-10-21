@@ -1,5 +1,5 @@
-defmodule LoomWeb.PageControllerTest do
-  use LoomWeb.ConnCase
+defmodule LoomerWeb.PageControllerTest do
+  use LoomerWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")
