@@ -9,11 +9,11 @@
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
-  <body class="w-full h-full">
-    <header>
+  <body class="w-full h-full text-white bg-purple-600">
+    <header class="bg-gradient-to-br from-purple-500 to-purple-600 shadow-md">
       <section class="container">
         <nav>
-          <ul class="flex flex-wrap gap-4">
+          <ul class="flex flex-wrap gap-4 p-4">
             <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
             <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
               <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
