@@ -1,5 +1,5 @@
-defmodule LoomWeb.ErrorView do
-  use LoomWeb, :view
+defmodule LoomerWeb.ErrorView do
+  use LoomerWeb, :view
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.

@@ -1,11 +1,11 @@
-defmodule LoomWeb.Router do
-  use LoomWeb, :router
+defmodule LoomerWeb.Router do
+  use LoomerWeb, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
-    plug :put_root_layout, {LoomWeb.LayoutView, :root}
+    plug :put_root_layout, {LoomerWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
@@ -14,7 +14,7 @@ defmodule LoomWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", LoomWeb do
+  scope "/", LoomerWeb do
     pipe_through :browser
 
     get "/", PageController, :index
@@ -23,7 +23,7 @@ defmodule LoomWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", LoomWeb do
+  # scope "/api", LoomerWeb do
   #   pipe_through :api
   # end
 
@@ -39,7 +39,7 @@ defmodule LoomWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/dashboard", metrics: LoomWeb.Telemetry
+      live_dashboard "/dashboard", metrics: LoomerWeb.Telemetry
     end
   end
 

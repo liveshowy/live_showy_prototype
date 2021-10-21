@@ -1,12 +1,12 @@
-defmodule LoomWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :loom
+defmodule LoomerWeb.Endpoint do
+  use Phoenix.Endpoint, otp_app: :loomer
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
   @session_options [
     store: :cookie,
-    key: "_loom_key",
+    key: "_loomer_key",
     signing_salt: "pPGsKN0G"
   ]
 
@@ -18,7 +18,7 @@ defmodule LoomWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :loom,
+    from: :loomer,
     gzip: false,
     only: ~w(assets fonts images favicon.ico robots.txt)
 
@@ -45,5 +45,5 @@ defmodule LoomWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug LoomWeb.Router
+  plug LoomerWeb.Router
 end

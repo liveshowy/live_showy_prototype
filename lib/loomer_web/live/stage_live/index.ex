@@ -1,5 +1,5 @@
-defmodule LoomWeb.StageLive.Index do
-  use LoomWeb, :live_view
+defmodule LoomerWeb.StageLive.Index do
+  use LoomerWeb, :live_view
 
   @impl true
   def mount(_params, _session, socket) do
@@ -26,10 +26,10 @@ defmodule LoomWeb.StageLive.Index do
   end
 
   def subscribe do
-    Phoenix.PubSub.subscribe(Loom.PubSub, "stage")
+    Phoenix.PubSub.subscribe(Loomer.PubSub, "stage")
   end
 
   defp broadcast(event, coords) do
-    Phoenix.PubSub.broadcast(Loom.PubSub, "stage", {event, coords})
+    Phoenix.PubSub.broadcast(Loomer.PubSub, "stage", {event, coords})
   end
 end

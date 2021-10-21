@@ -1,9 +1,9 @@
-defmodule Loom.MixProject do
+defmodule Loomer.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :loom,
+      app: :loomer,
       version: "0.1.0",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -19,7 +19,7 @@ defmodule Loom.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Loom.Application, []},
+      mod: {Loomer.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
