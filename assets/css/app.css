@@ -2,6 +2,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@import "./base.css";
 @import "./alerts.css";
 @import "./live_view.css";
 
