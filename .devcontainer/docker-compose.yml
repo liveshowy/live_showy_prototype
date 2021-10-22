@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  elixir:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VARIANT: "1.12.3"
+        PHOENIX_VERSION: "1.6.2"
+        NODE_VERSION: "14"
+
+    init: true
+
+    volumes:
+      - ..:/workspace:cached
+
+    command: sleep infinity
