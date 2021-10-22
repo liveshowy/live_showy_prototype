@@ -11,6 +11,19 @@
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"jakebecker.elixir-ls",
+		"github.vscode-pull-request-github",
+		"bierner.markdown-preview-github-styles",
+		"pantajoe.vscode-elixir-credo",
+		"heybourn.headwind",
+		"msaraiva.surface",
+		"csstools.postcss",
+		"daylerees.rainglow",
+		"aaron-bond.better-comments",
+		"phoenixframework.phoenix",
+		"2gua.rainbow-brackets",
+		"bradlc.vscode-tailwindcss",
+		"esbenp.prettier-vscode",
+		"cssho.vscode-svgviewer"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
