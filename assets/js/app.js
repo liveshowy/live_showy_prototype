@@ -32,12 +32,15 @@ import _ from 'underscore'
 window.Alpine = Alpine
 Alpine.start()
 
-let throttleMs = 50
+let throttleMs = parseInt(1000/30, 10)
 
 let Hooks = {
   TrackTouchEvents: {
     mounted() {
       console.log(`TrackTouchEvents mounted!`)
+
+      const {clientWidth: width, clientHeight: height} = this.el
+      this.el.setAttribute("viewBox", `0 0 ${width} ${height}`)
 
       // DOCS: https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Using_Touch_Events
       const pushTouchEvents = _.throttle(e => {
