@@ -1,11 +1,17 @@
 <h1>Stage</h1>
 
-<dl class="flex flex-wrap gap-2">
+<dl class="flex flex-wrap gap-2 select-none">
+  <dt>USER</dt>
+  <dd class="flex items-center gap-2">
+    <%= content_tag :span, "", class: "w-4 h-4 border border-white rounded-full", style: "background-color: #" <> @color %>
+    <%= @username %>
+  </dd>
+
   <dt>X</dt>
-  <dd><%= @coords["x"] %></dd>
+  <dd><%= @x %></dd>
 
   <dt>Y</dt>
-  <dd><%= @coords["y"] %></dd>
+  <dd><%= @y %></dd>
 </dl>
 
   <!-- TODO:
@@ -14,20 +20,19 @@
   -->
 
 <svg
-  class="bg-purple-500 hover:bg-purple-700 hover:translate-y-0.5 transition rounded-lg"
+  class="bg-purple-500 rounded-lg"
   style="width: 300px; height: 300px;"
   id="touchpad"
   phx-hook="TrackTouchEvents"
   viewBox="0 0 300 300"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <circle id="dot" cx="20" cy="20" r="10" />
-
-  <%= tag :use,
+  <%= tag :circle,
     href: "#dot",
-    class: "fill-current text-white",
-    x: @coords["x"],
-    y: @coords["y"]
+    fill: "#" <> @color,
+    stroke: "white",
+    r: 10,
+    cx: @x,
+    cy: @y
   %>
-
 </svg>
