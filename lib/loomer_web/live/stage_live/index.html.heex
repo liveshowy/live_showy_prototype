@@ -1,32 +1,47 @@
 <h1 class="select-none">Stage</h1>
 
-<ul>
-  <li class="flex items-center gap-2 select-none">
-    <%= content_tag :span, "", class: "w-4 h-4 border border-white shadow rounded-full", style: "background-color: #" <> @color %>
-    <%= @username %>
-    [ <%= @x %>, <%= @y %> ]
-  </li>
-</ul>
+<h2>Users</h2>
 
-  <!-- TODO:
-    - Compare SVG vs Canvas performance & cost.
-    - If using SVG, fix coord alignment (dynamic viewBox?)
-  -->
+<div class="flex flex-col gap-4">
 
-<svg
-  class="bg-purple-500 rounded-lg"
-  style="width: 300px; height: 300px;"
-  id="touchpad"
-  phx-hook="TrackTouchEvents"
-  viewBox="0 0 300 300"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <%= tag :circle,
-    href: "#dot",
-    fill: "#" <> @color,
-    stroke: "white",
-    r: 10,
-    cx: @x,
-    cy: @y
-  %>
-</svg>
+  <section class="flex-1">
+    <ul>
+      <%= for user <- @users do %>
+        <li class="flex items-center gap-2 select-none">
+          <%= content_tag :span, "", class: "w-4 h-4 border border-white shadow rounded-full", style: "background-color: " <> user.color %>
+          <%= user.username %>
+          [ <%= user.x %>, <%= user.y %> ]
+        </li>
+      <% end %>
+    </ul>
+  </section>
+
+  <section class="flex-1">
+      <!-- TODO:
+        - Compare SVG vs Canvas performance & cost.
+        - If using SVG, fix coord alignment (dynamic viewBox?)
+      -->
+
+    <svg
+      class="w-full h-full bg-purple-500 rounded-lg"
+      id="touchpad"
+      phx-hook="TrackTouchEvents"
+      viewBox="0 0 300 300"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <%= for user <- @users do %>
+        <%= content_tag :circle,
+          nil,
+          fill: user.color,
+          class: "transform-gpu origin-center",
+          r: 40,
+          cx: "50%",
+          cy: "50%",
+          style: "transform: translate3d(#{user.x}px, #{user.y}px, 0);"
+        %>
+      <% end %>
+    </svg>
+  </section>
+
+</div>
