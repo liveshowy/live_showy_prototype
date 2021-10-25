@@ -46,6 +46,7 @@ defmodule Loomer.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
+      {:faker, "~> 0.16.0"},
       {:credo, "~> 1.5.6"}
     ]
   end
