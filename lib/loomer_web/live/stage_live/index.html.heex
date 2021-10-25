@@ -1,18 +1,12 @@
-<h1>Stage</h1>
+<h1 class="select-none">Stage</h1>
 
-<dl class="flex flex-wrap gap-2 select-none">
-  <dt>USER</dt>
-  <dd class="flex items-center gap-2">
-    <%= content_tag :span, "", class: "w-4 h-4 border border-white rounded-full", style: "background-color: #" <> @color %>
+<ul>
+  <li class="flex items-center gap-2 select-none">
+    <%= content_tag :span, "", class: "w-4 h-4 border border-white shadow rounded-full", style: "background-color: #" <> @color %>
     <%= @username %>
-  </dd>
-
-  <dt>X</dt>
-  <dd><%= @x %></dd>
-
-  <dt>Y</dt>
-  <dd><%= @y %></dd>
-</dl>
+    [ <%= @x %>, <%= @y %> ]
+  </li>
+</ul>
 
   <!-- TODO:
     - Compare SVG vs Canvas performance & cost.
