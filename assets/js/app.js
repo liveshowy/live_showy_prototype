@@ -32,33 +32,28 @@ import _ from 'underscore'
 window.Alpine = Alpine
 Alpine.start()
 
-let throttleMs = parseInt(1000/30, 10)
-
 let Hooks = {
   TrackTouchEvents: {
     mounted() {
       console.log(`TrackTouchEvents mounted!`)
 
-      const {clientWidth: width, clientHeight: height} = this.el
-      this.el.setAttribute("viewBox", `0 0 ${width} ${height}`)
-
       // DOCS: https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Using_Touch_Events
-      const pushTouchEvents = _.throttle(e => {
-        const {clientX: x, clientY: y} = e.targetTouches[0]
+      const pushTouchEvents = (event) => {
+        const {clientX: x, clientY: y} = event.targetTouches[0]
         this.pushEvent("touch-event", [x, y])
-      }, throttleMs)
+      }
 
       // DOCS: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent
-      const pushMouseEvents = _.throttle(e => {
-        // Only send events if a button is pressed
-        if (e.buttons !== 0 && !e.relativeTarget) {
+      const pushMouseEvents = (event) => {
+        // Only send events if a button is pressed within the element's bounds.
+        if (event.buttons !== 0 && !event.relativeTarget) {
           const {clientX: x, clientY: y} = e
           this.pushEvent("mouse-event", [x, y])
         }
-      }, throttleMs)
+      }
 
+      // TODO: Throttle these events to 30 fps.
       this.el.addEventListener('touchmove', pushTouchEvents)
-
       this.el.addEventListener('mousemove', pushMouseEvents)
     },
   }
