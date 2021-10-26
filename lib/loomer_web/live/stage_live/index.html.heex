@@ -1,8 +1,8 @@
-<h1 class="select-none">Stage</h1>
+<div class="flex flex-wrap gap-4 place-content-center">
 
-<div class="flex flex-wrap gap-4">
+  <h1 class="w-full select-none">Stage</h1>
 
-  <section>
+  <section class="flex-1">
       <!-- TODO:
         - Compare SVG vs Canvas performance & cost.
         - If using SVG, fix coord alignment (dynamic viewBox?)
@@ -29,7 +29,7 @@
     </svg>
   </section>
 
-  <section class="flex-1">
+  <section class="flex-1 p-4 bg-purple-800 rounded-lg select-none">
     <span>
       You are <strong><%= @current_user %></strong>
     </span>
