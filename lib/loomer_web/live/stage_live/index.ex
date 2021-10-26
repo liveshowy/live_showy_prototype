@@ -18,10 +18,8 @@ defmodule LoomerWeb.StageLive.Index do
       @topic,
       username,
       %{
-        x: "50%",
-        y: "50%",
-        width: "1000",
-        height: "1000",
+        x: Enum.random(10..90),
+        y: Enum.random(10..90),
         color: "#" <> Faker.Color.rgb_hex(),
         username: username
       }
@@ -30,7 +28,6 @@ defmodule LoomerWeb.StageLive.Index do
     users =
       Presence.list(@topic) |> Enum.map(fn {_user_id, data} -> data[:metas] |> List.first() end)
 
-    # broadcast(:joined, users: users)
     {:ok, assign(socket, users: users, current_user: username)}
   end
 
@@ -52,7 +49,7 @@ defmodule LoomerWeb.StageLive.Index do
   end
 
   @impl true
-  def handle_event(event, [x, y], socket)
+  def handle_event(event, %{"x" => x, "y" => y}, socket)
       when event in ["touch-event", "mouse-event"] do
     current_user = get_current_user(socket)
 
@@ -62,33 +59,16 @@ defmodule LoomerWeb.StageLive.Index do
       |> Map.merge(%{x: x, y: y})
 
     Presence.update(self(), @topic, current_user, metas)
-
-    # broadcast(:dot_moved, new_socket.assigns)
     {:noreply, socket}
   end
 
-  def handle_event("element-dimensions", [width, height], socket) do
-    current_user = get_current_user(socket)
-
-    metas =
-      Presence.get_by_key(@topic, current_user)[:metas]
-      |> List.first()
-      |> Map.merge(%{width: width, height: height})
-
-    Presence.update(self(), @topic, current_user, metas)
-    {:noreply, socket}
-  end
-
-  def handle_event(_event, _params, socket) do
+  def handle_event(event, params, socket) do
+    IO.inspect({event, params}, label: "Unmatched Event")
     {:noreply, socket}
   end
 
   def subscribe do
     Phoenix.PubSub.subscribe(Loomer.PubSub, @topic)
-  end
-
-  defp broadcast(event, state) do
-    Phoenix.PubSub.broadcast(Loomer.PubSub, @topic, {event, state})
   end
 
   defp get_current_user(%{assigns: %{current_user: current_user}}) do
