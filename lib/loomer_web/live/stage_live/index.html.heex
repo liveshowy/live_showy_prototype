@@ -1,20 +1,18 @@
 <h1 class="select-none">Stage</h1>
 
-<h2>Users</h2>
-
 <div class="flex flex-wrap gap-4">
 
-  <section class="flex-1">
+  <section>
       <!-- TODO:
         - Compare SVG vs Canvas performance & cost.
         - If using SVG, fix coord alignment (dynamic viewBox?)
       -->
 
     <svg
-      class="w-full h-full bg-purple-800 rounded-lg"
+      class="w-[500px] h-[500px] bg-purple-800 rounded-lg"
       id="touchpad"
       phx-hook="TrackTouchEvents"
-      viewBox="0 0 300 300"
+      viewBox="0 0 500 500"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -22,11 +20,10 @@
         <%= content_tag :circle,
           nil,
           fill: user.color,
-          class: "transform-gpu origin-center",
-          r: 40,
-          cx: "50%",
-          cy: "50%",
-          style: "transform: translate3d(#{user.x}px, #{user.y}px, 0);"
+          r: 30,
+          cx: "0",
+          cy: "0",
+          style: "transform: translate3d(#{user.x}px, #{user.y}px, 0)"
         %>
       <% end %>
     </svg>
@@ -36,9 +33,17 @@
     <ul>
       <%= for user <- @users do %>
         <li class="flex items-center gap-2 select-none">
-          <%= content_tag :span, "", class: "w-4 h-4 shadow rounded-full", style: "background-color: " <> user.color %>
-          <%= user.username %>
-          [ <%= user.x %>, <%= user.y %> ]
+          <%= content_tag :span,
+            "",
+            class: "w-4 h-4 shadow rounded-full",
+            style: "background-color: " <> user.color
+          %>
+
+          <span><%= user.username %></span>
+
+          <span class="whitespace-nowrap">
+            [ <%= user.x %>, <%= user.y %> ]
+          </span>
         </li>
       <% end %>
     </ul>
