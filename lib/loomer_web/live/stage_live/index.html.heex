@@ -30,6 +30,10 @@
   </section>
 
   <section class="flex-1">
+    <span>
+      You are <strong><%= @current_user %></strong>
+    </span>
+
     <ul>
       <%= for user <- @users do %>
         <li class="flex items-center gap-2 select-none">
