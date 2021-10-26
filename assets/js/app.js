@@ -51,8 +51,8 @@ let Hooks = {
       // DOCS: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent
       const pushMouseEvents = _.throttle(e => {
         // Only send events if a button is pressed
-        if (e.buttons !== 0) {
-          const {offsetX: x, offsetY: y} = e
+        if (e.buttons !== 0 && !e.relativeTarget) {
+          const {clientX: x, clientY: y} = e
           this.pushEvent("mouse-event", [x, y])
         }
       }, throttleMs)
