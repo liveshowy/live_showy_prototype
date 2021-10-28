@@ -47,7 +47,7 @@ let Hooks = {
       const pushMouseEvents = (event) => {
         // Only send events if a button is pressed within the element's bounds.
         if (event.buttons !== 0 && !event.relativeTarget) {
-          const {clientX: x, clientY: y} = e
+          const {clientX: x, clientY: y} = event
           this.pushEvent("mouse-event", [x, y])
         }
       }
