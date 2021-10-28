@@ -49,7 +49,7 @@ defmodule LoomerWeb.StageLive.Index do
   end
 
   @impl true
-  def handle_event(event, %{"x" => x, "y" => y}, socket)
+  def handle_event(event, [x, y], socket)
       when event in ["touch-event", "mouse-event"] do
     current_user = get_current_user(socket)
 
