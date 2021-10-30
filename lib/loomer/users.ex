@@ -18,6 +18,8 @@ defmodule Loomer.Users do
   def put_user(username) do
     user = Loomer.Protocols.User.new(username)
     :ets.insert_new(__MODULE__, {user.id, user})
+
+    user
   end
 
   def get_user(id) do
