@@ -11,7 +11,7 @@ defmodule Loomer.Users.Guest do
   """
   def new do
     %__MODULE__{
-      id: nil,
+      id: UUID.uuid4(),
       username: nil,
       token: nil
     }
