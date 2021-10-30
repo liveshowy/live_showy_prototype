@@ -47,6 +47,7 @@ defmodule Loomer.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:faker, "~> 0.16.0"},
+      {:uuid, "~> 1.1"},
       {:credo, "~> 1.5.6"}
     ]
   end
