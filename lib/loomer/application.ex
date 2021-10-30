@@ -10,6 +10,8 @@ defmodule Loomer.Application do
     children = [
       # Start the Telemetry supervisor
       LoomerWeb.Telemetry,
+      # Start the Users ETS table
+      Loomer.Users,
       # Start the PubSub system
       {Phoenix.PubSub, name: Loomer.PubSub},
       # Start the Presence system
