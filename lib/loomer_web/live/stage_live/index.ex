@@ -56,8 +56,9 @@ defmodule LoomerWeb.StageLive.Index do
     {:noreply, socket}
   end
 
-  def handle_event(event, params, socket) do
-    IO.inspect({event, params}, label: "Unmatched Event")
+  def handle_event(_event, _params, socket) do
+    # TODO: Log unmatched events?
+    # IO.inspect({event, params}, label: "Unmatched Event")
     {:noreply, socket}
   end
 
