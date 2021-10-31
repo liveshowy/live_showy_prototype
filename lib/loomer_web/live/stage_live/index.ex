@@ -1,39 +1,37 @@
 defmodule LoomerWeb.StageLive.Index do
-  @moduledoc false
+  @moduledoc """
+  LiveView for multi-user interactions on a `stage`.
+  """
 
   use LoomerWeb, :live_view
-
   alias LoomerWeb.Presence
 
   @topic "stage"
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(_params, _session, %{assigns: %{current_user_id: current_user_id}} = socket) do
     if connected?(socket), do: subscribe()
+    current_user = Loomer.Users.get_user(current_user_id)
 
-    current_user = socket.assigns[:current_user] || Loomer.Protocols.User.new(:fake)
-
-    user =
+    Presence.track(
+      self(),
+      @topic,
+      current_user.id,
       current_user
       |> Map.merge(%{
         x: Enum.random(10..90),
         y: Enum.random(10..90),
         color: "#" <> Faker.Color.rgb_hex()
       })
-
-    Presence.track(
-      self(),
-      @topic,
-      user.username,
-      user
     )
 
     users =
       Presence.list(@topic) |> Enum.map(fn {_user_id, data} -> data[:metas] |> List.first() end)
 
-    {:ok, assign(socket, users: users, current_user: user.username)}
+    {:ok, assign(socket, users: users, current_username: current_user.username)}
   end
 
+  # TODO: HANDLE LEAVING USERS, SET :last_active TIMESTAMP FOR ETS CLEANUP WORKER?
   @impl true
   def handle_info(%{event: "presence_diff", payload: _payload}, socket) do
     users =
@@ -43,16 +41,14 @@ defmodule LoomerWeb.StageLive.Index do
   end
 
   @impl true
-  def handle_event(event, [x, y], socket)
+  def handle_event(event, [x, y], %{assigns: %{current_user_id: current_user_id}} = socket)
       when event in ["touch-event", "mouse-event"] do
-    current_user = get_current_user(socket)
-
     metas =
-      Presence.get_by_key(@topic, current_user)[:metas]
+      Presence.get_by_key(@topic, current_user_id)[:metas]
       |> List.first()
       |> Map.merge(%{x: x, y: y})
 
-    Presence.update(self(), @topic, current_user, metas)
+    Presence.update(self(), @topic, current_user_id, metas)
     {:noreply, socket}
   end
 
@@ -64,9 +60,5 @@ defmodule LoomerWeb.StageLive.Index do
 
   def subscribe do
     Phoenix.PubSub.subscribe(Loomer.PubSub, @topic)
-  end
-
-  defp get_current_user(%{assigns: %{current_user: current_user}}) do
-    current_user
   end
 end
