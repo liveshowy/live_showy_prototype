@@ -68,13 +68,4 @@ defmodule LoomerWeb.StageLive.Index do
   defp get_current_user(%{assigns: %{current_user: current_user}}) do
     current_user
   end
-
-  defp user_matches?(user, current_user), do: user.username == current_user
-
-  defp get_circle_z_index(user, current_user) do
-    case user_matches?(user, current_user) do
-      true -> 1000
-      _ -> 0
-    end
-  end
 end
