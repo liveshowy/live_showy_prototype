@@ -19,8 +19,8 @@ defmodule LoomerWeb.StageLive.Index do
       current_user.id,
       current_user
       |> Map.merge(%{
-        x: Enum.random(10..90),
-        y: Enum.random(10..90),
+        x: Enum.random(10..90) |> Integer.to_string() |> String.pad_leading(3, "0"),
+        y: Enum.random(10..90) |> Integer.to_string() |> String.pad_leading(3, "0"),
         color: "#" <> Faker.Color.rgb_hex()
       })
     )
@@ -46,7 +46,10 @@ defmodule LoomerWeb.StageLive.Index do
     metas =
       Presence.get_by_key(@topic, current_user_id)[:metas]
       |> List.first()
-      |> Map.merge(%{x: x, y: y})
+      |> Map.merge(%{
+        x: x |> Integer.to_string() |> String.pad_leading(3, "0"),
+        y: y |> Integer.to_string() |> String.pad_leading(3, "0")
+      })
 
     Presence.update(self(), @topic, current_user_id, metas)
     {:noreply, socket}
