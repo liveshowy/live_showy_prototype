@@ -47,7 +47,7 @@ let Hooks = {
       const pushMouseEvents = (event) => {
         // Only send events if a button is pressed within the element's bounds.
         if (event.buttons !== 0 && !event.relativeTarget) {
-          const {clientX: x, clientY: y} = event
+          const {offsetX: x, offsetY: y} = event
           this.pushEvent("mouse-event", [x, y])
         }
       }
@@ -56,7 +56,7 @@ let Hooks = {
       this.el.addEventListener('touchmove', pushTouchEvents)
       this.el.addEventListener('mousemove', pushMouseEvents)
     },
-  }
+  },
 }
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
