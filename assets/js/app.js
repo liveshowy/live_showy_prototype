@@ -39,6 +39,7 @@ let Hooks = {
 
       // DOCS: https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Using_Touch_Events
       const pushTouchEvents = (event) => {
+        // TODO: Fix offset on touch devices
         const {clientX: x, clientY: y} = event.targetTouches[0]
         this.pushEvent("touch-event", [x, y])
       }
