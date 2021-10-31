@@ -8,7 +8,11 @@ defmodule LoomerWeb.Router do
     plug :put_root_layout, {LoomerWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :put_user_token
+  end
+
+  pipeline :require_user do
+    plug LoomerWeb.Plugs.PutFakeUser
+    plug LoomerWeb.Plugs.PutUserToken
   end
 
   pipeline :api do
@@ -19,8 +23,13 @@ defmodule LoomerWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+  end
 
-    live "/stage", StageLive.Index, :index
+  live_session :default, on_mount: {LoomerWeb.InitAssigns, :user} do
+    scope "/", LoomerWeb do
+      pipe_through [:browser, :require_user]
+      live "/stage", StageLive.Index, :index
+    end
   end
 
   # Other scopes may use custom stacks.
@@ -53,15 +62,6 @@ defmodule LoomerWeb.Router do
       pipe_through :browser
 
       forward "/mailbox", Plug.Swoosh.MailboxPreview
-    end
-  end
-
-  defp put_user_token(conn, _opts) do
-    if current_user = conn.assigns[:current_user] do
-      token = Phoenix.Token.sign(conn, "user socket", current_user.id)
-      assign(conn, :user_token, token)
-    else
-      conn
     end
   end
 end
