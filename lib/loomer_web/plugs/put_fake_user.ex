@@ -9,7 +9,7 @@ defmodule LoomerWeb.Plugs.PutFakeUser do
   def call(conn, _opts) do
     with current_user_id <- get_session(conn, "current_user_id"),
          %{id: user_id} <- Loomer.Users.get_user(current_user_id) do
-      put_session(conn, :current_user_id, user_id)
+      conn
     else
       _ ->
         %{id: user_id} = Loomer.Users.put_user(:fake)
