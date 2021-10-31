@@ -18,11 +18,6 @@ defmodule LoomerWeb.StageLive.Index do
       @topic,
       current_user.id,
       current_user
-      |> Map.merge(%{
-        x: Enum.random(10..90) |> Integer.to_string() |> String.pad_leading(3, "0"),
-        y: Enum.random(10..90) |> Integer.to_string() |> String.pad_leading(3, "0"),
-        color: "#" <> Faker.Color.rgb_hex()
-      })
     )
 
     users =
@@ -33,7 +28,7 @@ defmodule LoomerWeb.StageLive.Index do
 
   # TODO: HANDLE LEAVING USERS, SET :last_active TIMESTAMP FOR ETS CLEANUP WORKER?
   @impl true
-  def handle_info(%{event: "presence_diff", payload: _payload}, socket) do
+  def handle_info(%{event: "presence_diff", payload: %{joins: _joins, leaves: _leaves}}, socket) do
     users =
       Presence.list(@topic) |> Enum.map(fn {_user_id, data} -> data[:metas] |> List.first() end)
 
@@ -51,13 +46,16 @@ defmodule LoomerWeb.StageLive.Index do
         y: y |> Integer.to_string() |> String.pad_leading(3, "0")
       })
 
+    Loomer.Users.update_user(current_user_id, metas)
+
     Presence.update(self(), @topic, current_user_id, metas)
     {:noreply, socket}
   end
 
+  @doc """
+  Ignore unmatched events.
+  """
   def handle_event(_event, _params, socket) do
-    # TODO: Log unmatched events?
-    # IO.inspect({event, params}, label: "Unmatched Event")
     {:noreply, socket}
   end
 
