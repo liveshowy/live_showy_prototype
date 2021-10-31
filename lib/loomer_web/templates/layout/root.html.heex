@@ -19,7 +19,15 @@
       <section class="max-w-6xl mx-auto">
         <nav>
           <ul class="flex flex-wrap gap-4 p-4">
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
+            <li>
+              <%= link "Home", to: Routes.page_path(@conn, :index) %>
+            </li>
+
+            <span class="flex-grow"></span>
+
+            <li>
+              <%= link "Stage", to: Routes.stage_index_path(@conn, :index) %>
+            </li>
             <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
               <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
             <% end %>
