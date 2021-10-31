@@ -40,9 +40,11 @@
 
       <%= for user <- @users do %>
         <li class="flex items-center gap-2 px-4 select-none">
-          <%= content_tag :span,
+          <%= content_tag :button,
             "",
-            class: "w-4 h-4 shadow rounded-full",
+            type: "button",
+            "phx-click": (if user.id == @current_user_id, do: "set-new-color", else: ""),
+            class: "w-4 h-4 cursor-pointer shadow rounded-full",
             style: "background-color: #{user.color}"
           %>
 

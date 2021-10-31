@@ -52,6 +52,23 @@ defmodule LoomerWeb.StageLive.Index do
     {:noreply, socket}
   end
 
+  def handle_event(
+        "set-new-color",
+        _params,
+        %{assigns: %{current_user_id: current_user_id}} = socket
+      ) do
+    metas =
+      Presence.get_by_key(@topic, current_user_id)[:metas]
+      |> List.first()
+      |> Map.merge(%{
+        color: "#" <> Faker.Color.rgb_hex()
+      })
+
+    Loomer.Users.update_user(current_user_id, metas)
+    Presence.update(self(), @topic, current_user_id, metas)
+    {:noreply, socket}
+  end
+
   @doc """
   Ignore unmatched events.
   """
