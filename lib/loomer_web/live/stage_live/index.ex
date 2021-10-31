@@ -11,24 +11,27 @@ defmodule LoomerWeb.StageLive.Index do
   def mount(_params, _session, socket) do
     if connected?(socket), do: subscribe()
 
-    username = Faker.Internet.user_name()
+    current_user = socket.assigns[:current_user] || Loomer.Protocols.User.new(:fake)
+
+    user =
+      current_user
+      |> Map.merge(%{
+        x: Enum.random(10..90),
+        y: Enum.random(10..90),
+        color: "#" <> Faker.Color.rgb_hex()
+      })
 
     Presence.track(
       self(),
       @topic,
-      username,
-      %{
-        x: Enum.random(10..90),
-        y: Enum.random(10..90),
-        color: "#" <> Faker.Color.rgb_hex(),
-        username: username
-      }
+      user.username,
+      user
     )
 
     users =
       Presence.list(@topic) |> Enum.map(fn {_user_id, data} -> data[:metas] |> List.first() end)
 
-    {:ok, assign(socket, users: users, current_user: username)}
+    {:ok, assign(socket, users: users, current_user: user.username)}
   end
 
   @impl true
@@ -73,5 +76,14 @@ defmodule LoomerWeb.StageLive.Index do
 
   defp get_current_user(%{assigns: %{current_user: current_user}}) do
     current_user
+  end
+
+  defp user_matches?(user, current_user), do: user.username == current_user
+
+  defp get_circle_z_index(user, current_user) do
+    case user_matches?(user, current_user) do
+      true -> 1000
+      _ -> 0
+    end
   end
 end

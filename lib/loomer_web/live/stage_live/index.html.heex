@@ -21,9 +21,10 @@
           nil,
           fill: user.color,
           r: 30,
-          cx: "0",
-          cy: "0",
-          style: "transform: translate3d(#{user.x}px, #{user.y}px, 0)"
+          cx: 0,
+          cy: 0,
+          id: "circle-#{user.username}",
+          style: "transform: translate3d(#{user.x}px, #{user.y}px, 0); z-index: #{get_circle_z_index(user, @current_user)}"
         %>
       <% end %>
     </svg>
