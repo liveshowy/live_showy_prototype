@@ -7,6 +7,11 @@
     <%= csrf_meta_tag() %>
     <%= live_title_tag assigns[:page_title] || "Loomer", suffix: "" %>
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
+
+    <script>
+      window.userToken = "<%= assigns[:user_token] %>"
+      console.log({userToken})
+    </script>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
   <body class="w-full h-full overflow-auto text-white bg-purple-900">
