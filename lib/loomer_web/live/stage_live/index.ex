@@ -35,15 +35,6 @@ defmodule LoomerWeb.StageLive.Index do
   end
 
   @impl true
-  def handle_info({:joined, state}, socket) do
-    {:noreply, socket}
-  end
-
-  @impl true
-  def handle_info({:dot_moved, state}, socket) do
-    {:noreply, socket}
-  end
-
   def handle_info(%{event: "presence_diff", payload: _payload}, socket) do
     users =
       Presence.list(@topic) |> Enum.map(fn {_user_id, data} -> data[:metas] |> List.first() end)
