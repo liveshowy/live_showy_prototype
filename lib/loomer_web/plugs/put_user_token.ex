@@ -9,7 +9,9 @@ defmodule LoomerWeb.Plugs.PutUserToken do
   def call(conn, _opts) do
     with current_user_id <- get_session(conn, "current_user_id"),
          token <- Phoenix.Token.sign(conn, "user socket", current_user_id) do
-      assign(conn, :user_token, token)
+      conn
+      |> assign(:user_token, token)
+      |> put_session(:live_socket_id, "users_socket:#{token}")
     else
       _ -> conn
     end
