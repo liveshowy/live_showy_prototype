@@ -10,8 +10,12 @@ defmodule Loomer.Application do
     children = [
       # Start the Telemetry supervisor
       LoomerWeb.Telemetry,
+      # Start the Users ETS table
+      Loomer.Users,
       # Start the PubSub system
       {Phoenix.PubSub, name: Loomer.PubSub},
+      # Start the Presence system
+      LoomerWeb.Presence,
       # Start the Endpoint (http/https)
       LoomerWeb.Endpoint
       # Start a worker by calling: Loomer.Worker.start_link(arg)

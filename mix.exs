@@ -36,7 +36,7 @@ defmodule Loomer.MixProject do
       {:phoenix, "~> 1.6.2"},
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 0.16.0"},
+      {:phoenix_live_view, "~> 0.17"},
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.5"},
       {:esbuild, "~> 0.3", runtime: Mix.env() == :dev},
@@ -46,6 +46,8 @@ defmodule Loomer.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
+      {:faker, "~> 0.16.0"},
+      {:uuid, "~> 1.1"},
       {:credo, "~> 1.5.6"}
     ]
   end

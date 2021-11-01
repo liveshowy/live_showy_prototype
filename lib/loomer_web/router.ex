@@ -10,6 +10,11 @@ defmodule LoomerWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :require_user do
+    plug LoomerWeb.Plugs.PutFakeUser
+    plug LoomerWeb.Plugs.PutUserToken
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -18,8 +23,13 @@ defmodule LoomerWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+  end
 
-    live "/stage", StageLive.Index, :index
+  live_session :default, on_mount: {LoomerWeb.InitAssigns, :user} do
+    scope "/", LoomerWeb do
+      pipe_through [:browser, :require_user]
+      live "/stage", StageLive.Index, :index
+    end
   end
 
   # Other scopes may use custom stacks.

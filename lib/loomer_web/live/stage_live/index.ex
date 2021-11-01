@@ -1,35 +1,82 @@
 defmodule LoomerWeb.StageLive.Index do
+  @moduledoc """
+  LiveView for multi-user interactions on a `stage`.
+  """
+
   use LoomerWeb, :live_view
+  alias LoomerWeb.Presence
+
+  @topic "stage"
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(_params, _session, %{assigns: %{current_user_id: current_user_id}} = socket) do
     if connected?(socket), do: subscribe()
-    coords = %{"clientX" => 0, "clientY" => 0}
-    broadcast(:joined, coords)
-    {:ok, assign(socket, :coords, coords)}
+    current_user = Loomer.Users.get_user(current_user_id)
+
+    Presence.track(
+      self(),
+      @topic,
+      current_user.id,
+      current_user
+    )
+
+    users =
+      Presence.list(@topic) |> Enum.map(fn {_user_id, data} -> data[:metas] |> List.first() end)
+
+    {:ok, assign(socket, users: users, current_username: current_user.username)}
+  end
+
+  # TODO: HANDLE LEAVING USERS, SET :last_active TIMESTAMP FOR ETS CLEANUP WORKER?
+  @impl true
+  def handle_info(%{event: "presence_diff", payload: %{joins: _joins, leaves: _leaves}}, socket) do
+    users =
+      Presence.list(@topic) |> Enum.map(fn {_user_id, data} -> data[:metas] |> List.first() end)
+
+    {:noreply, assign(socket, users: users)}
   end
 
   @impl true
-  def handle_info({:joined, coords}, socket) do
-    {:noreply, assign(socket, :coords, coords)}
+  def handle_event(event, [x, y], %{assigns: %{current_user_id: current_user_id}} = socket)
+      when event in ["touch-event", "mouse-event"] do
+    metas =
+      Presence.get_by_key(@topic, current_user_id)[:metas]
+      |> List.first()
+      |> Map.merge(%{
+        x: x |> Integer.to_string() |> String.pad_leading(3, "0"),
+        y: y |> Integer.to_string() |> String.pad_leading(3, "0")
+      })
+
+    Loomer.Users.update_user(current_user_id, metas)
+
+    Presence.update(self(), @topic, current_user_id, metas)
+    {:noreply, socket}
   end
 
-  @impl true
-  def handle_info({:event, coords}, socket) do
-    {:noreply, assign(socket, :coords, coords)}
+  def handle_event(
+        "set-new-color",
+        _params,
+        %{assigns: %{current_user_id: current_user_id}} = socket
+      ) do
+    metas =
+      Presence.get_by_key(@topic, current_user_id)[:metas]
+      |> List.first()
+      |> Map.merge(%{
+        color: "#" <> Faker.Color.rgb_hex()
+      })
+
+    Loomer.Users.update_user(current_user_id, metas)
+    Presence.update(self(), @topic, current_user_id, metas)
+    {:noreply, socket}
   end
 
-  @impl true
-  def handle_event(_event, params, socket) do
-    broadcast(:event, params)
-    {:noreply, assign(socket, :coords, params)}
+  @doc """
+  Ignore unmatched events.
+  """
+  def handle_event(_event, _params, socket) do
+    {:noreply, socket}
   end
 
   def subscribe do
-    Phoenix.PubSub.subscribe(Loomer.PubSub, "stage")
-  end
-
-  defp broadcast(event, coords) do
-    Phoenix.PubSub.broadcast(Loomer.PubSub, "stage", {event, coords})
+    Phoenix.PubSub.subscribe(Loomer.PubSub, @topic)
   end
 end

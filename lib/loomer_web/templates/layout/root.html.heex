@@ -5,16 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <%= csrf_meta_tag() %>
-    <%= live_title_tag assigns[:page_title] || "Loomer", suffix: " · Phoenix Framework" %>
+    <%= live_title_tag assigns[:page_title] || "Loomer", suffix: "" %>
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
+
+    <script>
+      window.userToken = "<%= assigns[:user_token] %>"
+      console.log({userToken})
+    </script>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
-  <body class="w-full h-full text-white bg-purple-600">
-    <header class="bg-gradient-to-br from-purple-500 to-purple-600 shadow-md">
-      <section class="container">
+  <body class="w-full h-full overflow-auto text-white bg-purple-900">
+    <header class="shadow-md bg-gradient-to-br from-purple-700 to-purple-900">
+      <section class="max-w-6xl mx-auto">
         <nav>
           <ul class="flex flex-wrap gap-4 p-4">
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
+            <li>
+              <%= link "Home", to: Routes.page_path(@conn, :index) %>
+            </li>
+
+            <span class="flex-grow"></span>
+
+            <li>
+              <%= link "Stage", to: Routes.stage_index_path(@conn, :index) %>
+            </li>
             <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
               <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
             <% end %>
@@ -23,7 +36,7 @@
       </section>
     </header>
 
-    <main class="w-full max-w-6xl p-4">
+    <main class="w-full max-w-6xl p-4 mx-auto">
       <%= @inner_content %>
     </main>
   </body>

@@ -32,38 +32,37 @@ import _ from 'underscore'
 window.Alpine = Alpine
 Alpine.start()
 
-let throttleMs = 50
-
 let Hooks = {
   TrackTouchEvents: {
     mounted() {
       console.log(`TrackTouchEvents mounted!`)
 
       // DOCS: https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Using_Touch_Events
-      const pushTouchEvents = _.throttle(e => {
-        const {clientX: x, clientY: y} = e.targetTouches[0]
-        this.pushEvent("touch-event", {x, y})
-      }, throttleMs)
+      const pushTouchEvents = (event) => {
+        // TODO: Fix offset on touch devices
+        const {clientX: x, clientY: y} = event.targetTouches[0]
+        this.pushEvent("touch-event", [x, y])
+      }
 
       // DOCS: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent
-      const pushMouseEvents = _.throttle(e => {
-        // Only send events if a button is pressed
-        if (e.buttons !== 0) {
-          const {offsetX: x, offsetY: y} = e
-          this.pushEvent("mouse-event", {x, y})
+      const pushMouseEvents = (event) => {
+        // Only send events if a button is pressed within the element's bounds.
+        if (event.buttons !== 0 && !event.relativeTarget) {
+          const {offsetX: x, offsetY: y} = event
+          this.pushEvent("mouse-event", [x, y])
         }
-      }, throttleMs)
+      }
 
+      // TODO: Throttle these events to 30 fps.
       this.el.addEventListener('touchmove', pushTouchEvents)
-
       this.el.addEventListener('mousemove', pushMouseEvents)
     },
-  }
+  },
 }
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {
-  params: {_csrf_token: csrfToken},
+  params: {_csrf_token: csrfToken, userToken},
   hooks: Hooks,
   dom: {
     onBeforeElUpdated(from, to) {
