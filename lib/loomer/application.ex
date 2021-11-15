@@ -12,6 +12,8 @@ defmodule Loomer.Application do
       LoomerWeb.Telemetry,
       # Start the Users ETS table
       Loomer.Users,
+      # Start the Midi ETS table
+      Loomer.MidiDevices,
       # Start the PubSub system
       {Phoenix.PubSub, name: Loomer.PubSub},
       # Start the Presence system
