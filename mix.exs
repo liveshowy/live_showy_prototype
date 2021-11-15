@@ -48,6 +48,7 @@ defmodule Loomer.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:faker, "~> 0.16.0"},
       {:uuid, "~> 1.1"},
+      {:portmidi, git: "git@github.com:thbar/ex-portmidi.git"},
       {:credo, "~> 1.5.6"}
     ]
   end
