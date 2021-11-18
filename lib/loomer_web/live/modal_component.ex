@@ -1,4 +1,5 @@
 defmodule LoomerWeb.ModalComponent do
+  @moduledoc false
   use LoomerWeb, :live_component
 
   @impl true

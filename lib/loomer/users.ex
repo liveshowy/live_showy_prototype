@@ -1,4 +1,7 @@
 defmodule Loomer.Users do
+  @moduledoc """
+  GenServer for managing users in an ETS table.
+  """
   use GenServer
 
   def start_link(state) do
