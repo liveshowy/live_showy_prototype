@@ -25,7 +25,7 @@ jobs:
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
           restore-keys: ${{ runner.os }}-mix-
       - name: Install PortMidi & Deps
-        run: sudo apt-get install -y libportmidi gcc make
+        run: sudo apt-get install -y libportmidi-dev gcc make
       - name: Install dependencies
         run: mix deps.get
       - name: Run tests
