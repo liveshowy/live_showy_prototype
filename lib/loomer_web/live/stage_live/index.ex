@@ -5,6 +5,8 @@ defmodule LoomerWeb.StageLive.Index do
 
   use LoomerWeb, :live_view
   alias LoomerWeb.Presence
+  alias LoomerWeb.Live.Components.XYPad
+  alias LoomerWeb.Live.Components.UserCoords
 
   @topic "stage"
 
