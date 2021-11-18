@@ -18,14 +18,14 @@ jobs:
         with:
           elixir-version: "1.12.3" # Define the elixir version [required]
           otp-version: "24.1" # Define the OTP version [required]
+      - name: Install PortMidi & Deps
+        run: sudo apt-get install -y libportmidi-dev gcc make
       - name: Restore dependencies cache
         uses: actions/cache@v2
         with:
           path: deps
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
           restore-keys: ${{ runner.os }}-mix-
-      - name: Install PortMidi & Deps
-        run: sudo apt-get install -y libportmidi-dev gcc make
       - name: Install dependencies
         run: mix deps.get
       - name: Run tests
