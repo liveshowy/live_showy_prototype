@@ -1,3 +1,5 @@
+[![Elixir CI](https://github.com/type1fool/loomer/actions/workflows/elixir.yml/badge.svg?branch=main)](https://github.com/type1fool/loomer/actions/workflows/elixir.yml)
+
 # Loomer
 
 \* This application is a work in progress. Some of the features below are not yet implemented.
