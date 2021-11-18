@@ -1,4 +1,7 @@
 defmodule Loomer.Users do
+  @moduledoc """
+  GenServer for managing users in an ETS table.
+  """
   use GenServer
 
   def start_link(state) do
@@ -36,6 +39,8 @@ defmodule Loomer.Users do
 
     :ets.insert(__MODULE__, {id, updated_user})
   end
+
+  def list_users(), do: :ets.tab2list(__MODULE__)
 
   def get_first_key, do: :ets.first(__MODULE__)
   def get_next_key(previous_key), do: :ets.next(__MODULE__, previous_key)

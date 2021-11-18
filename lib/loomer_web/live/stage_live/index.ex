@@ -26,7 +26,6 @@ defmodule LoomerWeb.StageLive.Index do
     {:ok, assign(socket, users: users, current_username: current_user.username)}
   end
 
-  # TODO: HANDLE LEAVING USERS, SET :last_active TIMESTAMP FOR ETS CLEANUP WORKER?
   @impl true
   def handle_info(%{event: "presence_diff", payload: %{joins: _joins, leaves: _leaves}}, socket) do
     users =

@@ -1,4 +1,7 @@
 defmodule LoomerWeb.Telemetry do
+  @moduledoc """
+  Supervisor for telemetry metrics.
+  """
   use Supervisor
   import Telemetry.Metrics
 
