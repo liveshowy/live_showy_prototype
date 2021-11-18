@@ -28,7 +28,5 @@ jobs:
         run: sudo apt-get install -y libportmidi-dev gcc make
       - name: Install dependencies
         run: mix deps.get
-      - name: Remove precompiled PortMidi files
-        run: rm -rf deps/portmidi/priv/portmidi_*
       - name: Run tests
         run: mix test
