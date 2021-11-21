@@ -1,4 +1,4 @@
-defmodule LoomerWeb.StageLive.Index do
+defmodule LoomerWeb.DotsLive.Index do
   @moduledoc """
   LiveView for multi-user interactions on a `stage`.
   """

@@ -26,7 +26,7 @@
             <span class="flex-grow"></span>
 
             <li>
-              <%= link "Stage", to: Routes.stage_index_path(@conn, :index) %>
+              <%= link "Dots", to: Routes.dots_index_path(@conn, :index) %>
             </li>
             <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
               <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
