@@ -5,7 +5,7 @@ defmodule LoomerWeb.Live.Components.LatencyMonitor do
     {:ok, assign(socket, :latency, nil)}
   end
 
-  def handle_event("ping", timestamp, socket) do
+  def handle_event("ping", _timestamp, socket) do
     {:noreply, socket}
   end
 
