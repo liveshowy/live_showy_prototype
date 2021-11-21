@@ -36,7 +36,7 @@ Alpine.start()
 let Hooks = {
   TrackTouchEvents: {
     mounted() {
-      console.log(`TrackTouchEvents mounted!`)
+      console.info(`TrackTouchEvents mounted`)
 
       // DOCS: https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Using_Touch_Events
       const pushTouchEvents = (event) => {
@@ -62,13 +62,35 @@ let Hooks = {
 
   MonitorLatency: {
     mounted() {
-      console.log(`Monitoring latency`)
+      console.info(`MonitorLatency mounted`)
       latency.measure(this)
       window.setInterval(() => latency.measure(this), (10 * 1000))
     },
 
     disconnected() {
       window.clearInterval(latency.measure)
+    },
+  },
+
+  HandleKeyboardPresses: {
+    mounted() {
+      console.info(`HandleKeyboardPresses mounted`)
+      
+      const noteon = e => {
+        const {offsetY: y} = e
+        const {scrollHeight: height} = e.target
+        const value = parseInt(e.target.value, 10)
+        const velocity = parseInt(parseFloat(y / height) * 127, 10)
+        this.pushEvent("note-on", [value, velocity])
+      }
+
+      const noteoff = e => {
+        const value = parseInt(e.target.value, 10)
+        this.pushEvent("note-off", value)
+      }
+      
+      this.el.addEventListener('mousedown', noteon)
+      this.el.addEventListener('mouseup', noteoff)
     },
   },
 }
