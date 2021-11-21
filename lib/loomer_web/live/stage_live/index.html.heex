@@ -3,12 +3,12 @@
   <h1 class="w-full select-none">Stage</h1>
 
   <section>
-  <.live_component module={XYPad} id="xy-pad" users={@users} />
+  <.live_component module={XYPad} id="xy-pad" users={@users} current_user_id={@current_user_id} />
   </section>
 
   <section class="flex-1 min-w-max">
 
-    <ul class="flex flex-col gap-2 pb-2 font-mono bg-purple-800 rounded-lg select-none">
+    <ul class="flex flex-col gap-2 pb-2 font-mono bg-purple-800 border-2 border-purple-700 rounded-lg shadow-lg select-none">
 
       <li class="w-full p-4 text-lg text-white bg-purple-700 rounded-t-lg col-span-full">
         You are <strong><%= @current_username %></strong>
