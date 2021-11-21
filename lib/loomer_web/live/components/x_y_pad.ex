@@ -17,10 +17,10 @@ defmodule LoomerWeb.Live.Components.XYPad do
       <line x1="175" x2="175" y1="0" y2="350" stroke="rgb(109, 40, 217)" stroke-width="2" />
 
       <%= for user <- @users do %>
-        <.live_component module={UserDot} id={user.id <> "-dot"} user={user} current_user_id={@current_user_id} />
+        <.live_component module={UserDot} id={"dot-" <> user.id} user={user} current_user_id={@current_user_id} />
       <% end %>
 
-      <use xlink:href={"#" <> @current_user_id <> "-dot"} />
+      <use xlink:href={"#dot-" <> @current_user_id} />
     </svg>
     """
   end
