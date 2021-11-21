@@ -1,6 +1,6 @@
 defmodule LoomerWeb.DotsLive.Index do
   @moduledoc """
-  LiveView for multi-user interactions on a `stage`.
+  A stage for multiple users to move shapes.
   """
 
   use LoomerWeb, :live_view
@@ -9,10 +9,14 @@ defmodule LoomerWeb.DotsLive.Index do
   alias LoomerWeb.Live.Components.UserCoords
   alias LoomerWeb.Live.Components.XYPad
 
-  @topic "stage"
+  @topic "dots_live"
 
   @impl true
-  def mount(_params, _session, %{assigns: %{current_user_id: current_user_id}} = socket) do
+  def mount(
+        _params,
+        _session,
+        %{assigns: %{current_user_id: current_user_id}} = socket
+      ) do
     if connected?(socket), do: subscribe()
     current_user = Loomer.Users.get_user(current_user_id)
 
