@@ -28,6 +28,7 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import _ from 'underscore'
+import latency from './latency'
 
 window.Alpine = Alpine
 Alpine.start()
@@ -56,6 +57,18 @@ let Hooks = {
       // TODO: Throttle these events to 30 fps.
       this.el.addEventListener('touchmove', pushTouchEvents)
       this.el.addEventListener('mousemove', pushMouseEvents)
+    },
+  },
+
+  MonitorLatency: {
+    mounted() {
+      console.log(`Monitoring latency`)
+      latency.measure(this)
+      window.setInterval(() => latency.measure(this), (10 * 1000))
+    },
+
+    disconnected() {
+      window.clearInterval(latency.measure)
     },
   },
 }
