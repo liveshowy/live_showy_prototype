@@ -2,7 +2,6 @@
 
   <h1 class="w-full select-none">Stage</h1>
 
-
   <section>
   <.live_component module={XYPad} id="xy-pad" users={@users} />
   </section>
@@ -13,6 +12,7 @@
 
       <li class="w-full p-4 text-lg text-white bg-purple-700 rounded-t-lg col-span-full">
         You are <strong><%= @current_username %></strong>
+        <.live_component module={LatencyMonitor} id="stage-latency-monitor" user_id={@current_user_id} />
       </li>
 
       <%= for user <- @users do %>
