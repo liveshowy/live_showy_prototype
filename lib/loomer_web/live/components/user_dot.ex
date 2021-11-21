@@ -4,7 +4,9 @@ defmodule LoomerWeb.Live.Components.UserDot do
   def render(assigns) do
     ~H"""
     <circle
+      id={"dot-" <> @user.id}
       fill={@user.color}
+      fill-opacity={if @user.id == @current_user_id, do: "100%", else: "50%"}
       r={30}
       cx={0}
       cy={0}
