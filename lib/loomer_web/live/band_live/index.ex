@@ -32,14 +32,12 @@ defmodule LoomerWeb.BandLive.Index do
   end
 
   def handle_event("note-on", [note, velocity], socket) do
-    IO.inspect([note, velocity], label: "NOTE ON")
     output = Loomer.MidiDevices.get_device(:output)
     PortMidi.write(output, {144, note, velocity})
     {:noreply, socket}
   end
 
   def handle_event("note-off", note, socket) do
-    IO.inspect(note, label: "NOTE OFF")
     output = Loomer.MidiDevices.get_device(:output)
     PortMidi.write(output, {144, note, 0})
     {:noreply, socket}
