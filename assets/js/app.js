@@ -77,9 +77,10 @@ let Hooks = {
       console.info(`HandleKeyboardPresses mounted`)
       
       const noteon = e => {
-        const {offsetY: y} = e
         const {scrollHeight: height} = e.target
         const value = parseInt(e.target.value, 10)
+
+        const y = e.offsetY
         const velocity = parseInt(parseFloat(y / height) * 127, 10)
         this.pushEvent("note-on", [value, velocity])
       }
@@ -88,9 +89,17 @@ let Hooks = {
         const value = parseInt(e.target.value, 10)
         this.pushEvent("note-off", value)
       }
+
+      if ('ontouchstart' in window) {
+        this.el.addEventListener('touchstart', noteon)
+        this.el.addEventListener('touchend', noteoff)
+        this.el.addEventListener('touchcancel', noteoff)
+      } else {
+        this.el.addEventListener('mousedown', noteon)
+        this.el.addEventListener('mouseup', noteoff)
+        this.el.addEventListener('mouseleave', noteoff)
+      }
       
-      this.el.addEventListener('mousedown', noteon)
-      this.el.addEventListener('mouseup', noteoff)
     },
   },
 }
