@@ -1,4 +1,4 @@
-defmodule LoomerWeb.BandLive.Index do
+defmodule LoomerWeb.KeysLive.Index do
   @moduledoc """
   A stage for up to six members to collaborate.
   """

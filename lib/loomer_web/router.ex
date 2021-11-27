@@ -30,7 +30,7 @@ defmodule LoomerWeb.Router do
       pipe_through [:browser, :require_user]
 
       live "/dots", DotsLive.Index, :index
-      live "/band", BandLive.Index, :index
+      live "/keys", KeysLive.Index, :index
     end
   end
 
