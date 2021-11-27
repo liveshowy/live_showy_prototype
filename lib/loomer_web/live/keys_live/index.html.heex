@@ -2,6 +2,11 @@
   <h1 class="w-full select-none">Keys</h1>
 
   <section>
-    <.live_component module={Keyboard} octave={5} id="band-keyboard" />
+    <.live_component module={LatencyMonitor} id="keys-latency-monitor" />
+  </section>
+
+  <section>
+    <.live_component module={OctaveControl} octave={@octave} id="keys-octave" />
+    <.live_component module={Keyboard} octave={@octave} id="keys-keyboard" />
   </section>
 </div>

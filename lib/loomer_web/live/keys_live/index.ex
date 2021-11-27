@@ -3,32 +3,13 @@ defmodule LoomerWeb.KeysLive.Index do
   A stage for up to six members to collaborate.
   """
   use LoomerWeb, :live_view
-  alias LoomerWeb.Presence
   alias LoomerWeb.Live.Components.LatencyMonitor
+  alias LoomerWeb.Live.Components.OctaveControl
   alias LoomerWeb.Live.Components.Keyboard
 
-  @topic "band_live"
-
   @impl true
-  def mount(
-        _params,
-        _session,
-        %{assigns: %{current_user_id: current_user_id}} = socket
-      ) do
-    if connected?(socket), do: subscribe()
-    current_user = Loomer.Users.get_user(current_user_id)
-
-    Presence.track(
-      self(),
-      @topic,
-      current_user.id,
-      current_user
-    )
-
-    users =
-      Presence.list(@topic) |> Enum.map(fn {_user_id, data} -> data[:metas] |> List.first() end)
-
-    {:ok, assign(socket, users: users, current_username: current_user.username)}
+  def mount(_params, _session, socket) do
+    {:ok, assign(socket, octave: 5)}
   end
 
   def handle_event("note-on", [note, velocity], socket) do
@@ -43,11 +24,22 @@ defmodule LoomerWeb.KeysLive.Index do
     {:noreply, socket}
   end
 
+  def handle_event("octave-increment", _params, socket) do
+    {:noreply, update(socket, :octave, &increment_octave/1)}
+  end
+
+  def handle_event("octave-decrement", _params, socket) do
+    {:noreply, update(socket, :octave, &decrement_octave/1)}
+  end
+
   @impl true
   def handle_event(event, params, socket) do
     IO.inspect(params, label: event)
     {:noreply, socket}
   end
 
-  defp subscribe, do: Phoenix.PubSub.subscribe(Loomer.PubSub, @topic)
+  defp increment_octave(octave) when octave in 0..9, do: octave + 1
+  defp increment_octave(octave), do: octave
+  defp decrement_octave(octave) when octave in 1..10, do: octave - 1
+  defp decrement_octave(octave), do: octave
 end
