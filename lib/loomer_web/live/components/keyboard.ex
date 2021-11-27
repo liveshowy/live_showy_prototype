@@ -1,15 +1,39 @@
 defmodule LoomerWeb.Live.Components.Keyboard do
   use Phoenix.LiveComponent
+  alias LoomerWeb.Live.Components.KeyboardKey
 
-  def render(assigns) do
+  # Create a range of notes from 0 to 126
+  # Group notes into octaves (12 notes each)
+  # Index each note within the octaves
+  # Index the list of octaves
+  @notes 0..126
+         |> Enum.chunk_every(12)
+         |> Enum.map(&Enum.with_index/1)
+         |> Enum.with_index()
+
+  def render(%{octave: octave} = assigns) do
+    {notes, _index} = @notes |> Enum.at(octave, [])
+
     ~H"""
-    <div class="flex gap-1 select-none">
-      <%= for note <- 0..127 do %>
-        <button type="button" phx-hook="HandleKeyboardPresses" id={"key-#{note}"} class="flex items-end justify-center w-16 h-64 p-1 font-bold text-purple-600 bg-white rounded" value={note}>
-          <%= note %>
-        </button>
-      <% end %>
+    <div>
+      <div class="flex gap-1 p-2 pt-0 shadow-lg select-none bg-gradient-to-b from-purple-800 to-purple-600 rounded-xl">
+        <%= for {note, index} <- notes do %>
+          <.live_component
+            id={"keyboard-key-#{note}"}
+            module={KeyboardKey}
+            color={get_key_color(index)}
+            note={note}
+          />
+        <% end %>
+      </div>
     </div>
     """
+  end
+
+  defp get_key_color(index) do
+    case index in [1, 3, 6, 8, 10] do
+      true -> :black
+      _ -> :white
+    end
   end
 end
