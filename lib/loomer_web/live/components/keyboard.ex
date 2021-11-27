@@ -22,7 +22,7 @@ defmodule LoomerWeb.Live.Components.Keyboard do
   def render(assigns) do
     ~H"""
     <div>
-      <div class="flex gap-1 p-2 pt-0 shadow-lg select-none bg-gradient-to-b from-purple-800 to-purple-600 rounded-xl">
+      <div class="flex justify-center gap-1 p-2 pt-0 shadow-lg select-none bg-gradient-to-b from-purple-800 to-purple-600 rounded-xl">
         <%= for {note, index} <- @notes do %>
           <.key
             id={"keyboard-key-#{note}"}
