@@ -102,6 +102,31 @@ let Hooks = {
       
     },
   },
+  HandleDrumPadPresses: {
+    mounted() {
+      console.info(`HandleDrumPadPresses mounted`)
+
+      const noteon = e => {
+        const value = parseInt(e.target.value, 10)
+        this.pushEvent("note-on", value)
+      }
+
+      const noteoff = e => {
+        const value = parseInt(e.target.value, 10)
+        this.pushEvent("note-off", value)
+      }
+
+      if ('ontouchstart' in window) {
+        this.el.addEventListener('touchstart', noteon)
+        this.el.addEventListener('touchend', noteoff)
+        this.el.addEventListener('touchcancel', noteoff)
+      } else {
+        this.el.addEventListener('mousedown', noteon)
+        this.el.addEventListener('mouseup', noteoff)
+        this.el.addEventListener('mouseleave', noteoff)
+      }      
+    },
+  },
 }
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")

@@ -31,6 +31,9 @@
             <li>
               <%= link "Keys", to: Routes.keys_index_path(@conn, :index) %>
             </li>
+            <li>
+              <%= link "Drum Pad", to: Routes.drum_pad_index_path(@conn, :index) %>
+            </li>
             <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
               <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
             <% end %>

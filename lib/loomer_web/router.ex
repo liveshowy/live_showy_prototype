@@ -31,6 +31,7 @@ defmodule LoomerWeb.Router do
 
       live "/dots", DotsLive.Index, :index
       live "/keys", KeysLive.Index, :index
+      live "/drum-pad", DrumPadLive.Index, :index
     end
   end
 
