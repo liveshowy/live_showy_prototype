@@ -10,6 +10,8 @@ defmodule LiveShowy.Application do
     children = [
       # Start the Telemetry supervisor
       LiveShowyWeb.Telemetry,
+      # Start the Repo
+      LiveShowy.Repo,
       # Start the Users ETS table
       LiveShowy.Users,
       # Start the Midi ETS table
