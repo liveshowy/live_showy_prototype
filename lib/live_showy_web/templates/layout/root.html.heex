@@ -14,7 +14,7 @@
     </script>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
-  <body class="w-full h-full overflow-auto leading-normal tracking-wide text-white bg-purple-900">
+  <body class="flex flex-col w-full h-full overflow-auto leading-normal tracking-wide text-white bg-purple-900">
     <header class="shadow-md bg-gradient-to-br from-purple-700 to-purple-900">
       <section class="max-w-6xl mx-auto">
         <nav>
@@ -42,7 +42,7 @@
       </section>
     </header>
 
-    <main class="w-full max-w-6xl p-4 mx-auto">
+    <main class="flex-grow w-full max-w-6xl p-4 mx-auto">
       <%= @inner_content %>
     </main>
   </body>
