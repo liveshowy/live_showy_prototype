@@ -8,7 +8,7 @@ defmodule LiveShowyWeb.Plugs.PutFakeUser do
 
   def call(conn, _opts) do
     with current_user_id <- get_session(conn, "current_user_id"),
-         %{id: user_id} <- LiveShowy.Users.get_user(current_user_id) do
+         %{id: _user_id} <- LiveShowy.Users.get_user(current_user_id) do
       conn
     else
       _ ->
