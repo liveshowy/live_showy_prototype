@@ -1,13 +1,13 @@
-defmodule LoomerWeb.DotsLive.Index do
+defmodule LiveShowyWeb.DotsLive.Index do
   @moduledoc """
   A stage for multiple users to move shapes.
   """
 
-  use LoomerWeb, :live_view
-  alias LoomerWeb.Presence
-  alias LoomerWeb.Live.Components.LatencyMonitor
-  alias LoomerWeb.Live.Components.UserCoords
-  alias LoomerWeb.Live.Components.XYPad
+  use LiveShowyWeb, :live_view
+  alias LiveShowyWeb.Presence
+  alias LiveShowyWeb.Live.Components.LatencyMonitor
+  alias LiveShowyWeb.Live.Components.UserCoords
+  alias LiveShowyWeb.Live.Components.XYPad
 
   @topic "dots_live"
 
@@ -18,7 +18,7 @@ defmodule LoomerWeb.DotsLive.Index do
         %{assigns: %{current_user_id: current_user_id}} = socket
       ) do
     if connected?(socket), do: subscribe()
-    current_user = Loomer.Users.get_user(current_user_id)
+    current_user = LiveShowy.Users.get_user(current_user_id)
 
     Presence.track(
       self(),
@@ -52,7 +52,7 @@ defmodule LoomerWeb.DotsLive.Index do
         y: y |> Integer.to_string() |> String.pad_leading(3, "0")
       })
 
-    Loomer.Users.update_user(current_user_id, metas)
+    LiveShowy.Users.update_user(current_user_id, metas)
 
     Presence.update(self(), @topic, current_user_id, metas)
     {:noreply, socket}
@@ -70,7 +70,7 @@ defmodule LoomerWeb.DotsLive.Index do
         color: "#" <> Faker.Color.rgb_hex()
       })
 
-    Loomer.Users.update_user(current_user_id, metas)
+    LiveShowy.Users.update_user(current_user_id, metas)
     Presence.update(self(), @topic, current_user_id, metas)
     {:noreply, socket}
   end
@@ -83,6 +83,6 @@ defmodule LoomerWeb.DotsLive.Index do
   end
 
   def subscribe do
-    Phoenix.PubSub.subscribe(Loomer.PubSub, @topic)
+    Phoenix.PubSub.subscribe(LiveShowy.PubSub, @topic)
   end
 end

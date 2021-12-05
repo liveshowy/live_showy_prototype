@@ -7,13 +7,13 @@
 # General application configuration
 import Config
 
-config :loomer, Loomer.MidiDevices, output: "Fake Bus1"
+config :live_showy, LiveShowy.MidiDevices, output: "Fake Bus1"
 
 # Configures the endpoint
-config :loomer, LoomerWeb.Endpoint,
+config :live_showy, LiveShowyWeb.Endpoint,
   url: [host: "localhost"],
-  render_errors: [view: LoomerWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: Loomer.PubSub,
+  render_errors: [view: LiveShowyWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: LiveShowy.PubSub,
   live_view: [signing_salt: "Cyk3GV4m"]
 
 # Configures the mailer
@@ -23,7 +23,7 @@ config :loomer, LoomerWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :loomer, Loomer.Mailer, adapter: Swoosh.Adapters.Local
+config :live_showy, LiveShowy.Mailer, adapter: Swoosh.Adapters.Local
 
 # Swoosh API client is needed for adapters other than SMTP.
 config :swoosh, :api_client, false

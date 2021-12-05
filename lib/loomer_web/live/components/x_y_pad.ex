@@ -1,7 +1,7 @@
-defmodule LoomerWeb.Live.Components.XYPad do
+defmodule LiveShowyWeb.Live.Components.XYPad do
   @moduledoc false
   use Phoenix.LiveComponent
-  alias LoomerWeb.Live.Components.UserDot
+  alias LiveShowyWeb.Live.Components.UserDot
 
   def render(assigns) do
     ~H"""

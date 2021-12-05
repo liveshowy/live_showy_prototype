@@ -1,4 +1,4 @@
-defmodule LoomerWeb.Live.Components.OctaveControl do
+defmodule LiveShowyWeb.Live.Components.OctaveControl do
   use Phoenix.LiveComponent
 
   def render(assigns) do

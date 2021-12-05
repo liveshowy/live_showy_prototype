@@ -1,4 +1,4 @@
-defmodule Loomer.Users.Guest do
+defmodule LiveShowy.Users.Guest do
   @moduledoc """
   The most basic form of a user.
   """
@@ -20,8 +20,8 @@ defmodule Loomer.Users.Guest do
     }
   end
 
-  alias Loomer.Users.Guest
-  alias Loomer.Protocols.User
+  alias LiveShowy.Users.Guest
+  alias LiveShowy.Protocols.User
 
   defimpl User, for: [Guest, Any] do
     def new(_username), do: Guest.new()

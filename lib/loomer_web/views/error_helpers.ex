@@ -1,4 +1,4 @@
-defmodule LoomerWeb.ErrorHelpers do
+defmodule LiveShowyWeb.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -39,9 +39,9 @@ defmodule LoomerWeb.ErrorHelpers do
     # should be written to the errors.po file. The :count option is
     # set by Ecto and indicates we should also apply plural rules.
     if count = opts[:count] do
-      Gettext.dngettext(LoomerWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(LiveShowyWeb.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(LoomerWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(LiveShowyWeb.Gettext, "errors", msg, opts)
     end
   end
 end

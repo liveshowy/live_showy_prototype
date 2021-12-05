@@ -1,6 +1,6 @@
-defmodule Loomer do
+defmodule LiveShowy do
   @moduledoc """
-  Loomer keeps the contexts that define your domain
+  LiveShowy keeps the contexts that define your domain
   and business logic.
 
   Contexts are also responsible for managing your data, regardless

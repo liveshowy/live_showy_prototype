@@ -1,12 +1,12 @@
-defmodule LoomerWeb do
+defmodule LiveShowyWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, views, channels and so on.
 
   This can be used in your application as:
 
-      use LoomerWeb, :controller
-      use LoomerWeb, :view
+      use LiveShowyWeb, :controller
+      use LiveShowyWeb, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -19,19 +19,19 @@ defmodule LoomerWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: LoomerWeb
+      use Phoenix.Controller, namespace: LiveShowyWeb
 
       import Plug.Conn
-      import LoomerWeb.Gettext
-      alias LoomerWeb.Router.Helpers, as: Routes
+      import LiveShowyWeb.Gettext
+      alias LiveShowyWeb.Router.Helpers, as: Routes
     end
   end
 
   def view do
     quote do
       use Phoenix.View,
-        root: "lib/loomer_web/templates",
-        namespace: LoomerWeb
+        root: "lib/live_showy_web/templates",
+        namespace: LiveShowyWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller,
@@ -45,7 +45,7 @@ defmodule LoomerWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {LoomerWeb.LayoutView, "live.html"}
+        layout: {LiveShowyWeb.LayoutView, "live.html"}
 
       unquote(view_helpers())
     end
@@ -72,7 +72,7 @@ defmodule LoomerWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import LoomerWeb.Gettext
+      import LiveShowyWeb.Gettext
     end
   end
 
@@ -83,14 +83,14 @@ defmodule LoomerWeb do
 
       # Import LiveView and .heex helpers (live_render, live_patch, <.form>, etc)
       import Phoenix.LiveView.Helpers
-      import LoomerWeb.LiveHelpers
+      import LiveShowyWeb.LiveHelpers
 
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
-      import LoomerWeb.ErrorHelpers
-      import LoomerWeb.Gettext
-      alias LoomerWeb.Router.Helpers, as: Routes
+      import LiveShowyWeb.ErrorHelpers
+      import LiveShowyWeb.Gettext
+      alias LiveShowyWeb.Router.Helpers, as: Routes
     end
   end
 

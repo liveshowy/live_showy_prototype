@@ -1,4 +1,4 @@
-defmodule LoomerWeb.Plugs.PutUserToken do
+defmodule LiveShowyWeb.Plugs.PutUserToken do
   @moduledoc """
   Puts a token in the session if a user is present.
   """

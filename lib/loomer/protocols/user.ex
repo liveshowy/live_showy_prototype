@@ -1,4 +1,4 @@
-defprotocol Loomer.Protocols.User do
+defprotocol LiveShowy.Protocols.User do
   @fallback_to_any true
 
   @enforce_keys [:id, :username, :color, :x, :y, :token]

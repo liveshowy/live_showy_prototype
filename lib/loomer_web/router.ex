@@ -1,32 +1,32 @@
-defmodule LoomerWeb.Router do
-  use LoomerWeb, :router
+defmodule LiveShowyWeb.Router do
+  use LiveShowyWeb, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
-    plug :put_root_layout, {LoomerWeb.LayoutView, :root}
+    plug :put_root_layout, {LiveShowyWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
 
   pipeline :require_user do
-    plug LoomerWeb.Plugs.PutFakeUser
-    plug LoomerWeb.Plugs.PutUserToken
+    plug LiveShowyWeb.Plugs.PutFakeUser
+    plug LiveShowyWeb.Plugs.PutUserToken
   end
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  scope "/", LoomerWeb do
+  scope "/", LiveShowyWeb do
     pipe_through :browser
 
     get "/", PageController, :index
   end
 
-  live_session :default, on_mount: {LoomerWeb.InitAssigns, :user} do
-    scope "/", LoomerWeb do
+  live_session :default, on_mount: {LiveShowyWeb.InitAssigns, :user} do
+    scope "/", LiveShowyWeb do
       pipe_through [:browser, :require_user]
 
       live "/dots", DotsLive.Index, :index
@@ -36,7 +36,7 @@ defmodule LoomerWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", LoomerWeb do
+  # scope "/api", LiveShowyWeb do
   #   pipe_through :api
   # end
 
@@ -52,7 +52,7 @@ defmodule LoomerWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/dashboard", metrics: LoomerWeb.Telemetry
+      live_dashboard "/dashboard", metrics: LiveShowyWeb.Telemetry
     end
   end
 

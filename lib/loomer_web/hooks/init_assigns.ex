@@ -1,4 +1,4 @@
-defmodule LoomerWeb.InitAssigns do
+defmodule LiveShowyWeb.InitAssigns do
   @moduledoc """
   Ensures common assigns are applied to all LiveViews attaching to this hook.
   """

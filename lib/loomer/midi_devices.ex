@@ -1,4 +1,4 @@
-defmodule Loomer.MidiDevices do
+defmodule LiveShowy.MidiDevices do
   @moduledoc """
   A GenServer for managing with MIDI devices connected to a server.
   """
@@ -20,7 +20,7 @@ defmodule Loomer.MidiDevices do
 
     set_devices()
 
-    with {:ok, devices} <- Application.fetch_env(:loomer, __MODULE__),
+    with {:ok, devices} <- Application.fetch_env(:live_showy, __MODULE__),
          output when is_binary(output) <- devices[:output] do
       set_device(:output, output)
     else

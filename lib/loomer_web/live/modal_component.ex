@@ -1,6 +1,6 @@
-defmodule LoomerWeb.ModalComponent do
+defmodule LiveShowyWeb.ModalComponent do
   @moduledoc false
-  use LoomerWeb, :live_component
+  use LiveShowyWeb, :live_component
 
   @impl true
   def render(assigns) do

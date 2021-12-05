@@ -1,4 +1,4 @@
-defmodule Loomer.Application do
+defmodule LiveShowy.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -9,24 +9,24 @@ defmodule Loomer.Application do
   def start(_type, _args) do
     children = [
       # Start the Telemetry supervisor
-      LoomerWeb.Telemetry,
+      LiveShowyWeb.Telemetry,
       # Start the Users ETS table
-      Loomer.Users,
+      LiveShowy.Users,
       # Start the Midi ETS table
-      Loomer.MidiDevices,
+      LiveShowy.MidiDevices,
       # Start the PubSub system
-      {Phoenix.PubSub, name: Loomer.PubSub},
+      {Phoenix.PubSub, name: LiveShowy.PubSub},
       # Start the Presence system
-      LoomerWeb.Presence,
+      LiveShowyWeb.Presence,
       # Start the Endpoint (http/https)
-      LoomerWeb.Endpoint
-      # Start a worker by calling: Loomer.Worker.start_link(arg)
-      # {Loomer.Worker, arg}
+      LiveShowyWeb.Endpoint
+      # Start a worker by calling: LiveShowy.Worker.start_link(arg)
+      # {LiveShowy.Worker, arg}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Loomer.Supervisor]
+    opts = [strategy: :one_for_one, name: LiveShowy.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
@@ -34,7 +34,7 @@ defmodule Loomer.Application do
   # whenever the application is updated.
   @impl true
   def config_change(changed, _new, removed) do
-    LoomerWeb.Endpoint.config_change(changed, removed)
+    LiveShowyWeb.Endpoint.config_change(changed, removed)
     :ok
   end
 end

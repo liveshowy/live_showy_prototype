@@ -1,4 +1,4 @@
-defmodule LoomerWeb.Live.Components.UserCoords do
+defmodule LiveShowyWeb.Live.Components.UserCoords do
   @moduledoc false
   use Phoenix.LiveComponent
 

@@ -1,4 +1,4 @@
-defmodule Loomer.Users.Fake do
+defmodule LiveShowy.Users.Fake do
   @moduledoc """
   The most basic form of a user.
   """
@@ -20,9 +20,9 @@ defmodule Loomer.Users.Fake do
     }
   end
 
-  alias Loomer.Users.Fake
-  alias Loomer.Users.Guest
-  alias Loomer.Protocols.User
+  alias LiveShowy.Users.Fake
+  alias LiveShowy.Users.Guest
+  alias LiveShowy.Protocols.User
 
   defimpl User, for: Atom do
     def new(:fake), do: Fake.new()

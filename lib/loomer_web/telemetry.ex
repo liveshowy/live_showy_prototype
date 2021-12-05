@@ -1,4 +1,4 @@
-defmodule LoomerWeb.Telemetry do
+defmodule LiveShowyWeb.Telemetry do
   @moduledoc """
   Supervisor for telemetry metrics.
   """
@@ -45,7 +45,7 @@ defmodule LoomerWeb.Telemetry do
     [
       # A module, function and arguments to be invoked periodically.
       # This function must call :telemetry.execute/3 and a metric must be added above.
-      # {LoomerWeb, :count_users, []}
+      # {LiveShowyWeb, :count_users, []}
     ]
   end
 end

@@ -1,3 +1,3 @@
-defmodule LoomerWeb.PageView do
-  use LoomerWeb, :view
+defmodule LiveShowyWeb.PageView do
+  use LiveShowyWeb, :view
 end

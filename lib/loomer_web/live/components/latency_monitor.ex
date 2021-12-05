@@ -1,4 +1,4 @@
-defmodule LoomerWeb.Live.Components.LatencyMonitor do
+defmodule LiveShowyWeb.Live.Components.LatencyMonitor do
   @moduledoc """
   Displays latency in milliseconds as reported by the client.
   """

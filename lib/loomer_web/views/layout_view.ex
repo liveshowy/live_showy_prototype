@@ -1,5 +1,5 @@
-defmodule LoomerWeb.LayoutView do
-  use LoomerWeb, :view
+defmodule LiveShowyWeb.LayoutView do
+  use LiveShowyWeb, :view
 
   # Phoenix LiveDashboard is available only in development by default,
   # so we instruct Elixir to not warn if the dashboard route is missing.

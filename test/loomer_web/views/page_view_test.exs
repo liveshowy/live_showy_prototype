@@ -1,3 +1,3 @@
-defmodule LoomerWeb.PageViewTest do
-  use LoomerWeb.ConnCase, async: true
+defmodule LiveShowyWeb.PageViewTest do
+  use LiveShowyWeb.ConnCase, async: true
 end

@@ -1,9 +1,9 @@
-defmodule Loomer.MixProject do
+defmodule LiveShowy.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :loomer,
+      app: :live_showy,
       version: "0.1.0",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -19,7 +19,7 @@ defmodule Loomer.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Loomer.Application, []},
+      mod: {LiveShowy.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end

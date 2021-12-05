@@ -1,4 +1,4 @@
-defmodule Loomer.Users do
+defmodule LiveShowy.Users do
   @moduledoc """
   GenServer for managing users in an ETS table.
   """
@@ -19,7 +19,7 @@ defmodule Loomer.Users do
   end
 
   def put_user(username) do
-    user = Loomer.Protocols.User.new(username)
+    user = LiveShowy.Protocols.User.new(username)
     :ets.insert_new(__MODULE__, {user.id, user})
 
     user
