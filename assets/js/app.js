@@ -28,6 +28,7 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import _ from 'underscore'
+import latency from './latency'
 
 window.Alpine = Alpine
 Alpine.start()
@@ -35,7 +36,7 @@ Alpine.start()
 let Hooks = {
   TrackTouchEvents: {
     mounted() {
-      console.log(`TrackTouchEvents mounted!`)
+      console.info(`TrackTouchEvents mounted`)
 
       // DOCS: https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Using_Touch_Events
       const pushTouchEvents = (event) => {
@@ -56,6 +57,74 @@ let Hooks = {
       // TODO: Throttle these events to 30 fps.
       this.el.addEventListener('touchmove', pushTouchEvents)
       this.el.addEventListener('mousemove', pushMouseEvents)
+    },
+  },
+
+  MonitorLatency: {
+    mounted() {
+      console.info(`MonitorLatency mounted`)
+      latency.measure(this)
+      window.setInterval(() => latency.measure(this), (10 * 1000))
+    },
+
+    disconnected() {
+      window.clearInterval(latency.measure)
+    },
+  },
+
+  HandleKeyboardPresses: {
+    mounted() {
+      console.info(`HandleKeyboardPresses mounted`)
+      
+      const noteon = e => {
+        const {scrollHeight: height} = e.target
+        const value = parseInt(e.target.value, 10)
+
+        const y = e.offsetY
+        const velocity = parseInt(parseFloat(y / height) * 127, 10)
+        this.pushEvent("note-on", [value, velocity])
+      }
+
+      const noteoff = e => {
+        const value = parseInt(e.target.value, 10)
+        this.pushEvent("note-off", value)
+      }
+
+      if ('ontouchstart' in window) {
+        this.el.addEventListener('touchstart', noteon)
+        this.el.addEventListener('touchend', noteoff)
+        this.el.addEventListener('touchcancel', noteoff)
+      } else {
+        this.el.addEventListener('mousedown', noteon)
+        this.el.addEventListener('mouseup', noteoff)
+        this.el.addEventListener('mouseleave', noteoff)
+      }
+      
+    },
+  },
+  HandleDrumPadPresses: {
+    mounted() {
+      console.info(`HandleDrumPadPresses mounted`)
+
+      const noteon = e => {
+        const value = parseInt(e.target.value, 10)
+        this.pushEvent("note-on", value)
+      }
+
+      const noteoff = e => {
+        const value = parseInt(e.target.value, 10)
+        this.pushEvent("note-off", value)
+      }
+
+      if ('ontouchstart' in window) {
+        this.el.addEventListener('touchstart', noteon)
+        this.el.addEventListener('touchend', noteoff)
+        this.el.addEventListener('touchcancel', noteoff)
+      } else {
+        this.el.addEventListener('mousedown', noteon)
+        this.el.addEventListener('mouseup', noteoff)
+        this.el.addEventListener('mouseleave', noteoff)
+      }      
     },
   },
 }

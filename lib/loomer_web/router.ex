@@ -28,7 +28,10 @@ defmodule LoomerWeb.Router do
   live_session :default, on_mount: {LoomerWeb.InitAssigns, :user} do
     scope "/", LoomerWeb do
       pipe_through [:browser, :require_user]
-      live "/stage", StageLive.Index, :index
+
+      live "/dots", DotsLive.Index, :index
+      live "/keys", KeysLive.Index, :index
+      live "/drum-pad", DrumPadLive.Index, :index
     end
   end
 

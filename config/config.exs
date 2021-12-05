@@ -7,6 +7,8 @@
 # General application configuration
 import Config
 
+config :loomer, Loomer.MidiDevices, output: "Fake Bus1"
+
 # Configures the endpoint
 config :loomer, LoomerWeb.Endpoint,
   url: [host: "localhost"],

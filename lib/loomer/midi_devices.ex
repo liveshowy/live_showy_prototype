@@ -20,6 +20,13 @@ defmodule Loomer.MidiDevices do
 
     set_devices()
 
+    with {:ok, devices} <- Application.fetch_env(:loomer, __MODULE__),
+         output when is_binary(output) <- devices[:output] do
+      set_device(:output, output)
+    else
+      _ -> raise("No MIDI devices configured")
+    end
+
     {:ok, nil}
   end
 
