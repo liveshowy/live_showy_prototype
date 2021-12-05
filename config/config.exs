@@ -9,6 +9,8 @@ import Config
 
 config :live_showy, LiveShowy.MidiDevices, output: "Fake Bus1"
 
+config :live_showy, ecto_repos: [LiveShowy.Repo]
+
 # Configures the endpoint
 config :live_showy, LiveShowyWeb.Endpoint,
   url: [host: "localhost"],
