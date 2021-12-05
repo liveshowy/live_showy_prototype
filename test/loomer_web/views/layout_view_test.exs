@@ -1,5 +1,5 @@
-defmodule LoomerWeb.LayoutViewTest do
-  use LoomerWeb.ConnCase, async: true
+defmodule LiveShowyWeb.LayoutViewTest do
+  use LiveShowyWeb.ConnCase, async: true
 
   # When testing helpers, you may want to import Phoenix.HTML and
   # use functions such as safe_to_string() to convert the helper

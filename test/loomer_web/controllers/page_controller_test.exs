@@ -1,5 +1,5 @@
-defmodule LoomerWeb.PageControllerTest do
-  use LoomerWeb.ConnCase
+defmodule LiveShowyWeb.PageControllerTest do
+  use LiveShowyWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")

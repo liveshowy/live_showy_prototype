@@ -21,7 +21,7 @@ erl_crash.dump
 *.ez
 
 # Ignore package tarball (built via "mix hex.build").
-loomer-*.tar
+live_showy-*.tar
 
 # Ignore assets that are produced by build tools.
 /priv/static/assets/

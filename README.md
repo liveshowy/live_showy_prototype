@@ -1,10 +1,10 @@
-[![Elixir CI](https://github.com/type1fool/loomer/actions/workflows/elixir.yml/badge.svg?branch=main)](https://github.com/type1fool/loomer/actions/workflows/elixir.yml)
+[![Elixir CI](https://github.com/type1fool/live_showy/actions/workflows/elixir.yml/badge.svg?branch=main)](https://github.com/type1fool/live_showy/actions/workflows/elixir.yml)
 
-# Loomer
+# LiveShowy
 
 \* This application is a work in progress. Some of the features below are not yet implemented.
 
-Loomer allows multiple people in a phyiscal or virtual space to join a live performance.
+LiveShowy allows multiple people in a phyiscal or virtual space to join a live performance.
 
 ## Requirements
 

@@ -1,5 +1,5 @@
 {
-	"name": "Loomer Container",
+	"name": "LiveShowy Container",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "elixir",
 	"workspaceFolder": "/workspace",
