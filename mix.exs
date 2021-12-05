@@ -20,7 +20,7 @@ defmodule LiveShowy.MixProject do
   def application do
     [
       mod: {LiveShowy.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :os_mon]
     ]
   end
 
