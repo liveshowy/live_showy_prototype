@@ -15,6 +15,14 @@ defmodule LiveShowyWeb.Router do
     plug LiveShowyWeb.Plugs.PutUserToken
   end
 
+  pipeline :authorize_performers do
+    plug LiveShowyWeb.Plugs.AuthorizeAction, :performers
+  end
+
+  pipeline :authorize_application_managers do
+    plug LiveShowyWeb.Plugs.AuthorizeAction, :application_managers
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
