@@ -3,10 +3,11 @@ defmodule LiveShowyWeb.DotsLive.Index do
   A stage for multiple users to move shapes.
   """
 
+  alias LiveShowy.UserCoordinates
   use LiveShowyWeb, :live_view
   alias LiveShowyWeb.Presence
   alias LiveShowyWeb.Live.Components.LatencyMonitor
-  alias LiveShowyWeb.Live.Components.UserCoords
+  alias LiveShowyWeb.Live.Components.UserStatus
   alias LiveShowyWeb.Live.Components.XYPad
 
   @topic "dots_live"
@@ -18,7 +19,10 @@ defmodule LiveShowyWeb.DotsLive.Index do
         %{assigns: %{current_user_id: current_user_id}} = socket
       ) do
     if connected?(socket), do: subscribe()
+
     current_user = LiveShowy.Users.get_user(current_user_id)
+    current_user_coords = UserCoordinates.get_coords(current_user.id)
+    current_user = Map.put(current_user, :coords, current_user_coords)
 
     Presence.track(
       self(),
@@ -28,9 +32,19 @@ defmodule LiveShowyWeb.DotsLive.Index do
     )
 
     users =
-      Presence.list(@topic) |> Enum.map(fn {_user_id, data} -> data[:metas] |> List.first() end)
+      Presence.list(@topic)
+      |> Enum.map(fn {_user_id, data} ->
+        data[:metas]
+        |> List.first()
+      end)
 
-    {:ok, assign(socket, users: users, current_username: current_user.username)}
+    {:ok,
+     assign(
+       socket,
+       users: users,
+       current_username: current_user.username,
+       dots: UserCoordinates.list_coords()
+     )}
   end
 
   @impl true
@@ -44,15 +58,12 @@ defmodule LiveShowyWeb.DotsLive.Index do
   @impl true
   def handle_event(event, [x, y], %{assigns: %{current_user_id: current_user_id}} = socket)
       when event in ["touch-event", "mouse-event"] do
+    UserCoordinates.put_coords(current_user_id, [x, y])
+
     metas =
       Presence.get_by_key(@topic, current_user_id)[:metas]
       |> List.first()
-      |> Map.merge(%{
-        x: x |> Integer.to_string() |> String.pad_leading(3, "0"),
-        y: y |> Integer.to_string() |> String.pad_leading(3, "0")
-      })
-
-    LiveShowy.Users.update_user(current_user_id, metas)
+      |> Map.merge(%{coords: [x, y]})
 
     Presence.update(self(), @topic, current_user_id, metas)
     {:noreply, socket}
