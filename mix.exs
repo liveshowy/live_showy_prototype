@@ -46,7 +46,7 @@ defmodule LiveShowy.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:faker, "~> 0.16.0"},
+      {:faker, "~> 0.17.0"},
       {:uuid, "~> 1.1"},
       {:portmidi, git: "https://github.com/thbar/ex-portmidi.git"},
       {:phoenix_ecto, "~> 4.0"},
