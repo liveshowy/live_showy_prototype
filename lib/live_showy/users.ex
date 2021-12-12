@@ -40,8 +40,9 @@ defmodule LiveShowy.Users do
     :ets.insert(__MODULE__, {id, updated_user})
   end
 
-  def list_users(), do: :ets.tab2list(__MODULE__)
+  def remove_user(id), do: :ets.delete(__MODULE__, id)
 
+  def list_users(), do: :ets.tab2list(__MODULE__)
   def get_first_key, do: :ets.first(__MODULE__)
   def get_next_key(previous_key), do: :ets.next(__MODULE__, previous_key)
 end
