@@ -3,7 +3,7 @@
   <h1 class="w-full select-none">Dancing Dots</h1>
 
   <section>
-  <.live_component module={XYPad} id="xy-pad" users={@users} current_user_id={@current_user_id} />
+    <.live_component module={XYPad} id="xy-pad" users={@users} dots={@dots} current_user_id={@current_user_id} />
   </section>
 
   <section class="flex-1 min-w-max">
@@ -16,7 +16,7 @@
       </li>
 
       <%= for user <- @users do %>
-        <.live_component module={UserCoords} id={user.id <> "-coords"} user={user} current_user_id={@current_user_id} />
+        <UserStatus.list_item id={user.id <> "-coords"} user={user} current_user_id={@current_user_id} />
       <% end %>
 
     </ul>
