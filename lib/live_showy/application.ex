@@ -14,6 +14,8 @@ defmodule LiveShowy.Application do
       LiveShowy.Repo,
       # Start the Users ETS table
       LiveShowy.Users,
+      # Start the UserCoordinates ETS table
+      LiveShowy.UserCoordinates,
       # Start the Midi ETS table
       LiveShowy.MidiDevices,
       # Start the PubSub system
