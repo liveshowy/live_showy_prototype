@@ -1,8 +1,8 @@
-defmodule LiveShowyWeb.Live.Components.UserCoords do
+defmodule LiveShowyWeb.Live.Components.UserStatus do
   @moduledoc false
-  use Phoenix.LiveComponent
+  use Phoenix.Component
 
-  def render(assigns) do
+  def list_item(assigns) do
     ~H"""
     <li class="flex items-center gap-2 px-4 select-none">
       <button
@@ -14,12 +14,6 @@ defmodule LiveShowyWeb.Live.Components.UserCoords do
       </button>
 
       <span><%= @user.username %></span>
-
-      <span class="flex-grow"></span>
-
-      <span class="whitespace-nowrap">
-        [ <%= @user.x %>, <%= @user.y %> ]
-      </span>
     </li>
     """
   end
