@@ -3,8 +3,8 @@ defmodule LiveShowy.Users.Fake do
   The most basic form of a user.
   """
 
-  @enforce_keys [:id, :username, :color, :token]
-  defstruct [:id, :username, :color, :token]
+  @enforce_keys [:id, :username, :color]
+  defstruct [:id, :username, :color]
 
   @doc """
   Returns a fake user with a random UUID and username.
@@ -13,8 +13,7 @@ defmodule LiveShowy.Users.Fake do
     %__MODULE__{
       id: UUID.uuid4(),
       username: Faker.Internet.user_name(),
-      color: "#" <> Faker.Color.rgb_hex(),
-      token: nil
+      color: "#" <> Faker.Color.rgb_hex()
     }
   end
 
