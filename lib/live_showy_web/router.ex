@@ -28,7 +28,7 @@ defmodule LiveShowyWeb.Router do
   end
 
   scope "/", LiveShowyWeb do
-    pipe_through :browser
+    pipe_through [:browser, :require_user]
 
     get "/", PageController, :index
   end
