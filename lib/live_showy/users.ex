@@ -40,6 +40,10 @@ defmodule LiveShowy.Users do
     :ets.insert(__MODULE__, {id, updated_user})
   end
 
+  def update_username(id, username) when is_binary(username) do
+    update_user(id, %{username: username})
+  end
+
   def remove_user(id), do: :ets.delete(__MODULE__, id)
 
   def list_users(), do: :ets.tab2list(__MODULE__)
