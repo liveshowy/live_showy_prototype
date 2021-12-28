@@ -7,7 +7,7 @@ defmodule LiveShowyWeb.DotsLive.Index do
   use LiveShowyWeb, :live_view
   alias LiveShowyWeb.Presence
   alias LiveShowyWeb.Live.Components.LatencyMonitor
-  alias LiveShowyWeb.Live.Components.UserStatus
+  alias LiveShowyWeb.Live.Components.Users
   alias LiveShowyWeb.Live.Components.XYPad
 
   @topic "dots_live"

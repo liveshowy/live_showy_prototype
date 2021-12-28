@@ -10,17 +10,8 @@
   </section>
 
   <section class="flex-1 min-w-max">
-
     <h2>Dancers</h2>
-
-    <div class="gap-2 py-2 font-mono select-none columns-lg">
-
-      <%= for user <- @users do %>
-        <UserStatus.list_item id={"#{user.id}-username"} user={user} current_user_id={@current_user_id} />
-      <% end %>
-
-    </div>
-
+    <Users.list id="user-list-dots" users={@users} current_user_id={@current_user_id} />
   </section>
 
 </div>
