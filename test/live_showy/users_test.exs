@@ -1,5 +1,5 @@
 defmodule LiveShowy.UsersTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: false
   alias LiveShowy.Users
   doctest Users
 
@@ -25,11 +25,5 @@ defmodule LiveShowy.UsersTest do
     assert user.color != nil
     assert fetched_user.username == user.username
     assert fetched_user.color == user.color
-  end
-
-  test "users table is not empty" do
-    user_list = Users.list_users()
-
-    assert Enum.count(user_list) > 0
   end
 end
