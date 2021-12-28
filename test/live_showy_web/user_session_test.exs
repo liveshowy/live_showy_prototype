@@ -8,6 +8,6 @@ defmodule LiveShowyWeb.UserSessionTest do
     assert new_username != nil
 
     conn = get(conn, "/")
-    assert new_username != conn.assigns.username
+    assert new_username == conn.assigns.username
   end
 end
