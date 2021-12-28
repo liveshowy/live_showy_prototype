@@ -23,7 +23,7 @@ defmodule LiveShowy.Users do
     {:ok, nil}
   end
 
-  def put_user(params) do
+  def put_user(params \\ nil) do
     user = LiveShowy.Protocols.User.new(params)
     :ets.insert_new(__MODULE__, {user.id, user})
     PubSub.broadcast(LiveShowy.PubSub, @topic, {:new_user, user})
