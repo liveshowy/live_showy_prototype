@@ -4,7 +4,7 @@ defmodule LiveShowyWeb.Live.Components.UserStatus do
 
   def list_item(assigns) do
     ~H"""
-    <li class="flex items-center gap-2 px-4 select-none">
+    <div class="flex items-center gap-2 select-none">
       <button
         type="button"
         phx-click={if @user.id == @current_user_id, do: "set-new-color"}
@@ -14,7 +14,7 @@ defmodule LiveShowyWeb.Live.Components.UserStatus do
       </button>
 
       <span><%= @user.username %></span>
-    </li>
+    </div>
     """
   end
 end
