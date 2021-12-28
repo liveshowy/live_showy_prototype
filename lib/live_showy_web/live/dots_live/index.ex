@@ -48,11 +48,33 @@ defmodule LiveShowyWeb.DotsLive.Index do
   end
 
   @impl true
-  def handle_info(%{event: "presence_diff", payload: %{joins: _joins, leaves: _leaves}}, socket) do
+  def handle_info(%{event: "presence_diff"}, socket) do
     users =
       Presence.list(@topic) |> Enum.map(fn {_user_id, data} -> data[:metas] |> List.first() end)
 
     {:noreply, assign(socket, users: users)}
+  end
+
+  @impl true
+  def handle_info({:user_updated, user}, socket) do
+    user = Presence.get_by_key(@topic, user.id)
+
+    if user[:metas] do
+      metas =
+        user[:metas]
+        |> List.first()
+        |> Map.merge(user)
+
+      Presence.update(self(), @topic, user.id, metas)
+    end
+
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_info(message, socket) do
+    IO.inspect(message, label: "UNKNOWN INFO MESSAGE")
+    {:noreply, socket}
   end
 
   @impl true
@@ -95,5 +117,6 @@ defmodule LiveShowyWeb.DotsLive.Index do
 
   def subscribe do
     Phoenix.PubSub.subscribe(LiveShowy.PubSub, @topic)
+    Phoenix.PubSub.subscribe(LiveShowy.PubSub, LiveShowy.Users.get_topic())
   end
 end
