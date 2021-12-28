@@ -11,10 +11,10 @@
 
   <section class="flex-1 min-w-max">
 
-    <ul class="flex flex-col gap-2 pb-2 font-mono bg-purple-800 border-2 border-purple-700 rounded-lg shadow-lg select-none">
+    <ul class="flex flex-col gap-2 py-2 font-mono bg-purple-800 border-2 border-purple-700 rounded-lg shadow-lg select-none">
 
       <%= for user <- @users do %>
-        <UserStatus.list_item id={user.id <> "-coords"} user={user} current_user_id={@current_user_id} />
+        <UserStatus.list_item id={"#{user.id}-username"} user={user} current_user_id={@current_user_id} />
       <% end %>
 
     </ul>
