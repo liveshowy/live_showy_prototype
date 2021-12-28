@@ -14,8 +14,9 @@ defmodule LiveShowyWeb.Plugs.PutFakeUser do
       |> assign(:username, username)
     else
       _ ->
-        %{id: user_id} = LiveShowy.Users.put_user(:fake)
+        %{id: user_id, username: username} = LiveShowy.Users.put_user(:fake)
         put_session(conn, :current_user_id, user_id)
+        assign(conn, :username, username)
     end
   end
 end
