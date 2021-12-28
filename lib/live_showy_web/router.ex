@@ -11,7 +11,7 @@ defmodule LiveShowyWeb.Router do
   end
 
   pipeline :require_user do
-    plug LiveShowyWeb.Plugs.PutFakeUser
+    plug LiveShowyWeb.Plugs.PutUser
     plug LiveShowyWeb.Plugs.PutUserToken
   end
 

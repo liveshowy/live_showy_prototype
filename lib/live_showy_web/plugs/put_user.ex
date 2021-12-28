@@ -1,4 +1,4 @@
-defmodule LiveShowyWeb.Plugs.PutFakeUser do
+defmodule LiveShowyWeb.Plugs.PutUser do
   @moduledoc """
   Puts a fake user in the conn if no user has been set.
   """
