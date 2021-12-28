@@ -1,9 +1,7 @@
 defprotocol LiveShowy.Protocols.User do
+  alias LiveShowy.Structs.User
   @fallback_to_any true
 
-  @enforce_keys [:id, :username, :color]
-  defstruct [:id, :username, :color]
-
-  @spec new(binary()) :: User.t()
-  def new(username)
+  @spec new(map()) :: User.t()
+  def new(params)
 end

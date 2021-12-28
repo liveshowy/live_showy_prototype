@@ -1,7 +1,7 @@
 defmodule LiveShowy.Authentication do
   alias Phoenix.Token
   alias LiveShowyWeb.Endpoint
-  alias LiveShowy.Protocols.User
+  alias LiveShowy.Structs.User
 
   @salt "user id token"
   @max_age 86400
