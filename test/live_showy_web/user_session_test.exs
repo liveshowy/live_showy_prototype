@@ -1,4 +1,4 @@
-defmodule LiveShowyTest.Users do
+defmodule LiveShowyWeb.UserSessionTest do
   use LiveShowyWeb.ConnCase, async: true
   doctest LiveShowy.Users
 
