@@ -57,15 +57,15 @@ defmodule LiveShowyWeb.DotsLive.Index do
 
   @impl true
   def handle_info({:user_updated, user}, socket) do
-    user = Presence.get_by_key(@topic, user.id)
+    present_user_metas = Presence.get_by_key(@topic, user.id)[:metas]
 
-    if user[:metas] do
+    if present_user_metas do
       metas =
-        user[:metas]
+        present_user_metas
         |> List.first()
         |> Map.merge(user)
 
-      Presence.update(self(), @topic, user.id, metas)
+      Presence.update(self(), @topic, metas.id, metas)
     end
 
     {:noreply, socket}
