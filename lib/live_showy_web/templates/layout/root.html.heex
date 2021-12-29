@@ -10,7 +10,6 @@
 
     <script>
       window.userToken = "<%= assigns[:user_token] %>"
-      console.log({userToken})
     </script>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
