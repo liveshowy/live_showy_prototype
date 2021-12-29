@@ -11,8 +11,16 @@ defmodule LiveShowyWeb.Router do
   end
 
   pipeline :require_user do
-    plug LiveShowyWeb.Plugs.PutFakeUser
+    plug LiveShowyWeb.Plugs.PutUser
     plug LiveShowyWeb.Plugs.PutUserToken
+  end
+
+  pipeline :authorize_performers do
+    plug LiveShowyWeb.Plugs.AuthorizeAction, :performers
+  end
+
+  pipeline :authorize_application_managers do
+    plug LiveShowyWeb.Plugs.AuthorizeAction, :application_managers
   end
 
   pipeline :api do
@@ -20,7 +28,7 @@ defmodule LiveShowyWeb.Router do
   end
 
   scope "/", LiveShowyWeb do
-    pipe_through :browser
+    pipe_through [:browser, :require_user]
 
     get "/", PageController, :index
   end

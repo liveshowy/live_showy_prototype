@@ -1,7 +1,9 @@
 defmodule LiveShowyWeb.Live.Components.UserDot do
-  use Phoenix.LiveComponent
+  use Phoenix.Component
 
   def render(assigns) do
+    [x, y] = assigns.user.coords
+
     ~H"""
     <circle
       id={"dot-" <> @user.id}
@@ -10,7 +12,7 @@ defmodule LiveShowyWeb.Live.Components.UserDot do
       r={30}
       cx={0}
       cy={0}
-      style={"transform: translate3d(#{@user.x}px, #{@user.y}px, 0)"}
+      style={"transform: translate3d(#{x}px, #{y}px, 0)"}
     />
     """
   end

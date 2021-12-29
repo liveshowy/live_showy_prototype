@@ -7,6 +7,15 @@
 # General application configuration
 import Config
 
+config :live_showy, :roles,
+  guests: [],
+  attendees: [],
+  performers: ~w(rose bonnie stone),
+  producers: [],
+  directors: [],
+  stage_managers: [],
+  application_managers: ~w(owen)
+
 config :live_showy, LiveShowy.MidiDevices, output: "Fake Bus1"
 
 config :live_showy, ecto_repos: [LiveShowy.Repo]
