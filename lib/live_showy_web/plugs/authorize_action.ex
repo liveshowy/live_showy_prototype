@@ -21,7 +21,7 @@ defmodule LiveShowyWeb.Plugs.AuthorizeAction do
 
       _ ->
         conn
-        |> Phoenix.Controller.put_flash(:error, "Not allowed")
+        |> Phoenix.Controller.put_flash(:error, "You are not authorized to view that page.")
         |> Phoenix.Controller.redirect(to: "/")
     end
   end
