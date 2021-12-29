@@ -41,6 +41,19 @@ defmodule LiveShowyWeb.Router do
       live "/keys", KeysLive.Index, :index
       live "/drum-pad", DrumPadLive.Index, :index
     end
+
+    scope "/admin", LiveShowyWeb do
+      pipe_through [:browser, :require_user, :authorize_application_managers]
+
+      live "/stage-manager", StageManagerLive.Index, :index
+    end
+
+    scope "/stage", LiveShowyWeb do
+      pipe_through [:browser, :require_user, :authorize_performers]
+
+      # band route
+      # choir route
+    end
   end
 
   # Other scopes may use custom stacks.
@@ -59,7 +72,7 @@ defmodule LiveShowyWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/" do
-      pipe_through :browser
+      pipe_through [:browser, :require_user, :authorize_application_managers]
       live_dashboard "/dashboard", metrics: LiveShowyWeb.Telemetry
     end
   end
