@@ -24,8 +24,8 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   end
 
   @impl true
-  def handle_event(event, _params, socket) do
-    IO.inspect(event, label: "UNKNDOWN EVENT")
+  def handle_event(event, params, socket) do
+    IO.inspect([event: event, params: params], label: "UNKNDOWN EVENT")
     {:noreply, socket}
   end
 
