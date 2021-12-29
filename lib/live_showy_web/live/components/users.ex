@@ -12,7 +12,7 @@ defmodule LiveShowyWeb.Live.Components.Users do
       </span>
       <div class="gap-2 py-2 font-mono select-none columns-lg">
         <%= for user <- Enum.sort_by(@users, & &1.username) do %>
-          <.list_item id={"#{user.id}-username"} user={user} current_user_id={@current_user_id} />
+          <.list_item id={"#{user.id}-username"} user={user} current_user_id={@current_user_id} editable={@editable} />
         <% end %>
       </div>
     </div>
@@ -21,7 +21,7 @@ defmodule LiveShowyWeb.Live.Components.Users do
 
   def list_item(assigns) do
     ~H"""
-    <div class="flex items-center gap-2 select-none">
+    <div class={get_list_item_class(assigns)} phx-click="edit-user" phx-value-id={@user.id}>
       <button
         type="button"
         phx-click={if @user.id == @current_user_id, do: "set-new-color"}
@@ -32,5 +32,10 @@ defmodule LiveShowyWeb.Live.Components.Users do
       <span><%= @user.username %></span>
     </div>
     """
+  end
+
+  defp get_list_item_class(assigns) do
+    base_classes = "flex items-center gap-2 select-none"
+    if assigns.editable, do: "#{base_classes} cursor-pointer", else: base_classes
   end
 end
