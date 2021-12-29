@@ -7,11 +7,13 @@
 # General application configuration
 import Config
 
-config :live_showy, :initial_roles,
-  guest: [],
-  attendee: [],
-  performer: [],
-  stage_manager: ["owen"]
+config :live_showy,
+  initial_roles: [
+    :guest,
+    :attendee,
+    :performer,
+    :stage_manager
+  ]
 
 config :live_showy, LiveShowy.MidiDevices, output: "Fake Bus1"
 

@@ -12,8 +12,12 @@ defmodule LiveShowy.Application do
       LiveShowyWeb.Telemetry,
       # Start the Repo
       LiveShowy.Repo,
+      # Start the Roles ETS table
+      LiveShowy.Roles,
       # Start the Users ETS table
       LiveShowy.Users,
+      # Start the UserRoles ETS table
+      LiveShowy.UserRoles,
       # Start the UserCoordinates ETS table
       LiveShowy.UserCoordinates,
       # Start the Midi ETS table

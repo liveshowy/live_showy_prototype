@@ -4,7 +4,8 @@ defmodule LiveShowy.RolesTest do
   doctest Roles
 
   test "roles list contains required roles" do
-    roles = Roles.list_roles()
-    assert [:guest, :attendee, :performer, :stage_manager] = Keyword.keys(roles)
+    expected_roles = Enum.sort([:guest, :attendee, :performer, :stage_manager])
+    actual_roles = Enum.sort(Roles.list())
+    assert expected_roles = actual_roles
   end
 end
