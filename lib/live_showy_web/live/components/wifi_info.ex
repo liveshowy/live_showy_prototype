@@ -5,13 +5,13 @@ defmodule LiveShowyWeb.Live.Components.WifiInfo do
   def datalist(assigns) do
     ~H"""
     <dl class="grid grid-cols-2 gap-1">
-      <dt>SSID</dt>
+      <dt class="font-bold text-purple-300 uppercase">SSID</dt>
       <dd>LiveShowy</dd>
 
-      <dt>Password</dt>
+      <dt class="font-bold text-purple-300 uppercase">Password</dt>
       <dd>live-showy-rocks!</dd>
 
-      <dt>URL</dt>
+      <dt class="font-bold text-purple-300 uppercase">URL</dt>
       <dd>live.showy</dd>
     </dl>
     """
