@@ -14,8 +14,18 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
 
   @impl true
   def handle_info({action, _user}, socket)
-      when action in [:user_added, :user_updated, :user_removed] do
-    {:noreply, assign(socket, users: Users.list())}
+      when action in [
+             :user_added,
+             :user_updated,
+             :user_removed,
+             :user_role_added,
+             :user_role_removed
+           ] do
+    {:noreply, assign(socket, users: Users.list_with_roles())}
+  end
+
+  def handle_info(_message, socket) do
+    {:noreply, socket}
   end
 
   @impl true
