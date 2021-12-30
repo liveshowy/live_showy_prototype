@@ -9,7 +9,7 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   @impl true
   def mount(_params, _session, socket) do
     if connected?(socket), do: subscribe()
-    {:ok, assign(socket, users: Users.list())}
+    {:ok, assign(socket, users: Users.list_with_roles())}
   end
 
   @impl true
