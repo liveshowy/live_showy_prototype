@@ -68,6 +68,11 @@ defmodule LiveShowy.UserRoles do
     {:error, "user_id must be binary and role must be an atom"}
   end
 
+  def get(user_id) do
+    :ets.match_object(__MODULE__, {user_id, :_})
+    |> Enum.map(&elem(&1, 1))
+  end
+
   def check({user_id, role} = params) when is_binary(user_id) and is_atom(role) do
     case :ets.match_object(__MODULE__, params) do
       [{^user_id, ^role}] ->
