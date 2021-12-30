@@ -2,6 +2,7 @@ defmodule LiveShowy.Users do
   @moduledoc """
   GenServer for managing users in an ETS table.
   """
+  require Logger
   use GenServer
   alias Phoenix.PubSub
 
@@ -28,6 +29,8 @@ defmodule LiveShowy.Users do
     :ets.insert_new(__MODULE__, {user.id, user})
     PubSub.broadcast(LiveShowy.PubSub, @topic, {:user_added, user})
 
+    Logger.info(user_added: user)
+
     user
   end
 
@@ -45,6 +48,8 @@ defmodule LiveShowy.Users do
 
     :ets.insert(__MODULE__, {id, updated_user})
     PubSub.broadcast(LiveShowy.PubSub, @topic, {:user_updated, updated_user})
+
+    Logger.info(user_updated: updated_user)
   end
 
   def update_username(id, username) when is_binary(username) do
@@ -54,6 +59,7 @@ defmodule LiveShowy.Users do
   def remove_user(id) do
     :ets.delete(__MODULE__, id)
     PubSub.broadcast(LiveShowy.PubSub, @topic, {:user_removed, id})
+    Logger.info(user_removed: id)
   end
 
   def list_users(), do: :ets.tab2list(__MODULE__)
