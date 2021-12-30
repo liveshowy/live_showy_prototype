@@ -20,7 +20,7 @@ defmodule LiveShowyWeb.DotsLive.Index do
       ) do
     if connected?(socket), do: subscribe()
 
-    current_user = LiveShowy.Users.get_user(current_user_id)
+    current_user = LiveShowy.Users.get(current_user_id)
     current_user_coords = UserCoordinates.get_coords(current_user.id)
     current_user = Map.put(current_user, :coords, current_user_coords)
 
@@ -103,7 +103,7 @@ defmodule LiveShowyWeb.DotsLive.Index do
         color: "#" <> Faker.Color.rgb_hex()
       })
 
-    LiveShowy.Users.update_user(current_user_id, metas)
+    LiveShowy.Users.update(current_user_id, metas)
     Presence.update(self(), @topic, current_user_id, metas)
     {:noreply, socket}
   end

@@ -9,13 +9,13 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   @impl true
   def mount(_params, _session, socket) do
     if connected?(socket), do: subscribe()
-    {:ok, assign(socket, users: get_users())}
+    {:ok, assign(socket, users: Users.list())}
   end
 
   @impl true
   def handle_info({action, _user}, socket)
       when action in [:user_added, :user_updated, :user_removed] do
-    {:noreply, assign(socket, users: get_users())}
+    {:noreply, assign(socket, users: Users.list())}
   end
 
   def handle_info(message, socket) do
@@ -32,6 +32,4 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   defp subscribe do
     Phoenix.PubSub.subscribe(LiveShowy.PubSub, LiveShowy.Users.get_topic())
   end
-
-  defp get_users, do: Users.list_users() |> Enum.map(fn {_id, user} -> user end)
 end
