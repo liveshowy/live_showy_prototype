@@ -45,4 +45,8 @@ defmodule LiveShowy.Application do
     LiveShowyWeb.Endpoint.config_change(changed, removed)
     :ok
   end
+
+  def is_pubsub_started?(pubsub_atom) do
+    Enum.member?(Process.registered(), pubsub_atom)
+  end
 end
