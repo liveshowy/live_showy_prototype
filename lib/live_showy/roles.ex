@@ -28,8 +28,6 @@ defmodule LiveShowy.Roles do
     @initial_roles
     |> Enum.map(&add/1)
 
-    Logger.info(roles: @initial_roles)
-
     {:ok, nil}
   end
 
@@ -48,6 +46,8 @@ defmodule LiveShowy.Roles do
       PubSub.broadcast(LiveShowy.PubSub, @topic, {:role_added, role})
     end
 
+    Logger.info(role_added: role)
+
     role
   end
 
@@ -58,6 +58,8 @@ defmodule LiveShowy.Roles do
     if LiveShowy.Application.is_pubsub_started?(LiveShowy.PubSub) do
       PubSub.broadcast(LiveShowy.PubSub, @topic, {:role_removed, role})
     end
+
+    Logger.info(role_removed: role)
 
     role
   end
