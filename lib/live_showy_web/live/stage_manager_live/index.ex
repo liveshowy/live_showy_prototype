@@ -27,5 +27,6 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
 
   defp subscribe do
     Phoenix.PubSub.subscribe(LiveShowy.PubSub, LiveShowy.Users.get_topic())
+    Phoenix.PubSub.subscribe(LiveShowy.PubSub, LiveShowy.UserRoles.get_topic())
   end
 end
