@@ -34,6 +34,13 @@ defmodule LiveShowy.UserRoles do
 
   def list do
     :ets.tab2list(__MODULE__)
+    |> Enum.reduce(%{}, &group_user_roles/2)
+  end
+
+  defp group_user_roles({user, role}, result) do
+    result
+    |> Map.put_new(user, [])
+    |> Map.update!(user, &[role | &1])
   end
 
   def add({user_id, role} = user_role) when is_binary(user_id) and is_atom(role) do
