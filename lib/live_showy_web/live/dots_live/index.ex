@@ -21,7 +21,7 @@ defmodule LiveShowyWeb.DotsLive.Index do
     if connected?(socket), do: subscribe()
 
     current_user = LiveShowy.Users.get(current_user_id)
-    current_user_coords = UserCoordinates.get_coords(current_user.id)
+    current_user_coords = UserCoordinates.get(current_user.id)
     current_user = Map.put(current_user, :coords, current_user_coords)
 
     Presence.track(
@@ -43,7 +43,7 @@ defmodule LiveShowyWeb.DotsLive.Index do
        socket,
        users: users,
        current_username: current_user.username,
-       dots: UserCoordinates.list_coords()
+       dots: UserCoordinates.list()
      )}
   end
 
@@ -80,7 +80,7 @@ defmodule LiveShowyWeb.DotsLive.Index do
   @impl true
   def handle_event(event, [x, y], %{assigns: %{current_user_id: current_user_id}} = socket)
       when event in ["touch-event", "mouse-event"] do
-    UserCoordinates.put_coords(current_user_id, [x, y])
+    UserCoordinates.add(current_user_id, [x, y])
 
     metas =
       Presence.get_by_key(@topic, current_user_id)[:metas]
