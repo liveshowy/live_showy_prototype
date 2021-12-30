@@ -16,11 +16,11 @@ defmodule LiveShowyWeb.Router do
   end
 
   pipeline :authorize_performers do
-    plug LiveShowyWeb.Plugs.AuthorizeAction, :performers
+    plug LiveShowyWeb.Plugs.AuthorizeAction, :performer
   end
 
-  pipeline :authorize_application_managers do
-    plug LiveShowyWeb.Plugs.AuthorizeAction, :application_managers
+  pipeline :authorize_stage_managers do
+    plug LiveShowyWeb.Plugs.AuthorizeAction, :stage_manager
   end
 
   pipeline :api do
@@ -43,7 +43,7 @@ defmodule LiveShowyWeb.Router do
     end
 
     scope "/admin", LiveShowyWeb do
-      pipe_through [:browser, :require_user, :authorize_application_managers]
+      pipe_through [:browser, :require_user, :authorize_stage_managers]
 
       live "/stage-manager", StageManagerLive.Index, :index
     end
@@ -72,7 +72,7 @@ defmodule LiveShowyWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/" do
-      pipe_through [:browser, :require_user, :authorize_application_managers]
+      pipe_through [:browser, :require_user, :authorize_stage_managers]
       live_dashboard "/dashboard", metrics: LiveShowyWeb.Telemetry
     end
   end
