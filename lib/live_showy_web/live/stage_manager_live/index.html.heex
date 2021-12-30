@@ -1,15 +1,15 @@
 <div class="flex flex-wrap justify-between gap-4">
-  <section id="general" class="flex-grow w-full">
+  <section id="general" class="flex-grow w-full px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md">
     <h1>Stage Manager</h1>
     <p>Control user roles and MIDI settings.</p>
   </section>
 
-  <section id="wifi-info">
+  <section id="wifi-info" class="px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md">
     <h2>Wifi Info</h2>
     <WifiInfo.datalist id="wifi-info-datalist" />
   </section>
 
-  <section id="performance-metrics" class="flex-grow min-w-max">
+  <section id="performance-metrics" class="flex-grow px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-max">
     <h2>Performance Metrics</h2>
     <ul>
       <li>App CPU</li>
@@ -21,7 +21,7 @@
     </ul>
   </section>
 
-  <section id="stages" class="flex-grow">
+  <section id="stages" class="flex-grow px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md">
     <h2>Stages</h2>
     <ul>
       <li>Dancing Dots</li>
@@ -31,7 +31,7 @@
     </ul>
   </section>
 
-  <section id="midi-devices" class="flex-grow min-w-max">
+  <section id="midi-devices" class="flex-grow px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-max">
     <h2>MIDI Devices</h2>
     <ol class="pl-6 list-decimal">
       <li>Fake Keys</li>
@@ -40,7 +40,7 @@
     </ol>
   </section>
 
-  <section id="users-list" class="flex-grow w-full min-w-max">
+  <section id="users-list" class="flex-grow w-full px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-max">
     <h2>Users</h2>
     <UsersList.table id="user-list-contents" users={@users} current_user_id={@current_user_id} editable={true} />
   </section>
