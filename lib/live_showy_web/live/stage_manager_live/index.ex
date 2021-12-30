@@ -5,6 +5,7 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   use LiveShowyWeb, :live_view
   alias LiveShowy.Users
   alias LiveShowyWeb.Live.Components.Users, as: UsersList
+  alias LiveShowyWeb.Live.Components.WifiInfo
 
   @impl true
   def mount(_params, _session, socket) do
