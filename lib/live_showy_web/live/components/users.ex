@@ -72,8 +72,8 @@ defmodule LiveShowyWeb.Live.Components.Users do
       <td><%= @user.username %></td>
       <td><span class={"rounded-full w-4 h-4 bg-[#{@user.color}]"}></span></td>
       <td><%= @user.roles |> Enum.join(", ") %></td>
-      <td>
-        <button phx-click="edit-user" phx-value-id={@user.id} type="button" class="px-2 transition bg-purple-700 rounded-sm hover:bg-purple-600">EDIT</button>
+      <td class="flex flex-wrap justify-end">
+        <button phx-click="edit-user" phx-value-id={@user.id} type="button" class="px-2 py-1 transition bg-purple-700 rounded-sm hover:bg-purple-600">EDIT</button>
       </td>
     </tr>
     """
