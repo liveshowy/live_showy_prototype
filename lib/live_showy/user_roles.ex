@@ -32,8 +32,7 @@ defmodule LiveShowy.UserRoles do
     :ets.tab2list(__MODULE__)
   end
 
-  def add(user_id, role) when is_binary(user_id) and is_atom(role) do
-    params = {user_id, role}
+  def add({user_id, role} = params) when is_binary(user_id) and is_atom(role) do
     :ets.insert(__MODULE__, params)
 
     if LiveShowy.Application.is_pubsub_started?(LiveShowy.PubSub) do
@@ -41,14 +40,15 @@ defmodule LiveShowy.UserRoles do
     end
 
     Logger.info(user_role_added: params)
+
+    params
   end
 
-  def add(_user_id, _role) do
+  def add({_user_id, _role}) do
     {:error, "user_id must be binary and role must be an atom"}
   end
 
-  def remove(user_id, role) when is_binary(user_id) and is_atom(role) do
-    params = {user_id, role}
+  def remove({user_id, role} = params) when is_binary(user_id) and is_atom(role) do
     :ets.delete_object(__MODULE__, params)
 
     if LiveShowy.Application.is_pubsub_started?(LiveShowy.PubSub) do
@@ -56,9 +56,11 @@ defmodule LiveShowy.UserRoles do
     end
 
     Logger.info(user_role_removed: params)
+
+    params
   end
 
-  def remove(_user_id, _role) do
+  def remove({_user_id, _role}) do
     {:error, "user_id must be binary and role must be an atom"}
   end
 end
