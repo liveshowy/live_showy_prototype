@@ -63,4 +63,16 @@ defmodule LiveShowy.UserRoles do
   def remove({_user_id, _role}) do
     {:error, "user_id must be binary and role must be an atom"}
   end
+
+  def check({user_id, role} = params) when is_binary(user_id) and is_atom(role) do
+    case :ets.match_object(__MODULE__, params) do
+      [{^user_id, ^role}] ->
+        Logger.info(user_role_pass: params)
+        true
+
+      _ ->
+        Logger.warn(user_role_fail: params)
+        false
+    end
+  end
 end
