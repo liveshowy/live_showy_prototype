@@ -5,6 +5,7 @@ defmodule LiveShowy.Users do
   require Logger
   use GenServer
   alias Phoenix.PubSub
+  alias LiveShowy.UserRoles
 
   @topic "users"
 
@@ -27,6 +28,11 @@ defmodule LiveShowy.Users do
   def list() do
     :ets.tab2list(__MODULE__)
     |> Enum.map(&elem(&1, 1))
+  end
+
+  def list_with_roles() do
+    list()
+    |> Enum.map(fn user -> Map.put(user, :roles, UserRoles.get(user.id)) end)
   end
 
   def add(params \\ nil) do
