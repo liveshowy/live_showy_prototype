@@ -9,6 +9,18 @@
     <WifiInfo.datalist id="wifi-info-datalist" />
   </section>
 
+  <section id="performance-metrics" class="flex-grow min-w-max">
+    <h2>Performance Metrics</h2>
+    <ul>
+      <li>App CPU</li>
+      <li>System CPU</li>
+      <li>App RAM</li>
+      <li>System RAM</li>
+      <li>App IO</li>
+      <li>System IO</li>
+    </ul>
+  </section>
+
   <section id="stages" class="flex-grow">
     <h2>Stages</h2>
     <ul>
@@ -17,11 +29,6 @@
       <li>Band</li>
       <li>Choir</li>
     </ul>
-  </section>
-
-  <section id="users-list" class="flex-grow min-w-max">
-    <h2>Users</h2>
-    <UsersList.table id="user-list-contents" users={@users} current_user_id={@current_user_id} editable={true} />
   </section>
 
   <section id="midi-devices" class="flex-grow min-w-max">
@@ -33,15 +40,8 @@
     </ol>
   </section>
 
-  <section id="performance-metrics" class="flex-grow w-full min-w-max">
-    <h2>Performance Metrics</h2>
-    <ul>
-      <li>App CPU</li>
-      <li>System CPU</li>
-      <li>App RAM</li>
-      <li>System RAM</li>
-      <li>App IO</li>
-      <li>System IO</li>
-    </ul>
+  <section id="users-list" class="flex-grow w-full min-w-max">
+    <h2>Users</h2>
+    <UsersList.table id="user-list-contents" users={@users} current_user_id={@current_user_id} editable={true} />
   </section>
 </div>
