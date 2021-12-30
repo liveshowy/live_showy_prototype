@@ -32,32 +32,32 @@ defmodule LiveShowy.UserRoles do
     :ets.tab2list(__MODULE__)
   end
 
-  def add({user_id, role} = params) when is_binary(user_id) and is_atom(role) do
-    :ets.insert(__MODULE__, params)
+  def add({user_id, role} = user_role) when is_binary(user_id) and is_atom(role) do
+    :ets.insert(__MODULE__, user_role)
 
     if LiveShowy.Application.is_pubsub_started?(LiveShowy.PubSub) do
-      PubSub.broadcast(LiveShowy.PubSub, @topic, {:user_role_added, params})
+      PubSub.broadcast(LiveShowy.PubSub, @topic, {:user_role_added, user_role})
     end
 
-    Logger.info(user_role_added: params)
+    Logger.info(user_role_added: user_role)
 
-    params
+    user_role
   end
 
   def add({_user_id, _role}) do
     {:error, "user_id must be binary and role must be an atom"}
   end
 
-  def remove({user_id, role} = params) when is_binary(user_id) and is_atom(role) do
-    :ets.delete_object(__MODULE__, params)
+  def remove({user_id, role} = user_role) when is_binary(user_id) and is_atom(role) do
+    :ets.delete_object(__MODULE__, user_role)
 
     if LiveShowy.Application.is_pubsub_started?(LiveShowy.PubSub) do
-      PubSub.broadcast(LiveShowy.PubSub, @topic, {:user_role_removed, params})
+      PubSub.broadcast(LiveShowy.PubSub, @topic, {:user_role_removed, user_role})
     end
 
-    Logger.info(user_role_removed: params)
+    Logger.info(user_role_removed: user_role)
 
-    params
+    user_role
   end
 
   def remove({_user_id, _role}) do
