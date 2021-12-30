@@ -72,12 +72,6 @@ defmodule LiveShowyWeb.DotsLive.Index do
   end
 
   @impl true
-  def handle_info(message, socket) do
-    IO.inspect(message, label: "UNKNOWN INFO MESSAGE")
-    {:noreply, socket}
-  end
-
-  @impl true
   def handle_event(event, [x, y], %{assigns: %{current_user_id: current_user_id}} = socket)
       when event in ["touch-event", "mouse-event"] do
     UserCoordinates.add(current_user_id, [x, y])
@@ -111,7 +105,9 @@ defmodule LiveShowyWeb.DotsLive.Index do
   @doc """
   Ignore unmatched events.
   """
-  def handle_event(_event, _params, socket) do
+  def handle_event(event, _params, socket) do
+    require Logger
+    Logger.warn("UNKNOWN EVENT: #{event}")
     {:noreply, socket}
   end
 

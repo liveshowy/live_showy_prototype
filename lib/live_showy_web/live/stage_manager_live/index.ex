@@ -18,14 +18,10 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
     {:noreply, assign(socket, users: Users.list())}
   end
 
-  def handle_info(message, socket) do
-    IO.inspect(message, label: "UNKNOWN INFO MESSAGE")
-    {:noreply, socket}
-  end
-
   @impl true
-  def handle_event(event, params, socket) do
-    IO.inspect([event: event, params: params], label: "UNKNDOWN EVENT")
+  def handle_event(event, _params, socket) do
+    require Logger
+    Logger.warn("UNKNOWN EVENT: #{event}")
     {:noreply, socket}
   end
 

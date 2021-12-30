@@ -24,8 +24,9 @@ defmodule LiveShowyWeb.DrumPadLive.Index do
   end
 
   @impl true
-  def handle_event(event, params, socket) do
-    IO.inspect(params, label: event)
+  def handle_event(event, _params, socket) do
+    require Logger
+    Logger.warn("UNKNOWN EVENT: #{event}")
     {:noreply, socket}
   end
 end
