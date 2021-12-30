@@ -19,7 +19,7 @@ defmodule LiveShowyWeb.Live.Components.Users do
     """
   end
 
-  def list_item(assigns) do
+  defp list_item(assigns) do
     ~H"""
     <div class={get_list_item_class(assigns)} phx-click="edit-user" phx-value-id={@user.id}>
       <button
@@ -37,5 +37,45 @@ defmodule LiveShowyWeb.Live.Components.Users do
   defp get_list_item_class(assigns) do
     base_classes = "flex items-center gap-2 select-none"
     if assigns.editable, do: "#{base_classes} cursor-pointer", else: base_classes
+  end
+
+  def table(assigns) do
+    user_count = Enum.count(assigns.users)
+
+    ~H"""
+    <table class="w-full text-left">
+      <caption class="font-mono text-xs text-left">
+        <%= user_count %> active <%= if user_count == 1, do: "user", else: "users" %>
+      </caption>
+
+      <thead class="text-purple-300">
+        <tr>
+          <th>USER</th>
+          <th>COLOR</th>
+          <th>ROLES</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+
+      <tbody class="font-mono text-sm font-normal">
+        <%= for user <- Enum.sort_by(@users, & &1.username) do %>
+          <.table_row id={"#{user.id}-username"} user={user} />
+        <% end %>
+      </tbody>
+    </table>
+    """
+  end
+
+  defp table_row(assigns) do
+    ~H"""
+    <tr>
+      <td><%= @user.username %></td>
+      <td><span class={"rounded-full w-4 h-4 bg-[#{@user.color}]"}></span></td>
+      <td><%= @user.roles |> Enum.join(", ") %></td>
+      <td>
+        <button phx-click="edit-user" phx-value-id={@user.id} type="button" class="px-2 transition bg-purple-700 rounded-sm hover:bg-purple-600">EDIT</button>
+      </td>
+    </tr>
+    """
   end
 end
