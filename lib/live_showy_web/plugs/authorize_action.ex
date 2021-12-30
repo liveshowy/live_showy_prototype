@@ -3,7 +3,9 @@ defmodule LiveShowyWeb.Plugs.AuthorizeAction do
   Permits or denies a user action based on the user's role.
   """
   import Plug.Conn
-  alias LiveShowy.Roles
+  import Phoenix.Controller
+  alias LiveShowyWeb.Router.Helpers, as: Routes
+  alias LiveShowy.UserRoles
 
   def init(conn), do: conn
 
@@ -12,14 +14,15 @@ defmodule LiveShowyWeb.Plugs.AuthorizeAction do
       get_session(conn, "current_user_id")
       |> LiveShowy.Users.get_user()
 
-    case current_user.username in Roles.list_role_users(role_name) do
+    case UserRoles.check({current_user.id, role_name}) do
       true ->
         conn
 
       _ ->
         conn
-        |> Phoenix.Controller.put_flash(:error, "You are not authorized to view that page.")
-        |> Phoenix.Controller.redirect(to: "/")
+        |> put_flash(:error, "You are not authorized to view that page.")
+        |> redirect(to: Routes.page_path(conn, :index))
+        |> halt()
     end
   end
 end
