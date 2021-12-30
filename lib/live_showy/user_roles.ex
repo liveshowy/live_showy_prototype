@@ -1,12 +1,16 @@
 defmodule LiveShowy.UserRoles do
   @moduledoc """
   Manages user-role relationships for authorization.
+
+  In LiveShowy, users may have multiple roles. As a user navigates the application and performs actions, `check/1` is called to authorize
   """
   require Logger
   use GenServer
   alias Phoenix.PubSub
 
   @topic "user_roles"
+
+  def get_topic, do: @topic
 
   def start_link(state) do
     GenServer.start_link(__MODULE__, state, name: __MODULE__)
