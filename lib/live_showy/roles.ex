@@ -2,6 +2,7 @@ defmodule LiveShowy.Roles do
   @moduledoc """
   Manages application roles.
   """
+  require Logger
   use GenServer
   alias Phoenix.PubSub
 
@@ -27,6 +28,8 @@ defmodule LiveShowy.Roles do
     @initial_roles
     |> Enum.map(&add/1)
 
+    Logger.info(roles: @initial_roles)
+
     {:ok, nil}
   end
 
@@ -37,22 +40,22 @@ defmodule LiveShowy.Roles do
     end
   end
 
-  def add(role, broadcast \\ false) when is_atom(role) do
+  def add(role) when is_atom(role) do
     roles = [role | list()]
     :ets.insert(__MODULE__, {:roles, roles})
 
-    if broadcast do
+    if LiveShowy.Application.is_pubsub_started?(LiveShowy.PubSub) do
       PubSub.broadcast(LiveShowy.PubSub, @topic, {:role_added, role})
     end
 
     role
   end
 
-  def remove(role, broadcast \\ false) when is_atom(role) do
+  def remove(role) when is_atom(role) do
     roles = list() -- [role]
     :ets.insert(__MODULE__, {:roles, roles})
 
-    if broadcast do
+    if LiveShowy.Application.is_pubsub_started?(LiveShowy.PubSub) do
       PubSub.broadcast(LiveShowy.PubSub, @topic, {:role_removed, role})
     end
 
