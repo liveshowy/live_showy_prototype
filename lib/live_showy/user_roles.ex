@@ -59,6 +59,11 @@ defmodule LiveShowy.UserRoles do
     {:error, "user_id must be binary and role must be an atom"}
   end
 
+  def set({user_id, roles}) when is_binary(user_id) and is_list(roles) do
+    :ets.delete(__MODULE__, user_id)
+    for role <- roles, do: add({user_id, role})
+  end
+
   def remove({user_id, role} = user_role) when is_binary(user_id) and is_atom(role) do
     :ets.delete_object(__MODULE__, user_role)
 
