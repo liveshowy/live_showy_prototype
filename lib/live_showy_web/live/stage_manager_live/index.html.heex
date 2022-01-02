@@ -40,8 +40,23 @@
     </ol>
   </section>
 
-  <section id="users-list" class="flex-grow w-full px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-max">
-    <h2>Users</h2>
-    <UsersList.table id="user-list-contents" users={@users} current_user_id={@current_user_id} editable={true} />
+  <section id="user-roles" class="flex-grow w-full px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-max">
+    <h2>User</h2>
+
+    <form class="grid items-center grid-cols-5 gap-2" phx-change="user-role-changed">
+      <span class="font-bold text-purple-300 uppercase">User</span>
+      <%= for role <- @roles do %>
+        <span class="font-bold text-purple-300 uppercase"><%= role %></span>
+      <% end %>
+
+      <%= for user <- @users do %>
+        <fieldset class="contents">
+          <span><%= user.username %></span>
+          <%= for role <- @roles do %>
+          <input type="checkbox" checked={role in user.roles} name={"#{user.id}[]"} value={role} class="accent-purple-300">
+          <% end %>
+        </fieldset>
+      <% end %>
+    </form>
   </section>
 </div>
