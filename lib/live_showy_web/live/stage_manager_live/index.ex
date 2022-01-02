@@ -4,13 +4,15 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   """
   use LiveShowyWeb, :live_view
   alias LiveShowy.Users
+  alias LiveShowy.Roles
+  alias LiveShowy.UserRoles
   alias LiveShowyWeb.Live.Components.Users, as: UsersList
   alias LiveShowyWeb.Live.Components.WifiInfo
 
   @impl true
   def mount(_params, _session, socket) do
     if connected?(socket), do: subscribe()
-    {:ok, assign(socket, users: Users.list_with_roles())}
+    {:ok, assign(socket, users: Users.list_with_roles(), roles: Roles.list())}
   end
 
   @impl true
@@ -29,10 +31,17 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
     {:noreply, socket}
   end
 
+  def handle_event("user-role-changed", %{"_target" => [user_id]} = params, socket) do
+    roles = params[user_id] |> Enum.map(&String.to_existing_atom/1)
+    UserRoles.set({user_id, roles})
+    {:noreply, socket}
+  end
+
   @impl true
-  def handle_event(event, _params, socket) do
+  def handle_event(event, params, socket) do
     require Logger
     Logger.warn("UNKNOWN EVENT: #{event}")
+    IO.inspect(params)
     {:noreply, socket}
   end
 
