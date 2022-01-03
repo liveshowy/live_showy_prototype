@@ -16,7 +16,7 @@
   <body class="flex flex-col w-full h-full overflow-auto leading-normal tracking-wide text-white bg-purple-900">
     <header class="sticky top-0 z-50 text-purple-200 shadow-md select-none">
       <section class="bg-gradient-to-br from-purple-700 to-purple-900">
-        <nav class="max-w-6xl mx-auto">
+        <nav class="mx-auto max-w-7xl">
           <ul class="flex flex-wrap gap-4 p-4">
             <li>
               <%= link "LiveShowy", to: Routes.page_path(@conn, :index), class: "hover:text-white" %>
@@ -44,7 +44,7 @@
       </section>
 
       <section class="w-full overflow-x-auto bg-purple-900 whitespace-nowrap">
-        <div class="flex justify-between max-w-6xl gap-4 px-4 py-2 mx-auto text-sm text-purple-300">
+        <div class="flex justify-between gap-4 px-4 py-2 mx-auto text-sm text-purple-300 max-w-7xl">
           <LiveShowyWeb.Live.Components.WifiInfo.bar id="wifi-info-bar" />
           <span>Username: <strong><%= @username %></strong></span>
         </div>
@@ -52,7 +52,7 @@
     </header>
 
 
-    <main class="flex-grow w-full h-full max-w-6xl p-4 mx-auto">
+    <main class="flex-grow w-full h-full p-4 mx-auto max-w-7xl">
       <%= @inner_content %>
     </main>
   </body>
