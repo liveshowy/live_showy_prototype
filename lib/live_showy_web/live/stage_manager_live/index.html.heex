@@ -46,7 +46,7 @@
     <form class="grid items-center grid-cols-5 gap-2" phx-change="user-role-changed">
       <span class="font-bold text-purple-300 uppercase"></span>
       <%= for role <- @roles do %>
-        <span class="font-bold text-purple-300 uppercase"><%= role %></span>
+        <span class="font-bold text-purple-300 uppercase place-self-center"><%= role %></span>
       <% end %>
 
       <%= for user <- @users do %>
@@ -54,7 +54,11 @@
           <span class="font-mono text-sm"><%= user.username %></span>
 
           <%= for role <- @roles do %>
-          <input type="checkbox" checked={role in user.roles} name={"#{user.id}[]"} value={role} class="accent-purple-300">
+            <%= if role in user.roles do %>
+              <button type="button" phx-click="remove-user-role" phx-value-user-id={user.id} phx-value-role={role} class="px-2 py-1 text-purple-900 bg-purple-200 rounded">YES</button>
+            <% else %>
+              <button type="button" phx-click="add-user-role" phx-value-user-id={user.id} phx-value-role={role} class="px-2 py-1 bg-purple-700 rounded">ADD</button>
+            <% end %>
           <% end %>
         </fieldset>
       <% end %>
