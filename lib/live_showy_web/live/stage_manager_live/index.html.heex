@@ -55,9 +55,9 @@
 
           <%= for role <- @roles do %>
             <%= if role in user.roles do %>
-              <button type="button" phx-click="remove-user-role" phx-value-user-id={user.id} phx-value-role={role} class="px-2 py-1 text-purple-900 bg-purple-200 rounded">YES</button>
+              <button type="button" phx-click="remove-user-role" phx-value-user-id={user.id} phx-value-role={role} class="px-2 py-1 text-purple-900 transition bg-purple-200 rounded shadow hover:bg-purple-600 hover:text-white">YES</button>
             <% else %>
-              <button type="button" phx-click="add-user-role" phx-value-user-id={user.id} phx-value-role={role} class="px-2 py-1 bg-purple-700 rounded">ADD</button>
+              <button type="button" phx-click="add-user-role" phx-value-user-id={user.id} phx-value-role={role} class="px-2 py-1 transition bg-purple-700 rounded shadow hover:bg-purple-600 hover:text-white">ADD</button>
             <% end %>
           <% end %>
         </fieldset>
