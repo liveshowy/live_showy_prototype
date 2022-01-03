@@ -6,7 +6,6 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   alias LiveShowy.Users
   alias LiveShowy.Roles
   alias LiveShowy.UserRoles
-  alias LiveShowyWeb.Live.Components.Users, as: UsersList
   alias LiveShowyWeb.Live.Components.WifiInfo
 
   @impl true
@@ -34,6 +33,24 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   def handle_event("user-role-changed", %{"_target" => [user_id]} = params, socket) do
     roles = params[user_id] |> Enum.map(&String.to_existing_atom/1)
     UserRoles.set({user_id, roles})
+    {:noreply, socket}
+  end
+
+  def handle_event(
+        "add-user-role",
+        %{"user-id" => user_id, "role" => role},
+        socket
+      ) do
+    UserRoles.add({user_id, String.to_existing_atom(role)})
+    {:noreply, socket}
+  end
+
+  def handle_event(
+        "remove-user-role",
+        %{"user-id" => user_id, "role" => role},
+        socket
+      ) do
+    UserRoles.remove({user_id, String.to_existing_atom(role)})
     {:noreply, socket}
   end
 
