@@ -15,7 +15,7 @@ config :live_showy,
     :stage_manager
   ]
 
-config :live_showy, LiveShowy.MidiDevices, output: "Fake Bus1"
+config :live_showy, LiveShowy.MidiDevices, output: "IAC Device Bus 1"
 
 config :live_showy, ecto_repos: [LiveShowy.Repo]
 
