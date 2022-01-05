@@ -12,6 +12,8 @@ defmodule LiveShowy.Application do
       LiveShowyWeb.Telemetry,
       # Start the Repo
       LiveShowy.Repo,
+      # Start the PubSub system
+      {Phoenix.PubSub, name: LiveShowy.PubSub},
       # Start the Roles ETS table
       LiveShowy.Roles,
       # Start the Users ETS table
@@ -22,8 +24,6 @@ defmodule LiveShowy.Application do
       LiveShowy.UserCoordinates,
       # Start the Midi ETS table
       LiveShowy.MidiDevices,
-      # Start the PubSub system
-      {Phoenix.PubSub, name: LiveShowy.PubSub},
       # Start the Presence system
       LiveShowyWeb.Presence,
       # Start the Endpoint (http/https)
