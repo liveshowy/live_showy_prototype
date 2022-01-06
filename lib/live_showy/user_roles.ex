@@ -46,9 +46,7 @@ defmodule LiveShowy.UserRoles do
   def add({user_id, role} = user_role) when is_binary(user_id) and is_atom(role) do
     :ets.insert(__MODULE__, user_role)
 
-    if LiveShowy.Application.is_pubsub_started?(LiveShowy.PubSub) do
-      PubSub.broadcast(LiveShowy.PubSub, @topic, {:user_role_added, user_role})
-    end
+    PubSub.broadcast(LiveShowy.PubSub, @topic, {:user_role_added, user_role})
 
     Logger.info(user_role_added: user_role)
 
@@ -67,9 +65,7 @@ defmodule LiveShowy.UserRoles do
   def remove({user_id, role} = user_role) when is_binary(user_id) and is_atom(role) do
     :ets.delete_object(__MODULE__, user_role)
 
-    if LiveShowy.Application.is_pubsub_started?(LiveShowy.PubSub) do
-      PubSub.broadcast(LiveShowy.PubSub, @topic, {:user_role_removed, user_role})
-    end
+    PubSub.broadcast(LiveShowy.PubSub, @topic, {:user_role_removed, user_role})
 
     Logger.info(user_role_removed: user_role)
 

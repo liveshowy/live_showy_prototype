@@ -44,9 +44,7 @@ defmodule LiveShowy.Roles do
     roles = [role | list()]
     :ets.insert(__MODULE__, {:roles, roles})
 
-    if LiveShowy.Application.is_pubsub_started?(LiveShowy.PubSub) do
-      PubSub.broadcast(LiveShowy.PubSub, @topic, {:role_added, role})
-    end
+    PubSub.broadcast(LiveShowy.PubSub, @topic, {:role_added, role})
 
     Logger.info(role_added: role)
 
@@ -57,9 +55,7 @@ defmodule LiveShowy.Roles do
     roles = list() -- [role]
     :ets.insert(__MODULE__, {:roles, roles})
 
-    if LiveShowy.Application.is_pubsub_started?(LiveShowy.PubSub) do
-      PubSub.broadcast(LiveShowy.PubSub, @topic, {:role_removed, role})
-    end
+    PubSub.broadcast(LiveShowy.PubSub, @topic, {:role_removed, role})
 
     Logger.info(role_removed: role)
 
