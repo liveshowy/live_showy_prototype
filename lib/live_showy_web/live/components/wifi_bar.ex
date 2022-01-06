@@ -12,7 +12,6 @@ defmodule LiveShowyWeb.Live.Components.WifiBar do
 
   @impl true
   def update(assigns, socket) do
-    IO.inspect(assigns, label: "NEW ASSIGNS")
     {:ok, assign(socket, assigns)}
   end
 
