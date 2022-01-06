@@ -42,18 +42,8 @@
           </ul>
         </nav>
       </section>
-
-      <section class="w-full overflow-x-auto bg-purple-900 whitespace-nowrap">
-        <div class="flex justify-between gap-4 px-4 py-2 mx-auto text-sm text-purple-300 max-w-7xl">
-          <LiveShowyWeb.Live.Components.WifiCard.bar id="wifi-info-bar" />
-          <span>Username: <strong><%= @username %></strong></span>
-        </div>
-      </section>
     </header>
 
-
-    <main class="flex-grow w-full h-full p-4 mx-auto max-w-7xl">
-      <%= @inner_content %>
-    </main>
+    <%= @inner_content %>
   </body>
 </html>

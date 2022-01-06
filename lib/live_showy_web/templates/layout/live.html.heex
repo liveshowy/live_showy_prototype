@@ -1,9 +1,22 @@
-<p class="alert alert-info" role="alert"
-  phx-click="lv:clear-flash"
-  phx-value-key="info"><%= live_flash(@flash, :info) %></p>
+<section class="w-full overflow-x-auto bg-black bg-opacity-10 whitespace-nowrap">
+  <div class="flex justify-between gap-2 px-4 py-2 mx-auto text-sm text-purple-300 max-w-7xl">
+    <.live_component module={LiveShowyWeb.Live.Components.WifiBar} id="wifi-bar" />
+    <.live_component module={LiveShowyWeb.Live.Components.LatencyMonitor} id="latency-monitor-bar" user_id={@current_user.id} />
 
-<p class="alert alert-danger" role="alert"
-  phx-click="lv:clear-flash"
-  phx-value-key="error"><%= live_flash(@flash, :error) %></p>
+    <span class="flex-grow"></span>
 
-<%= @inner_content %>
+    <span>Username: <strong><%= @current_user.username %></strong></span>
+  </div>
+</section>
+
+<main class="flex-grow w-full h-full p-4 mx-auto max-w-7xl">
+  <p class="alert alert-info" role="alert"
+    phx-click="lv:clear-flash"
+    phx-value-key="info"><%= live_flash(@flash, :info) %></p>
+
+  <p class="alert alert-danger" role="alert"
+    phx-click="lv:clear-flash"
+    phx-value-key="error"><%= live_flash(@flash, :error) %></p>
+
+  <%= @inner_content %>
+</main>
