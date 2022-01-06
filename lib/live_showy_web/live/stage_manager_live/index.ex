@@ -6,6 +6,7 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   alias LiveShowy.Users
   alias LiveShowy.Roles
   alias LiveShowy.UserRoles
+  alias LiveShowy.Wifi
   alias LiveShowyWeb.Live.Components.WifiInfo
 
   @impl true
@@ -24,6 +25,11 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
              :user_role_removed
            ] do
     {:noreply, assign(socket, users: Users.list_with_roles())}
+  end
+
+  def handle_info({:wifi_credential_updated, {key, value}}, socket) do
+    send_update(WifiInfo, [{key, value}, id: "wifi-info-stage-manager"])
+    {:noreply, socket}
   end
 
   def handle_info(_message, socket) do
@@ -65,5 +71,6 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   defp subscribe do
     Phoenix.PubSub.subscribe(LiveShowy.PubSub, LiveShowy.Users.get_topic())
     Phoenix.PubSub.subscribe(LiveShowy.PubSub, LiveShowy.UserRoles.get_topic())
+    Phoenix.PubSub.subscribe(LiveShowy.PubSub, Wifi.get_topic())
   end
 end
