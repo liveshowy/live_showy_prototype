@@ -37,10 +37,13 @@ defmodule LiveShowy.Wifi do
   end
 
   def add({key, value} = credential) when is_atom(key) and is_binary(value) do
-    :ets.insert_new(__MODULE__, credential)
-    PubSub.broadcast(LiveShowy.PubSub, @topic, {:wifi_credential_added, credential})
-    Logger.info(wifi_credential_added: credential)
-    credential
+    if :ets.insert_new(__MODULE__, credential) do
+      PubSub.broadcast(LiveShowy.PubSub, @topic, {:wifi_credential_added, credential})
+      Logger.info(wifi_credential_added: credential)
+      credential
+    else
+      {:error, "credential already present. please use update/1 instead"}
+    end
   end
 
   def update({key, value} = credential) when is_atom(key) and is_binary(value) do
