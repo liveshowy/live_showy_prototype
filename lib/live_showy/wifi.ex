@@ -49,4 +49,9 @@ defmodule LiveShowy.Wifi do
     Logger.info(wifi_credential_updated: credential)
     credential
   end
+
+  def get(key) when is_atom(key) do
+    [{^key, value}] = :ets.lookup(__MODULE__, key)
+    value
+  end
 end
