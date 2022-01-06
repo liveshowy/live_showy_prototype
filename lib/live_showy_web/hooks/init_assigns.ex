@@ -5,7 +5,10 @@ defmodule LiveShowyWeb.InitAssigns do
   import Phoenix.LiveView
 
   def on_mount(:user, _params, %{"current_user_id" => current_user_id} = _session, socket) do
-    {:cont, assign(socket, current_user_id: current_user_id)}
+    {:cont,
+     assign(socket,
+       current_user: LiveShowy.Users.get(current_user_id)
+     )}
   end
 
   def on_mount(:default, _params, _session, socket) do

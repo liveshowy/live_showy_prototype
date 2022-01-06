@@ -15,11 +15,10 @@ defmodule LiveShowyWeb.DotsLive.Index do
   def mount(
         _params,
         _session,
-        %{assigns: %{current_user_id: current_user_id}} = socket
+        %{assigns: %{current_user: current_user}} = socket
       ) do
     if connected?(socket), do: subscribe()
 
-    current_user = LiveShowy.Users.get(current_user_id)
     current_user_coords = UserCoordinates.get(current_user.id)
     current_user = Map.put(current_user, :coords, current_user_coords)
 
@@ -41,7 +40,7 @@ defmodule LiveShowyWeb.DotsLive.Index do
      assign(
        socket,
        users: users,
-       current_username: current_user.username,
+       current_user: current_user,
        dots: UserCoordinates.list()
      )}
   end
@@ -71,33 +70,33 @@ defmodule LiveShowyWeb.DotsLive.Index do
   end
 
   @impl true
-  def handle_event(event, [x, y], %{assigns: %{current_user_id: current_user_id}} = socket)
+  def handle_event(event, [x, y], %{assigns: %{current_user: current_user}} = socket)
       when event in ["touch-event", "mouse-event"] do
-    UserCoordinates.add(current_user_id, [x, y])
+    UserCoordinates.add(current_user.id, [x, y])
 
     metas =
-      Presence.get_by_key(@topic, current_user_id)[:metas]
+      Presence.get_by_key(@topic, current_user.id)[:metas]
       |> List.first()
       |> Map.merge(%{coords: [x, y]})
 
-    Presence.update(self(), @topic, current_user_id, metas)
+    Presence.update(self(), @topic, current_user.id, metas)
     {:noreply, socket}
   end
 
   def handle_event(
         "set-new-color",
         _params,
-        %{assigns: %{current_user_id: current_user_id}} = socket
+        %{assigns: %{current_user: current_user}} = socket
       ) do
     metas =
-      Presence.get_by_key(@topic, current_user_id)[:metas]
+      Presence.get_by_key(@topic, current_user.id)[:metas]
       |> List.first()
       |> Map.merge(%{
         color: "#" <> Faker.Color.rgb_hex()
       })
 
-    LiveShowy.Users.update(current_user_id, metas)
-    Presence.update(self(), @topic, current_user_id, metas)
+    LiveShowy.Users.update(current_user.id, metas)
+    Presence.update(self(), @topic, current_user.id, metas)
     {:noreply, socket}
   end
 
