@@ -1,4 +1,4 @@
-defmodule LiveShowyWeb.Live.Components.WifiBar do
+defmodule LiveShowyWeb.Components.WifiBar do
   @moduledoc false
   use LiveShowyWeb, :live_component
   alias LiveShowy.Wifi

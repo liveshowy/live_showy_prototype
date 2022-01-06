@@ -1,4 +1,4 @@
-defmodule LiveShowyWeb.Live.Components.UserDot do
+defmodule LiveShowyWeb.Components.UserDot do
   use Phoenix.Component
 
   def render(assigns) do

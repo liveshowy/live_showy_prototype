@@ -1,4 +1,4 @@
-defmodule LiveShowyWeb.Live.Components.Users do
+defmodule LiveShowyWeb.Components.Users do
   @moduledoc false
   use Phoenix.Component
 

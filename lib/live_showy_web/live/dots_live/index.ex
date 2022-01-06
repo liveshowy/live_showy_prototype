@@ -6,8 +6,8 @@ defmodule LiveShowyWeb.DotsLive.Index do
   alias LiveShowy.UserCoordinates
   use LiveShowyWeb, :live_view
   alias LiveShowyWeb.Presence
-  alias LiveShowyWeb.Live.Components.Users
-  alias LiveShowyWeb.Live.Components.XYPad
+  alias LiveShowyWeb.Components.Users
+  alias LiveShowyWeb.Components.XYPad
 
   @topic "dots_live"
 

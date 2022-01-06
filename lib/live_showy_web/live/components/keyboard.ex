@@ -1,4 +1,4 @@
-defmodule LiveShowyWeb.Live.Components.Keyboard do
+defmodule LiveShowyWeb.Components.Keyboard do
   @moduledoc """
   - Create a range of notes from 0 to 126
   - Group notes into octaves (12 notes each)
