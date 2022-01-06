@@ -16,30 +16,38 @@ defmodule LiveShowyWeb.Router do
   end
 
   pipeline :authorize_performers do
-    plug LiveShowyWeb.Plugs.AuthorizeAction, :performers
+    plug LiveShowyWeb.Plugs.AuthorizeAction, :performer
   end
 
-  pipeline :authorize_application_managers do
-    plug LiveShowyWeb.Plugs.AuthorizeAction, :application_managers
+  pipeline :authorize_stage_managers do
+    plug LiveShowyWeb.Plugs.AuthorizeAction, :stage_manager
   end
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  scope "/", LiveShowyWeb do
-    pipe_through [:browser, :require_user]
-
-    get "/", PageController, :index
-  end
-
   live_session :default, on_mount: {LiveShowyWeb.InitAssigns, :user} do
     scope "/", LiveShowyWeb do
       pipe_through [:browser, :require_user]
 
+      live "/", LandingLive.Index, :index
       live "/dots", DotsLive.Index, :index
       live "/keys", KeysLive.Index, :index
       live "/drum-pad", DrumPadLive.Index, :index
+    end
+
+    scope "/admin", LiveShowyWeb do
+      pipe_through [:browser, :require_user, :authorize_stage_managers]
+
+      live "/stage-manager", StageManagerLive.Index, :index
+    end
+
+    scope "/stage", LiveShowyWeb do
+      pipe_through [:browser, :require_user, :authorize_performers]
+
+      # band route
+      # choir route
     end
   end
 
@@ -59,7 +67,7 @@ defmodule LiveShowyWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/" do
-      pipe_through :browser
+      pipe_through [:browser, :require_user, :authorize_stage_managers]
       live_dashboard "/dashboard", metrics: LiveShowyWeb.Telemetry
     end
   end

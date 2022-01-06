@@ -2,16 +2,15 @@
 
   <div class="w-full">
     <h1>Dancing Dots</h1>
-    <.live_component module={LatencyMonitor} id="stage-latency-monitor" user_id={@current_user_id} />
   </div>
 
   <section>
-    <.live_component module={XYPad} id="xy-pad" users={@users} dots={@dots} current_user_id={@current_user_id} />
+    <.live_component module={XYPad} id="xy-pad" users={@users} dots={@dots} current_user_id={@current_user.id} />
   </section>
 
   <section class="flex-1 min-w-max">
     <h2>Dancers</h2>
-    <Users.list id="user-list-dots" users={@users} current_user_id={@current_user_id} />
+    <Users.list id="user-list-dots" users={@users} current_user_id={@current_user.id} editable={false} />
   </section>
 
 </div>

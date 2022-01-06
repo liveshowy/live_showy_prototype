@@ -2,8 +2,9 @@ defmodule LiveShowyWeb.Live.Components.DrumPad do
   @moduledoc """
   A user interface for drum and other rhythmic instruments
   """
-  use Phoenix.LiveComponent
+  use LiveShowyWeb, :live_component
 
+  @impl true
   def render(assigns) do
     ~H"""
     <div class="grid grid-cols-4 grid-rows-4 gap-1 place-items-center place-content-center">

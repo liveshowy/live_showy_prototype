@@ -3,7 +3,6 @@ defmodule LiveShowyWeb.KeysLive.Index do
   A stage for up to six members to collaborate.
   """
   use LiveShowyWeb, :live_view
-  alias LiveShowyWeb.Live.Components.LatencyMonitor
   alias LiveShowyWeb.Live.Components.OctaveControl
   alias LiveShowyWeb.Live.Components.Keyboard
 
@@ -33,8 +32,9 @@ defmodule LiveShowyWeb.KeysLive.Index do
   end
 
   @impl true
-  def handle_event(event, params, socket) do
-    IO.inspect(params, label: event)
+  def handle_event(event, _params, socket) do
+    require Logger
+    Logger.warn("UNKNOWN EVENT: #{event}")
     {:noreply, socket}
   end
 

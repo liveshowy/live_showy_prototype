@@ -18,8 +18,8 @@ defmodule LiveShowyWeb.Live.Components.LatencyMonitor do
 
   def render(assigns) do
     ~H"""
-    <span id="latency-monitor" phx-hook="MonitorLatency" class="flex gap-2 font-mono text-xs">
-      Latency: <%= @latency %>ms
+    <span id="latency-monitor" phx-hook="MonitorLatency">
+      Latency: <strong><%= @latency %>ms</strong>
     </span>
     """
   end

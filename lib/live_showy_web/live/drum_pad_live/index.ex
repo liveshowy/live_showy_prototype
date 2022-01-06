@@ -3,7 +3,6 @@ defmodule LiveShowyWeb.DrumPadLive.Index do
   A stage for up to six members to collaborate.
   """
   use LiveShowyWeb, :live_view
-  alias LiveShowyWeb.Live.Components.LatencyMonitor
   alias LiveShowyWeb.Live.Components.DrumPad
 
   @impl true
@@ -24,8 +23,9 @@ defmodule LiveShowyWeb.DrumPadLive.Index do
   end
 
   @impl true
-  def handle_event(event, params, socket) do
-    IO.inspect(params, label: event)
+  def handle_event(event, _params, socket) do
+    require Logger
+    Logger.warn("UNKNOWN EVENT: #{event}")
     {:noreply, socket}
   end
 end

@@ -6,8 +6,8 @@ defmodule LiveShowy.UsersTest do
   test "add a custom user" do
     username = "owen"
     color = "#ABC123"
-    user = Users.put_user(%{username: username, color: color})
-    fetched_user = Users.get_user(user.id)
+    user = Users.add(%{username: username, color: color})
+    fetched_user = Users.get(user.id)
 
     assert %Users.Custom{} = user
     assert user.username == username
@@ -17,8 +17,8 @@ defmodule LiveShowy.UsersTest do
   end
 
   test "add a fake user" do
-    user = Users.put_user()
-    fetched_user = Users.get_user(user.id)
+    user = Users.add()
+    fetched_user = Users.get(user.id)
 
     assert %Users.Fake{} = user
     assert user.username != nil

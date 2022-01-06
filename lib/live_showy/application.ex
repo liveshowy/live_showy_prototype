@@ -12,14 +12,20 @@ defmodule LiveShowy.Application do
       LiveShowyWeb.Telemetry,
       # Start the Repo
       LiveShowy.Repo,
+      # Start the PubSub system
+      {Phoenix.PubSub, name: LiveShowy.PubSub},
+      # Start the Wifi ETS table
+      LiveShowy.Wifi,
+      # Start the Roles ETS table
+      LiveShowy.Roles,
       # Start the Users ETS table
       LiveShowy.Users,
+      # Start the UserRoles ETS table
+      LiveShowy.UserRoles,
       # Start the UserCoordinates ETS table
       LiveShowy.UserCoordinates,
       # Start the Midi ETS table
       LiveShowy.MidiDevices,
-      # Start the PubSub system
-      {Phoenix.PubSub, name: LiveShowy.PubSub},
       # Start the Presence system
       LiveShowyWeb.Presence,
       # Start the Endpoint (http/https)

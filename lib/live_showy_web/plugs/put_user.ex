@@ -8,19 +8,18 @@ defmodule LiveShowyWeb.Plugs.PutUser do
 
   def call(conn, _opts) do
     with current_user_id <- get_session(conn, "current_user_id"),
-         %{id: ^current_user_id, username: username} <- LiveShowy.Users.get_user(current_user_id) do
+         %{id: ^current_user_id} = user <-
+           LiveShowy.Users.get(current_user_id) do
       conn
-      |> assign(:current_user_id, current_user_id)
-      |> assign(:username, username)
+      |> assign(:current_user, user)
     else
       _ ->
         delete_session(conn, "current_user_id")
-        %{id: user_id, username: username} = LiveShowy.Users.put_user()
+        user = LiveShowy.Users.add()
 
         conn
-        |> put_session(:current_user_id, user_id)
-        |> assign(:current_user_id, user_id)
-        |> assign(:username, username)
+        |> put_session(:current_user_id, user.id)
+        |> assign(:current_user, user)
     end
   end
 end
