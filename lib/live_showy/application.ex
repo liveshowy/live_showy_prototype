@@ -14,6 +14,8 @@ defmodule LiveShowy.Application do
       LiveShowy.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: LiveShowy.PubSub},
+      # Start the Wifi ETS table
+      LiveShowy.Wifi,
       # Start the Roles ETS table
       LiveShowy.Roles,
       # Start the Users ETS table
@@ -44,9 +46,5 @@ defmodule LiveShowy.Application do
   def config_change(changed, _new, removed) do
     LiveShowyWeb.Endpoint.config_change(changed, removed)
     :ok
-  end
-
-  def is_pubsub_started?(pubsub_atom) do
-    Enum.member?(Process.registered(), pubsub_atom)
   end
 end

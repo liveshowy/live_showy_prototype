@@ -13,6 +13,11 @@ config :live_showy,
     :attendee,
     :performer,
     :stage_manager
+  ],
+  wifi: [
+    ssid: "LiveShowy",
+    password: "live-showy-rocks!",
+    url: "live.showy"
   ]
 
 config :live_showy, LiveShowy.MidiDevices, output: "IAC Device Bus 1"
