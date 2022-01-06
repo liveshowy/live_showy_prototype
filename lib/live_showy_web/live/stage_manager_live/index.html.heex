@@ -46,7 +46,7 @@
     <form class="grid items-center grid-cols-5 gap-2" phx-change="user-role-changed">
       <span class="font-bold text-purple-300 uppercase"></span>
       <%= for role <- @roles do %>
-        <span class="font-bold text-purple-300 uppercase place-self-center"><%= role %></span>
+        <span class="font-bold text-purple-300 uppercase place-self-center"><%= role |> Atom.to_string() |> String.replace(~r/_/, " ") %></span>
       <% end %>
 
       <%= for user <- @users do %>
