@@ -7,7 +7,7 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   alias LiveShowy.Roles
   alias LiveShowy.UserRoles
   alias LiveShowy.Wifi
-  alias LiveShowyWeb.Live.Components.WifiInfo
+  alias LiveShowyWeb.Live.Components.WifiCard
 
   @impl true
   def mount(_params, _session, socket) do
@@ -28,7 +28,7 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   end
 
   def handle_info({:wifi_credential_updated, {key, value}}, socket) do
-    send_update(WifiInfo, [{key, value}, id: "wifi-info-stage-manager"])
+    send_update(WifiCard, [{key, value}, id: "wifi-info-stage-manager"])
     {:noreply, socket}
   end
 

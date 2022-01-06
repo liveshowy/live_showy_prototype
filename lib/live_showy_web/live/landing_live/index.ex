@@ -3,7 +3,7 @@ defmodule LiveShowyWeb.LandingLive.Index do
   The landing page for LiveShowy.
   """
   use LiveShowyWeb, :live_view
-  alias LiveShowyWeb.Live.Components.WifiInfo
+  alias LiveShowyWeb.Live.Components.WifiCard
   alias LiveShowyWeb.Live.Components.LatencyMonitor
 
   @impl true
@@ -13,7 +13,7 @@ defmodule LiveShowyWeb.LandingLive.Index do
 
   @impl true
   def handle_info({:wifi_credential_updated, {key, value}}, socket) do
-    send_update(WifiInfo, [{key, value}, id: "wifi-info-stage-manager"])
+    send_update(WifiCard, [{key, value}, id: "wifi-info-stage-manager"])
     {:noreply, socket}
   end
 end
