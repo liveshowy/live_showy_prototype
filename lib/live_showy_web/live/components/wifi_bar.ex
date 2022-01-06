@@ -1,4 +1,4 @@
-defmodule LiveShowyWeb.Live.Components.WifiCard do
+defmodule LiveShowyWeb.Live.Components.WifiBar do
   @moduledoc false
   use LiveShowyWeb, :live_component
   alias LiveShowy.Wifi
@@ -12,22 +12,26 @@ defmodule LiveShowyWeb.Live.Components.WifiCard do
 
   @impl true
   def update(assigns, socket) do
+    IO.inspect(assigns, label: "NEW ASSIGNS")
     {:ok, assign(socket, assigns)}
   end
 
   @impl true
   def render(assigns) do
     ~H"""
-    <dl class="grid grid-cols-2 gap-1">
-      <dt class="font-bold text-purple-300 uppercase">SSID</dt>
-      <dd><%= @ssid %></dd>
+    <ul class="flex gap-2">
+      <li>
+        SSID: <strong><%= @ssid %></strong>
+      </li>
 
-      <dt class="font-bold text-purple-300 uppercase">Password</dt>
-      <dd><%= @password %></dd>
+      <li>
+        Password: <strong><%= @password %></strong>
+      </li>
 
-      <dt class="font-bold text-purple-300 uppercase">URL</dt>
-      <dd><%= @url %></dd>
-      </dl>
+      <li>
+        URL: <strong><%= @url %></strong>
+      </li>
+    </ul>
     """
   end
 end
