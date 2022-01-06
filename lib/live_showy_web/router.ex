@@ -27,16 +27,11 @@ defmodule LiveShowyWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", LiveShowyWeb do
-    pipe_through [:browser, :require_user]
-
-    get "/", PageController, :index
-  end
-
   live_session :default, on_mount: {LiveShowyWeb.InitAssigns, :user} do
     scope "/", LiveShowyWeb do
       pipe_through [:browser, :require_user]
 
+      live "/", LandingLive.Index, :index
       live "/dots", DotsLive.Index, :index
       live "/keys", KeysLive.Index, :index
       live "/drum-pad", DrumPadLive.Index, :index
