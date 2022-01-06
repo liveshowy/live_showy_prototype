@@ -3,8 +3,8 @@ defmodule LiveShowyWeb.KeysLive.Index do
   A stage for up to six members to collaborate.
   """
   use LiveShowyWeb, :live_view
-  alias LiveShowyWeb.Live.Components.OctaveControl
-  alias LiveShowyWeb.Live.Components.Keyboard
+  alias LiveShowyWeb.Components.OctaveControl
+  alias LiveShowyWeb.Components.Keyboard
 
   @impl true
   def mount(_params, _session, socket) do

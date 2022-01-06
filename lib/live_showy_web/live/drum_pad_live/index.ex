@@ -3,7 +3,7 @@ defmodule LiveShowyWeb.DrumPadLive.Index do
   A stage for up to six members to collaborate.
   """
   use LiveShowyWeb, :live_view
-  alias LiveShowyWeb.Live.Components.DrumPad
+  alias LiveShowyWeb.Components.DrumPad
 
   @impl true
   def mount(_params, _session, socket) do

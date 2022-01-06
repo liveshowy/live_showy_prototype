@@ -1,4 +1,4 @@
-defmodule LiveShowyWeb.Live.Components.OctaveControl do
+defmodule LiveShowyWeb.Components.OctaveControl do
   use Phoenix.LiveComponent
 
   def render(assigns) do

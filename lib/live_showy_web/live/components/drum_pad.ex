@@ -1,4 +1,4 @@
-defmodule LiveShowyWeb.Live.Components.DrumPad do
+defmodule LiveShowyWeb.Components.DrumPad do
   @moduledoc """
   A user interface for drum and other rhythmic instruments
   """

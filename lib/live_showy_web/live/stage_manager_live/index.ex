@@ -7,7 +7,7 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   alias LiveShowy.Roles
   alias LiveShowy.UserRoles
   alias LiveShowy.Wifi
-  alias LiveShowyWeb.Live.Components.WifiCard
+  alias LiveShowyWeb.Components.WifiCard
 
   @impl true
   def mount(_params, _session, socket) do

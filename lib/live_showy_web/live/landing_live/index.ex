@@ -4,7 +4,7 @@ defmodule LiveShowyWeb.LandingLive.Index do
   """
   use LiveShowyWeb, :live_view
   alias LiveShowy.Wifi
-  alias LiveShowyWeb.Live.Components.WifiBar
+  alias LiveShowyWeb.Components.WifiBar
 
   @impl true
   def mount(_params, _session, socket) do
