@@ -45,7 +45,8 @@ defmodule LiveShowyWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {LiveShowyWeb.LayoutView, "live.html"}
+        layout: {LiveShowyWeb.LayoutView, "live.html"},
+        container: {:div, style: "display: contents;"}
 
       unquote(view_helpers())
     end
