@@ -1,4 +1,4 @@
-defmodule LiveShowyWeb.ModalComponent do
+defmodule LiveShowyWeb.Components.Modal do
   @moduledoc false
   use LiveShowyWeb, :live_component
 
