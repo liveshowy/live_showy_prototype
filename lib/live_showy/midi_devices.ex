@@ -63,19 +63,25 @@ defmodule LiveShowy.MidiDevices do
   """
   def set_device(device_type, device_name) when device_type in [:input, :output] do
     {:ok, pid} = PortMidi.open(device_type, device_name)
-    :ets.insert(__MODULE__, {device_type, pid})
+    type_name_pid = {device_type, device_name, pid}
+    :ets.insert(__MODULE__, type_name_pid)
 
-    Logger.info(midi_device_set: {device_type, device_name, pid})
+    Logger.info(midi_device_set: type_name_pid)
 
-    {:ok, :ets.lookup(__MODULE__, device_type)}
+    type_name_pid
   end
 
   @doc """
   Retrieves an input or output device PID from ETS.
   """
   def get_device(device) when device in [:input, :output] do
-    [{_, pid}] = :ets.lookup(__MODULE__, device)
-    pid
+    case :ets.lookup(__MODULE__, device) do
+      [{^device, name, pid}] ->
+        {device, name, pid}
+
+      _ ->
+        nil
+    end
   end
 
   def get_device(_invalid_device), do: {:error, "not supported"}
