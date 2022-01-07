@@ -21,7 +21,7 @@ defmodule LiveShowyWeb.Plugs.AuthorizeAction do
       _ ->
         conn
         |> put_flash(:error, "You are not authorized to view that page.")
-        |> redirect(to: Routes.page_path(conn, :index))
+        |> redirect(to: Routes.landing_index_path(conn, :index))
         |> halt()
     end
   end
