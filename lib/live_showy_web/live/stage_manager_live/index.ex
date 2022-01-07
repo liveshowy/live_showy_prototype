@@ -7,12 +7,22 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   alias LiveShowy.Roles
   alias LiveShowy.UserRoles
   alias LiveShowy.Wifi
+  alias LiveShowy.MidiDevices
+  alias LiveShowyWeb.Components.MidiDevices, as: MidiDevicesComponent
   alias LiveShowyWeb.Components.WifiCard
 
   @impl true
   def mount(_params, _session, socket) do
     if connected?(socket), do: subscribe()
-    {:ok, assign(socket, users: Users.list_with_roles(), roles: Roles.list())}
+
+    {:ok,
+     assign(socket,
+       users: Users.list_with_roles(),
+       roles: Roles.list(),
+       midi_devices: MidiDevices.get_devices(),
+       midi_output: MidiDevices.get_device(:output),
+       midi_input: MidiDevices.get_device(:input)
+     )}
   end
 
   @impl true
@@ -36,6 +46,7 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
     {:noreply, socket}
   end
 
+  @impl true
   def handle_event("user-role-changed", %{"_target" => [user_id]} = params, socket) do
     roles = params[user_id] |> Enum.map(&String.to_existing_atom/1)
     UserRoles.set({user_id, roles})
@@ -58,6 +69,16 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
       ) do
     UserRoles.remove({user_id, String.to_existing_atom(role)})
     {:noreply, socket}
+  end
+
+  def handle_event("set-midi-input", %{"device-name" => device_name}, socket) do
+    device = MidiDevices.set_device(:input, device_name)
+    {:noreply, assign(socket, midi_input: device)}
+  end
+
+  def handle_event("set-midi-output", %{"device-name" => device_name}, socket) do
+    device = MidiDevices.set_device(:output, device_name)
+    {:noreply, assign(socket, midi_output: device)}
   end
 
   @impl true
