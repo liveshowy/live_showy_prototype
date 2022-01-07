@@ -20,8 +20,6 @@ config :live_showy,
     url: "live.showy"
   ]
 
-config :live_showy, LiveShowy.MidiDevices, output: "IAC Device Bus 1"
-
 config :live_showy, ecto_repos: [LiveShowy.Repo]
 
 # Configures the endpoint
