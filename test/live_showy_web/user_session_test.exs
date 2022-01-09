@@ -4,10 +4,10 @@ defmodule LiveShowyWeb.UserSessionTest do
 
   test "new user is created on first visit and retained on next visit", %{conn: conn} do
     conn = get(conn, "/")
-    new_username = conn.assigns.username
+    new_username = conn.assigns.current_user.username
     assert new_username != nil
 
     conn = get(conn, "/")
-    assert new_username == conn.assigns.username
+    assert new_username == conn.assigns.current_user.username
   end
 end
