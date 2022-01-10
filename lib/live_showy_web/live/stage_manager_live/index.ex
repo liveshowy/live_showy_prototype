@@ -19,9 +19,7 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
      assign(socket,
        users: Users.list_with_roles(),
        roles: Roles.list(),
-       midi_devices: MidiDevices.get_devices(),
-       midi_output: MidiDevices.get_device(:output),
-       midi_input: MidiDevices.get_device(:input)
+       midi_devices: MidiDevices.list()
      )}
   end
 
@@ -71,15 +69,15 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
     {:noreply, socket}
   end
 
-  def handle_event("set-midi-input", %{"device-name" => device_name}, socket) do
-    device = MidiDevices.set_device(:input, device_name)
-    {:noreply, assign(socket, midi_input: device)}
-  end
+  # def handle_event("set-midi-input", %{"device-name" => device_name}, socket) do
+  #   device = MidiDevices.set_device(:input, device_name)
+  #   {:noreply, assign(socket, midi_input: device)}
+  # end
 
-  def handle_event("set-midi-output", %{"device-name" => device_name}, socket) do
-    device = MidiDevices.set_device(:output, device_name)
-    {:noreply, assign(socket, midi_output: device)}
-  end
+  # def handle_event("set-midi-output", %{"device-name" => device_name}, socket) do
+  #   device = MidiDevices.set_device(:output, device_name)
+  #   {:noreply, assign(socket, midi_output: device)}
+  # end
 
   @impl true
   def handle_event(event, params, socket) do
