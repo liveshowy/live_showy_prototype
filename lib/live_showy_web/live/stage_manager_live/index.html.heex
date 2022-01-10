@@ -1,4 +1,4 @@
-<div class="flex flex-wrap justify-between gap-4">
+<div class="flex flex-wrap justify-between gap-2">
   <section id="general" class="flex-grow w-full px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md">
     <h1>Stage Manager</h1>
     <p>Control user roles and MIDI settings.</p>
@@ -31,13 +31,9 @@
     </ul>
   </section>
 
-  <section id="midi-devices" class="flex-grow px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-max">
+  <section id="midi-devices" class="flex-1 px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-min">
     <h2>MIDI Devices</h2>
-    <ol class="pl-6 list-decimal">
-      <li>Fake Keys</li>
-      <li>Fake Drums</li>
-      <li>Fake Choir</li>
-    </ol>
+    <MidiDevicesComponent.button_groups devices={@midi_devices} input={@midi_input} output={@midi_output} />
   </section>
 
   <section id="user-roles" class="flex-grow w-full px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-max">

@@ -1,81 +1,138 @@
 defmodule LiveShowy.MidiDevices do
   @moduledoc """
-  A GenServer for managing with MIDI devices connected to a server.
+  A GenServer for managing MIDI output devices connected to the server.
   """
   use GenServer
+  require Logger
 
-  def start_link(_state) do
-    GenServer.start_link(__MODULE__, nil, name: __MODULE__)
+  def start_link(state \\ []) do
+    GenServer.start_link(__MODULE__, state, name: __MODULE__)
   end
 
   @impl true
   def init(_) do
     :ets.new(__MODULE__, [
       :named_table,
-      :set,
+      :bag,
       :public,
       write_concurrency: false,
       read_concurrency: true
     ])
 
-    set_devices()
-
-    with {:ok, devices} <- Application.fetch_env(:live_showy, __MODULE__),
-         output when is_binary(output) <- devices[:output] do
-      set_device(:output, output)
-    else
-      _ -> raise("No MIDI devices configured")
-    end
-
     {:ok, nil}
   end
 
-  @doc """
-  Places a list of devices from PortMidi into ETS.
-  """
-  def set_devices() do
-    :ets.insert(__MODULE__, {:devices, PortMidi.devices()})
-
-    {:ok, :ets.lookup(__MODULE__, :devices)}
+  def list() do
+    :ets.tab2list(__MODULE__)
   end
 
   @doc """
-  Retrieves a list of devices from ETS.
+  Opens a PortMidi device if it is not already opened, then adds the device pid and name to the ETS table.
   """
-  def get_devices() do
-    [{_, devices}] = :ets.lookup(__MODULE__, :devices)
+  def add(%PortMidi.Device{opened: 0} = device) do
+    with type <- get_device_type(device),
+         %PortMidi.Device{opened: 0} <- get_portmidi_device_by_name(type, device.name),
+         {:ok, pid} <- PortMidi.open(type, device.name),
+         device <- Map.put(device, :opened, 1),
+         result <- {type, pid, device},
+         added? <- :ets.insert_new(__MODULE__, result) do
+      if added?, do: Logger.info(midi_output_added: device.name)
+      {:ok, result}
+    else
+      {:error, message} -> {:error, message}
+      e -> {:error, e}
+    end
+  end
 
-    devices
+  def add(%PortMidi.Device{opened: 1}) do
+    {:error, "the provided device is already open"}
+  end
+
+  def add(_) do
+    {:error, "an unopened PortMidi.Device is required"}
   end
 
   @doc """
-  Places an input or output device PID in ETS.
+  Removes a PortMidi device from the ETS table and closes it if the process is still alive.
   """
-  def set_device(device_type, device_name) when device_type in [:input, :output] do
-    {:ok, device} = PortMidi.open(device_type, device_name)
-    :ets.insert(__MODULE__, {device_type, device})
-
-    {:ok, :ets.lookup(__MODULE__, device_type)}
+  def remove(%PortMidi.Device{opened: 1} = device) do
+    with type <- get_device_type(device),
+         %PortMidi.Device{opened: 1} <- get_portmidi_device_by_name(type, device.name),
+         {:ok, pid} <- get_device_pid(type, device.name),
+         alive? <- Process.alive?(pid),
+         deleted? <- :ets.delete_object(__MODULE__, {:output, pid, device}) do
+      if alive?, do: PortMidi.close(type, pid)
+      if deleted?, do: Logger.info(midi_device_removed: device.name)
+      device = Map.put(device, :opened, 0)
+      {:ok, device}
+    else
+      {:error, message} -> {:error, message}
+      e -> {:error, e}
+    end
   end
 
-  @doc """
-  Retrieves an input or output device PID from ETS.
-  """
-  def get_device(device) when device in [:input, :output] do
-    [{_, pid}] = :ets.lookup(__MODULE__, device)
-    pid
+  def remove(%PortMidi.Device{opened: 0}) do
+    {:error, "the provided device is already closed"}
   end
 
-  def get_device(_invalid_device), do: {:error, "not supported"}
-
-  @doc """
-  Removes an input or output device from ETS.
-  """
-  def remove_device(device) when device in [:input, :output] do
-    :ets.delete(__MODULE__, device)
-
-    {:ok}
+  def remove(_) do
+    {:error, "an opened PortMidi.Device is required"}
   end
 
-  def remove_device(_invalid_device), do: {:error, "not supported"}
+  def get_by_name(type, name) when type in [:input, :output] and is_binary(name) do
+    input = if type == :input, do: 1, else: 0
+    output = if type == :output, do: 1, else: 0
+    device = %{name: name, input: input, output: output}
+
+    case :ets.match_object(__MODULE__, {type, :_, device}) do
+      [{matched_type, matched_pid, matched_name}] ->
+        {matched_type, matched_pid, matched_name}
+
+      [] ->
+        nil
+    end
+  end
+
+  def get_by_pid(pid) when is_pid(pid) do
+    case :ets.match_object(__MODULE__, {:_, pid, :_}) do
+      [{matched_type, matched_pid, matched_device}] ->
+        {matched_type, matched_pid, matched_device}
+
+      [] ->
+        nil
+    end
+  end
+
+  def get_portmidi_device_by_name(type, name) do
+    device =
+      PortMidi.devices()
+      |> Map.get(type)
+      |> Enum.filter(fn device -> device.name == name end)
+      |> Enum.at(0)
+
+    case device do
+      %PortMidi.Device{} -> device
+      _ -> nil
+    end
+  end
+
+  defp get_device_type(%PortMidi.Device{} = device) do
+    if device.input == 1 do
+      :input
+    else
+      if device.output == 1 do
+        :output
+      end
+    end
+  end
+
+  defp get_device_pid(type, name) when type in [:input, :output] and is_binary(name) do
+    case :ets.match_object(__MODULE__, {type, :_, %{name: name}}) do
+      [{_type, pid, _device}] ->
+        {:ok, pid}
+
+      _ ->
+        {:error, "pid not found"}
+    end
+  end
 end
