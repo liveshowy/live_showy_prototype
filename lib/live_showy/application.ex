@@ -28,6 +28,8 @@ defmodule LiveShowy.Application do
       LiveShowy.MidiDevices,
       # Start the Presence system
       LiveShowyWeb.Presence,
+      # Start the Backstage ETS table
+      LiveShowy.Chat.Backstage,
       # Start the Endpoint (http/https)
       LiveShowyWeb.Endpoint
       # Start a worker by calling: LiveShowy.Worker.start_link(arg)
