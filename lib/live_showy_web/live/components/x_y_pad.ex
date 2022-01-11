@@ -1,9 +1,9 @@
 defmodule LiveShowyWeb.Components.XYPad do
   @moduledoc false
-  use Phoenix.LiveComponent
+  use Phoenix.Component
   alias LiveShowyWeb.Components.UserDot
 
-  def render(assigns) do
+  def square(assigns) do
     ~H"""
       <svg
       class="w-[350px] h-[350px] bg-purple-800 rounded-lg border-2 border-purple-700 shadow-lg overscroll-none"
