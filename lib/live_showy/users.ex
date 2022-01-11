@@ -43,7 +43,8 @@ defmodule LiveShowy.Users do
     Logger.info(user_added: user)
 
     if Enum.count(list()) == 1 do
-      UserRoles.add({user.id, :stage_manager})
+      LiveShowy.Roles.list()
+      |> Enum.map(&UserRoles.add({user.id, &1}))
     else
       UserRoles.add({user.id, :guest})
     end
