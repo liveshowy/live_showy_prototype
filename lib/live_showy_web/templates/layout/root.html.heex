@@ -34,6 +34,9 @@
               <%= link "Drum Pad", to: Routes.drum_pad_index_path(@conn, :index), class: "hover:text-white" %>
             </li>
             <li>
+              <%= link "Backstage", to: Routes.backstage_index_path(@conn, :index), class: "hover:text-white" %>
+            </li>
+            <li>
               <%= link "Stage Manager", to: Routes.stage_manager_index_path(@conn, :index), class: "hover:text-white" %>
             </li>
             <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>

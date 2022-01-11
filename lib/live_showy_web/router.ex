@@ -37,6 +37,12 @@ defmodule LiveShowyWeb.Router do
       live "/drum-pad", DrumPadLive.Index, :index
     end
 
+    scope "/backstage", LiveShowyWeb do
+      pipe_through [:browser, :require_user, :authorize_performers]
+
+      live "/", BackstageLive.Index, :index
+    end
+
     scope "/admin", LiveShowyWeb do
       pipe_through [:browser, :require_user, :authorize_stage_managers]
 
