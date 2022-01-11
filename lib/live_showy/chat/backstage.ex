@@ -35,19 +35,20 @@ defmodule LiveShowy.Chat.Backstage do
     messages =
       :ets.tab2list(__MODULE__)
       |> Enum.map(&elem(&1, 1))
-      |> Enum.sort_by(fn message -> message.created_at end)
 
     if include_deleted do
       messages
     else
-      Enum.filter(messages, fn message -> message.status != :deleted end)
+      Enum.filter(messages, &(&1.status != :deleted))
     end
+    |> Enum.sort(&(DateTime.compare(&1.created_at, &2.created_at) != :gt))
   end
 
   def add(params) do
     message = Message.new(params)
 
     :ets.insert(__MODULE__, {message.id, message})
+    Logger.info(message_added: message)
     PubSub.broadcast(LiveShowy.PubSub, @topic, {:message_added, message})
 
     message
