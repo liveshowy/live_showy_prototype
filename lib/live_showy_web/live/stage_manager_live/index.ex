@@ -19,7 +19,9 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
      assign(socket,
        users: Users.list_with_roles(),
        roles: Roles.list(),
-       midi_devices: MidiDevices.list()
+       midi_devices: MidiDevices.list(),
+       midi_input: nil,
+       midi_output: nil
      )}
   end
 

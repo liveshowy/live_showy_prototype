@@ -2,7 +2,7 @@
   <h1 class="w-full select-none">Keys</h1>
 
   <section>
-    <.live_component module={OctaveControl} octave={@octave} id="keys-octave" />
-    <.live_component module={Keyboard} octave={@octave} id="keys-keyboard" />
+    <OctaveControl.buttons octave={@octave} id="keys-octave" />
+    <Keyboard.large octave={@octave} id="keys-keyboard" />
   </section>
 </div>

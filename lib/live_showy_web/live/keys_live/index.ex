@@ -11,17 +11,17 @@ defmodule LiveShowyWeb.KeysLive.Index do
     {:ok, assign(socket, octave: 5)}
   end
 
-  def handle_event("note-on", [note, velocity], socket) do
-    output = LiveShowy.MidiDevices.get_device(:output)
-    PortMidi.write(output, {144, note, velocity})
-    {:noreply, socket}
-  end
+  # def handle_event("note-on", [note, velocity], socket) do
+  #   output = LiveShowy.MidiDevices.get_device(:output)
+  #   PortMidi.write(output, {144, note, velocity})
+  #   {:noreply, socket}
+  # end
 
-  def handle_event("note-off", note, socket) do
-    output = LiveShowy.MidiDevices.get_device(:output)
-    PortMidi.write(output, {144, note, 0})
-    {:noreply, socket}
-  end
+  # def handle_event("note-off", note, socket) do
+  #   output = LiveShowy.MidiDevices.get_device(:output)
+  #   PortMidi.write(output, {144, note, 0})
+  #   {:noreply, socket}
+  # end
 
   def handle_event("octave-increment", _params, socket) do
     {:noreply, update(socket, :octave, &increment_octave/1)}

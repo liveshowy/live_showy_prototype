@@ -17,7 +17,7 @@ config :live_showy,
   wifi: [
     ssid: "LiveShowy",
     password: "live-showy-rocks!",
-    url: "live.showy"
+    url: "liveshowy.local"
   ]
 
 config :live_showy, ecto_repos: [LiveShowy.Repo]

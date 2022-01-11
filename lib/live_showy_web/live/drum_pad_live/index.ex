@@ -10,17 +10,17 @@ defmodule LiveShowyWeb.DrumPadLive.Index do
     {:ok, socket}
   end
 
-  def handle_event("note-on", note, socket) do
-    output = LiveShowy.MidiDevices.get_device(:output)
-    PortMidi.write(output, {144, note, 100})
-    {:noreply, socket}
-  end
+  # def handle_event("note-on" = event, note, socket) do
+  #   output = LiveShowy.MidiDevices.get_device(:output)
+  #   PortMidi.write(output, {144, note, 100})
+  #   {:noreply, socket}
+  # end
 
-  def handle_event("note-off", note, socket) do
-    output = LiveShowy.MidiDevices.get_device(:output)
-    PortMidi.write(output, {144, note, 0})
-    {:noreply, socket}
-  end
+  # def handle_event("note-off" = event, note, socket) do
+  #   output = LiveShowy.MidiDevices.get_device(:output)
+  #   PortMidi.write(output, {128, note, 0})
+  #   {:noreply, socket}
+  # end
 
   @impl true
   def handle_event(event, _params, socket) do

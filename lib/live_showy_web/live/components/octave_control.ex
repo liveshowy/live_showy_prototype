@@ -1,7 +1,7 @@
 defmodule LiveShowyWeb.Components.OctaveControl do
-  use Phoenix.LiveComponent
+  use Phoenix.Component
 
-  def render(assigns) do
+  def buttons(assigns) do
     ~H"""
     <div class="flex items-center gap-1 py-2">
       <span class="">Octave: <%= @octave %></span>

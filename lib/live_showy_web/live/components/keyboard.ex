@@ -5,29 +5,58 @@ defmodule LiveShowyWeb.Components.Keyboard do
   - Index each note within the octaves
   - Index the list of octaves
   """
-  use Phoenix.LiveComponent
+  use Phoenix.Component
 
   @notes 0..127
          |> Enum.chunk_every(12)
          |> Enum.map(&Enum.with_index/1)
          |> Enum.with_index()
 
-  @default_class "flex items-end justify-center w-20 h-64 p-1 font-bold transition-color duration-150 rounded-b-xl"
+  @note_names Enum.with_index([
+                "C",
+                "C# | Db",
+                "D",
+                "D# | Eb",
+                "E",
+                "F",
+                "F# | Gb",
+                "G",
+                "G# | Ab",
+                "A",
+                "A# | Bb",
+                "B"
+              ])
+
+  @default_class "flex flex-col gap-1 items-center justify-end w-20 h-64 p-1 font-bold transition-color duration-150 rounded-b-xl"
 
   def update(assigns, socket) do
     {notes, _index} = @notes |> Enum.at(assigns.octave, [])
     {:ok, assign(socket, octave: assigns.octave, notes: notes)}
   end
 
-  def render(assigns) do
+  def large(assigns) do
+    {notes, _index} = Enum.at(@notes, assigns.octave, [])
+
+    notes =
+      Enum.zip_reduce(notes, @note_names, [], fn {note, note_index}, {label, label_index}, acc ->
+        if note_index == label_index do
+          [{note, label, note_index} | acc]
+        else
+          acc
+        end
+      end)
+      |> Enum.reverse()
+
+    assigns = assign(assigns, :notes, notes)
+
     ~H"""
     <div>
       <div class="flex justify-center gap-1 p-2 pt-0 shadow-lg select-none bg-gradient-to-b from-purple-800 to-purple-600 rounded-xl">
-        <%= for {note, index} <- @notes do %>
+        <%= for {note, label, index} <- @notes do %>
           <.key
             id={"keyboard-key-#{note}"}
-            module={KeyboardKey}
             color={get_key_color(index)}
+            label={label}
             note={note}
           />
         <% end %>
@@ -52,8 +81,19 @@ defmodule LiveShowyWeb.Components.Keyboard do
       value={@note}
       id={"key-#{@note}"}
       class={get_class(@color)}
-    ></button>
+    >
+      <span><%= @label %></span>
+      <span class="opacity-50"><%= @note %></span>
+    </button>
     """
+  end
+
+  defp get_note_name(int) do
+    @note_names
+    |> Enum.find("TBD", fn {_label, index} -> int == index end)
+    |> elem(0)
+
+    # |> IO.inspect(label: "get_note_name")
   end
 
   defp get_key_color(index) do
