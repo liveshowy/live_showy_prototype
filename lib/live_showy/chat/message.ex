@@ -5,7 +5,7 @@ defmodule LiveShowy.Chat.Message do
             user_id: nil,
             created_at: nil,
             updated_at: nil,
-            status: :draft,
+            status: :public,
             body: ""
 
   def new(params) do
