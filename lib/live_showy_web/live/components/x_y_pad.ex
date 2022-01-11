@@ -17,11 +17,27 @@ defmodule LiveShowyWeb.Components.XYPad do
       <line x1="175" x2="175" y1="0" y2="350" stroke="rgb(109, 40, 217)" stroke-width="2" />
 
       <%= for user <- @users do %>
-        <UserDot.render id={"dot-" <> user.id} user={user} current_user_id={@current_user_id} />
+        <.dot id={"dot-" <> user.id} user={user} current_user_id={@current_user_id} />
       <% end %>
 
       <use xlink:href={"#dot-" <> @current_user_id} />
     </svg>
+    """
+  end
+
+  defp dot(assigns) do
+    [x, y] = assigns.user.coords
+
+    ~H"""
+    <circle
+      id={"dot-" <> @user.id}
+      fill={@user.color}
+      fill-opacity={if @user.id == @current_user_id, do: "100%", else: "50%"}
+      r={30}
+      cx={0}
+      cy={0}
+      style={"transform: translate3d(#{x}px, #{y}px, 0)"}
+    />
     """
   end
 end
