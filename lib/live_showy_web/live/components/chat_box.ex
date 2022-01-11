@@ -10,6 +10,10 @@ defmodule LiveShowyWeb.Components.ChatBox do
       <%= for message <- @messages do %>
         <.message_item message={message} />
       <% end %>
+
+      <%= if Enum.count(@messages) == 0 do %>
+        <li class="flex w-full h-full text-purple-400 place-items-center place-content-center">No messages yet</li>
+      <% end %>
     </ul>
     """
   end
