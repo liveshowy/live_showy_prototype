@@ -2,6 +2,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   @moduledoc """
   A chat room for coordinating performers and instruments.
   """
+  require Logger
   use LiveShowyWeb, :live_view
   alias LiveShowy.Chat.Message
   alias LiveShowy.Chat.Backstage, as: BackstageChat
@@ -42,7 +43,6 @@ defmodule LiveShowyWeb.BackstageLive.Index do
         socket
       ) do
     # TODO: process request
-    require Logger
     Logger.info(instrument_requested: {user_id, instrument})
     {:noreply, socket}
   end
@@ -63,7 +63,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   end
 
   def handle_event(event, value, socket) do
-    IO.inspect({event, value}, label: "UNKNOWN EVENT")
+    Logger.warning(unknown_event: {event, value})
     {:noreply, socket}
   end
 
