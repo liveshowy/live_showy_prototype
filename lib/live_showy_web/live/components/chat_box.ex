@@ -6,8 +6,8 @@ defmodule LiveShowyWeb.Components.ChatBox do
 
   def list(assigns) do
     ~H"""
-    <div class="flex flex-1 h-auto overflow-hidden rounded">
-      <ul class="h-full max-h-full overflow-y-auto divide-y divide-purple-700">
+    <div class="flex h-full overflow-hidden rounded max-h-96 shadow-inner-lg">
+      <ul class="flex-1 space-y-2 overflow-y-auto bg-black divide-y divide-purple-700 bg-opacity-5">
         <%= for message <- @messages do %>
           <.message_item message={message} />
         <% end %>
@@ -48,9 +48,10 @@ defmodule LiveShowyWeb.Components.ChatBox do
   end
 
   def new_message(assigns) do
+    # TODO: convert this to a proper Phoenix form
     ~H"""
     <form phx-submit="submit-message" class={"flex border-2 border-purple-900 divide-x-2 divide-purple-900 rounded focus-within:border-black focus-within:divide-black w-full #{@class}"}>
-      <input name="body" value={@message.body} type="text" class="flex-grow px-2 py-1 transition bg-purple-700 rounded-l resize-none focus:bg-purple-600 focus:outline-none" />
+      <input title="may not be empty" name="body" value={@message.body} type="text" class="flex-grow px-2 py-1 transition bg-purple-700 rounded-l resize-none focus:bg-purple-600 focus:outline-none" />
       <button type="submit" class="px-2 py-1 font-bold transition bg-purple-700 rounded-r shadow hover:bg-purple-600 hover:text-white">SEND</button>
     </form>
     """
