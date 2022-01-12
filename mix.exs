@@ -51,6 +51,7 @@ defmodule LiveShowy.MixProject do
       {:portmidi, git: "https://github.com/thbar/ex-portmidi.git"},
       {:phoenix_ecto, "~> 4.0"},
       {:etso, "~> 0.1.6"},
+      {:tzdata, "~> 1.1"},
       {:credo, "~> 1.5.6"}
     ]
   end
