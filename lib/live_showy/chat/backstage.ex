@@ -31,17 +31,17 @@ defmodule LiveShowy.Chat.Backstage do
     {:ok, nil}
   end
 
-  def list(include_deleted \\ false) do
-    messages =
-      :ets.tab2list(__MODULE__)
-      |> Enum.map(&elem(&1, 1))
+  def list(statuses \\ [:public]) when is_list(statuses) do
+    case Enum.all?(statuses, &is_atom/1) do
+      true ->
+        :ets.tab2list(__MODULE__)
+        |> Enum.map(&elem(&1, 1))
+        |> Enum.filter(&(&1.status in statuses))
+        |> Enum.sort(&(DateTime.compare(&1.created_at, &2.created_at) != :gt))
 
-    if include_deleted do
-      messages
-    else
-      Enum.filter(messages, &(&1.status != :deleted))
+      _ ->
+        {:error, "statuses must be a list of atoms"}
     end
-    |> Enum.sort(&(DateTime.compare(&1.created_at, &2.created_at) != :gt))
   end
 
   def add(params) do
