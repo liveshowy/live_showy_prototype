@@ -93,16 +93,6 @@ defmodule LiveShowy.MidiDevices do
     end
   end
 
-  def get_by_pid(pid) when is_pid(pid) do
-    case :ets.match_object(__MODULE__, {:_, pid, :_}) do
-      [{matched_type, matched_pid, matched_device}] ->
-        {matched_type, matched_pid, matched_device}
-
-      [] ->
-        nil
-    end
-  end
-
   def get_portmidi_device_by_name(type, name) do
     device =
       PortMidi.devices()
