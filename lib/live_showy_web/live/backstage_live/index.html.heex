@@ -1,7 +1,9 @@
-<div class="flex flex-col flex-grow h-full max-h-full gap-2">
-  <h1>Backstage</h1>
+<div class="flex flex-col flex-initial gap-2">
+  <section class="flex flex-col gap-2 px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md">
+    <h1>Backstage</h1>
 
-  <p>Welcome. You have been invited backstage, and are awaiting entry to the live stage. You may coordinate with other backstage members via chat.</p>
+    <p>Welcome. You have been invited backstage, and are awaiting entry to the live stage. You may coordinate with other backstage members via chat.</p>
+  </section>
 
   <section id="assignment" class="flex flex-col gap-2 px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md">
     <h2>Your Assignment</h2>
@@ -23,10 +25,10 @@
     <Users.list users={@performers} id="performers-list" />
   </section>
 
-  <section id="performers-chat" class="flex flex-col flex-1 gap-2 px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md">
+  <section id="performers-chat" class="flex flex-col justify-between gap-2 px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md">
     <h2>Chat</h2>
 
     <ChatBox.list messages={@messages} id="performers-chat-messages" />
-    <ChatBox.new_message message={@form_message} id="performers-chat-form" />
+    <ChatBox.new_message message={@form_message} class="place-self-end" id="performers-chat-form" />
   </section>
 </div>
