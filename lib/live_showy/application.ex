@@ -24,6 +24,8 @@ defmodule LiveShowy.Application do
       LiveShowy.UserRoles,
       # Start the UserCoordinates ETS table
       LiveShowy.UserCoordinates,
+      # Start the UserInstruments ETS table
+      LiveShowy.UserInstruments,
       # Start the Midi ETS table
       LiveShowy.MidiDevices,
       # Start the Presence system
