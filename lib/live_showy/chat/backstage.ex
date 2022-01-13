@@ -6,8 +6,9 @@ defmodule LiveShowy.Chat.Backstage do
   use GenServer
   alias Phoenix.PubSub
   alias LiveShowy.Chat.Message
+  alias LiveShowy.Users
 
-  @topic "backstage"
+  @topic "backstage_chat"
 
   def get_topic, do: @topic
 
@@ -35,12 +36,21 @@ defmodule LiveShowy.Chat.Backstage do
     case Enum.all?(statuses, &is_atom/1) do
       true ->
         :ets.tab2list(__MODULE__)
-        |> Enum.map(&elem(&1, 1))
-        |> Enum.filter(&(&1.status in statuses))
+        |> Enum.reduce([], &filter_and_match_user/2)
         |> Enum.sort(&(DateTime.compare(&1.created_at, &2.created_at) != :gt))
 
       _ ->
         {:error, "statuses must be a list of atoms"}
+    end
+  end
+
+  defp filter_and_match_user({_id, message}, acc) do
+    usernames = Users.map_usernames()
+    if message.status in [:public] do
+      username = Map.get(usernames, message.user_id)
+      [Map.put(message, :username, username) | acc]
+    else
+      acc
     end
   end
 
