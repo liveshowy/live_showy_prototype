@@ -45,7 +45,7 @@ defmodule LiveShowy.UserInstruments do
   def get(user_id) when is_binary(user_id) do
     case :ets.match_object(__MODULE__, {user_id, :_}) do
       [{user_id, instrument}] -> {user_id, instrument}
-      _ -> nil
+      _ -> {user_id, nil}
     end
   end
 
