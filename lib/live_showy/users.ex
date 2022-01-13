@@ -35,6 +35,12 @@ defmodule LiveShowy.Users do
     |> Enum.map(fn user -> Map.put(user, :roles, UserRoles.get(user.id)) end)
   end
 
+  def map_usernames do
+    :ets.tab2list(__MODULE__)
+    |> Enum.map(fn {user_id, user} -> {user_id, user.username} end)
+    |> Enum.into(%{})
+  end
+
   def add(params \\ nil) do
     user = LiveShowy.Protocols.User.new(params)
     :ets.insert_new(__MODULE__, {user.id, user})
