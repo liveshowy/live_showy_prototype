@@ -8,7 +8,7 @@ defmodule LiveShowy.Chat.Message do
             status: :public,
             body: ""
 
-  def new(params) do
+  def new(params \\ %{}) do
     params = Map.drop(params, [:id, :created_at])
 
     %__MODULE__{
