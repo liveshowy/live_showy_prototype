@@ -3,16 +3,16 @@ defmodule LiveShowyWeb.Components.Users do
   use Phoenix.Component
 
   def list(assigns) do
-    user_count = Enum.count(assigns.users)
+    assigns = assign(assigns, user_count: Enum.count(assigns.users))
 
     ~H"""
     <div>
       <span class="font-mono text-xs">
-        <%= user_count %> active <%= if user_count == 1, do: "user", else: "users" %>
+        <%= @user_count %> active <%= if @user_count == 1, do: "user", else: "users" %>
       </span>
       <div class="gap-2 py-2 font-mono select-none columns-lg">
         <%= for user <- Enum.sort_by(@users, & &1.username) do %>
-          <.list_item id={"#{user.id}-username"} user={user} current_user_id={@current_user_id} editable={@editable} />
+          <.list_item id={"#{user.id}-username"} user={user} current_user_id={@current_user.id} editable={user.id == @current_user.id} />
         <% end %>
       </div>
     </div>
