@@ -51,7 +51,7 @@ defmodule LiveShowyWeb.Components.Keyboard do
 
     ~H"""
     <div>
-      <div class="flex justify-center gap-1 p-2 pt-0 shadow-lg select-none bg-gradient-to-b from-purple-800 to-purple-600 rounded-xl">
+      <div class="flex justify-center gap-1 p-2 pt-0 select-none">
         <%= for {note, label, index} <- @notes do %>
           <.key
             id={"keyboard-key-#{note}"}
@@ -66,7 +66,7 @@ defmodule LiveShowyWeb.Components.Keyboard do
   end
 
   defp get_class(:black),
-    do: @default_class <> " bg-gradient-to-b from-gray-800 to-gray-900 text-white active:to-black"
+    do: @default_class <> " bg-gradient-to-b from-purple-600 to-purple-700 text-white active:to-black"
 
   defp get_class(:white),
     do:
@@ -92,8 +92,6 @@ defmodule LiveShowyWeb.Components.Keyboard do
     @note_names
     |> Enum.find("TBD", fn {_label, index} -> int == index end)
     |> elem(0)
-
-    # |> IO.inspect(label: "get_note_name")
   end
 
   defp get_key_color(index) do
