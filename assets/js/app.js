@@ -29,6 +29,7 @@ import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import _ from 'underscore'
 import latency from './latency'
+import {init as initMidi, onMidiSuccess, onMidiFailure, onMidiMessage, onMidiDeviceChange} from './midi'
 
 window.Alpine = Alpine
 Alpine.start()
@@ -75,7 +76,7 @@ let Hooks = {
   HandleKeyboardPresses: {
     mounted() {
       console.info(`HandleKeyboardPresses mounted`)
-      
+
       const noteon = e => {
         const {scrollHeight: height} = e.target
         const value = parseInt(e.target.value, 10)
@@ -99,9 +100,10 @@ let Hooks = {
         this.el.addEventListener('mouseup', noteoff)
         this.el.addEventListener('mouseleave', noteoff)
       }
-      
+
     },
   },
+
   HandleDrumPadPresses: {
     mounted() {
       console.info(`HandleDrumPadPresses mounted`)
@@ -124,7 +126,19 @@ let Hooks = {
         this.el.addEventListener('mousedown', noteon)
         this.el.addEventListener('mouseup', noteoff)
         this.el.addEventListener('mouseleave', noteoff)
-      }      
+      }
+    },
+  },
+
+  HandleWebMidiDevices: {
+    async mounted() {
+      console.info(`HandleWebMidiDevices mounted`)
+      midiAccess = await initMidi(onMidiSuccess, onMidiFailure)
+      console.log(midiAccess)
+      midiAccess.inputs.forEach(input => {
+        input.onmidimessage = event => onMidiMessage(event, this)
+        input.onstatechange = event => onMidiDeviceChange(event, this)
+      })
     },
   },
 }
