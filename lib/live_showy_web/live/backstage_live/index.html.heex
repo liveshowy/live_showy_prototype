@@ -5,7 +5,7 @@
     <p>Welcome. You have been invited backstage, and are awaiting entry to the live stage. You may coordinate with other backstage members via chat.</p>
   </section>
 
-  <section id="instrument" class="flex flex-col w-full gap-2 px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-max">
+  <section id="instrument" phx-hook="HandleWebMidiDevices" class="flex flex-col w-full gap-2 px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-max">
     <h2>Your Instrument</h2>
 
     <DynamicInstrument.render instrument={@assigned_instrument} id="assigned-instrument-component" />

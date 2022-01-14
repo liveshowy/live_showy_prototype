@@ -14,7 +14,7 @@ defmodule LiveShowyWeb.Components.MidiDevices do
       |> assign(:input_name, input_name)
 
     ~H"""
-    <div class="flex flex-wrap gap-2 whitespace-nowrap">
+    <div id="midi-device-list" class="flex flex-wrap gap-2 whitespace-nowrap" phx-hook="HandleWebMidiDevices">
       <div>
         <label class="font-bold">Inputs</label>
         <div class="flex flex-wrap gap-1">
