@@ -9,8 +9,12 @@ defmodule LiveShowyWeb.Components.DynamicInstrument do
     assigns = Map.merge(assigns, instrument)
 
     case component do
-      Keyboard -> Keyboard.large(assigns)
-      DrumPad -> DrumPad.grid(assigns)
+      Keyboard ->
+        Keyboard.large(assigns)
+
+      DrumPad ->
+        DrumPad.grid(assigns)
+
       _ ->
         ~H"""
         <span class="font-bold text-purple-300">No instrument</span>

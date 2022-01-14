@@ -75,7 +75,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   end
 
   def handle_info({event, _message}, socket)
-    when event in [:message_added, :message_updated] do
+      when event in [:message_added, :message_updated] do
     update_chat(socket)
   end
 
@@ -102,7 +102,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
       ) do
     %{
       body: body,
-      user_id: current_user.id,
+      user_id: current_user.id
     }
     |> BackstageChat.add()
 

@@ -46,6 +46,7 @@ defmodule LiveShowy.Chat.Backstage do
 
   defp filter_and_match_user({_id, message}, acc) do
     usernames = Users.map_usernames()
+
     if message.status in [:public] do
       username = Map.get(usernames, message.user_id)
       [Map.put(message, :username, username) | acc]
