@@ -6,7 +6,7 @@ defmodule LiveShowyWeb.Components.DrumPad do
 
   def grid(assigns) do
     ~H"""
-    <div class="grid grid-cols-4 grid-rows-4 gap-1 place-items-center place-content-center">
+    <div class="grid flex-1 grid-cols-4 grid-rows-4 gap-1 place-self-center place-content-center place-items-center">
       <.single_pad label="kick 1" note={36} />
       <.single_pad label="kick 2" note={37} />
       <.single_pad label="snare 1" note={38} />
@@ -30,7 +30,7 @@ defmodule LiveShowyWeb.Components.DrumPad do
       disabled={if @note == nil, do: "disabled"}
       value={@note}
       phx-hook="HandleDrumPadPresses"
-      class="w-32 h-32 uppercase duration-150 bg-purple-800 transition-color rounded-xl active:bg-purple-700"
+      class="w-32 h-32 uppercase duration-150 bg-gradient-to-b from-purple-600 to-purple-700 transition-color rounded-xl active:bg-purple-700"
     >
       <%= @label %>
     </button>

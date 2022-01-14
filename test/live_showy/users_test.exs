@@ -1,29 +1,30 @@
 defmodule LiveShowy.UsersTest do
-  use ExUnit.Case, async: false
+  use ExUnit.Case, async: true
   alias LiveShowy.Users
   doctest Users
 
-  test "add a custom user" do
-    username = "owen"
-    color = "#ABC123"
-    user = Users.add(%{username: username, color: color})
-    fetched_user = Users.get(user.id)
-
-    assert %Users.Custom{} = user
-    assert user.username == username
-    assert user.color == color
-    assert fetched_user.username == username
-    assert fetched_user.color == color
+  setup do
+    %{
+      custom_user:
+        Users.add(%{
+          username: Faker.Internet.user_name(),
+          color: Faker.Color.rgb_hex()
+        }),
+      fake_user: Users.add()
+    }
   end
 
-  test "add a fake user" do
-    user = Users.add()
-    fetched_user = Users.get(user.id)
+  test "add a custom user", state do
+    assert %Users.Custom{} = state.custom_user
+    assert Users.get(state.custom_user.id) == state.custom_user
+    assert is_binary(state.custom_user.username)
+    assert is_binary(state.custom_user.color)
+  end
 
-    assert %Users.Fake{} = user
-    assert user.username != nil
-    assert user.color != nil
-    assert fetched_user.username == user.username
-    assert fetched_user.color == user.color
+  test "add a fake user", state do
+    assert %Users.Fake{} = state.fake_user
+    assert Users.get(state.fake_user.id) == state.fake_user
+    assert state.fake_user.username != nil
+    assert state.fake_user.color != nil
   end
 end

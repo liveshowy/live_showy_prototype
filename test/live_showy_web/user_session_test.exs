@@ -1,6 +1,5 @@
 defmodule LiveShowyWeb.UserSessionTest do
-  use LiveShowyWeb.ConnCase, async: false
-  doctest LiveShowy.Users
+  use LiveShowyWeb.ConnCase, async: true
 
   test "new user is created on first visit and retained on next visit", %{conn: conn} do
     conn = get(conn, "/")

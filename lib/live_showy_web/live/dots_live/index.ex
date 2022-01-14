@@ -19,8 +19,12 @@ defmodule LiveShowyWeb.DotsLive.Index do
       ) do
     if connected?(socket), do: subscribe()
 
-    current_user_coords = UserCoordinates.get(current_user.id)
-    current_user = Map.put(current_user, :coords, current_user_coords)
+    current_user =
+      Map.put(
+        current_user,
+        :coords,
+        UserCoordinates.get(current_user.id)
+      )
 
     Presence.track(
       self(),
@@ -31,10 +35,7 @@ defmodule LiveShowyWeb.DotsLive.Index do
 
     users =
       Presence.list(@topic)
-      |> Enum.map(fn {_user_id, data} ->
-        data[:metas]
-        |> List.first()
-      end)
+      |> Enum.map(fn {_user_id, data} -> List.first(data[:metas]) end)
 
     {:ok,
      assign(
