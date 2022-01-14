@@ -20,4 +20,10 @@ defmodule LiveShowy.Instrument do
     }
     |> Map.merge(params)
   end
+
+  @impl Access
+  def fetch(term, key) do
+    Map.from_struct(term)
+    |> Map.fetch(key)
+  end
 end
