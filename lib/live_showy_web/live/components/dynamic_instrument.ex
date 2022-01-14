@@ -4,21 +4,28 @@ defmodule LiveShowyWeb.Components.DynamicInstrument do
   alias LiveShowyWeb.Components.DrumPad
 
   def render(assigns) do
-    instrument = Map.from_struct(assigns.instrument)
-    component = get_in(instrument, [:component])
-    assigns = Map.merge(assigns, instrument)
+    instrument = Map.get(assigns, :instrument)
+    if instrument do
+      instrument = Map.from_struct(instrument)
+      component = get_in(instrument, [:component])
+      assigns = Map.merge(assigns, instrument)
 
-    case component do
-      Keyboard ->
-        Keyboard.large(assigns)
+      case component do
+        Keyboard ->
+          Keyboard.large(assigns)
 
-      DrumPad ->
-        DrumPad.grid(assigns)
+        DrumPad ->
+          DrumPad.grid(assigns)
 
-      _ ->
-        ~H"""
-        <span class="font-bold text-purple-300">No instrument</span>
-        """
+        _ ->
+          ~H"""
+          <span class="font-bold text-purple-300">Instrument not supported</span>
+          """
+      end
+    else
+      ~H"""
+      <span class="font-bold text-purple-300">Instrument not supported</span>
+      """
     end
   end
 end
