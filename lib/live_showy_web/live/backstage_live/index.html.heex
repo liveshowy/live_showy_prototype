@@ -20,6 +20,20 @@
     </div>
   </section>
 
+  <section id="client-input-devices" class="flex-1 px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-max">
+  <%= case @webmidi_supported do %>
+  <% true ->  %>
+    <h2>Your Input Devices</h2>
+    <p class="text-sm">Your device(s) will change color as notes are played.</p>
+
+    <ClientMidiDevices.list id="client-input-devices-list" devices={@client_input_devices} playing_devices={@playing_devices} />
+  <% false ->  %>
+    <span>WebMIDI is not supported in this browser.</span>
+  <% _ ->  %>
+    <span class="text-purple-300">Awaiting WebMIDI status</span>
+  <% end %>
+  </section>
+
   <section id="performers-list" class="flex-1 px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-max">
     <h2>Performers</h2>
 
