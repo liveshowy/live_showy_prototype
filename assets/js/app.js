@@ -133,8 +133,8 @@ let Hooks = {
   HandleWebMidiDevices: {
     async mounted() {
       console.info(`HandleWebMidiDevices mounted`)
-      midiAccess = await initMidi(onMidiSuccess, onMidiFailure)
-      console.log(midiAccess)
+      midiAccess = await initMidi(onMidiSuccess, onMidiFailure, this)
+
       midiAccess.inputs.forEach(input => {
         input.onmidimessage = event => onMidiMessage(event, this)
         input.onstatechange = event => onMidiDeviceChange(event, this)
