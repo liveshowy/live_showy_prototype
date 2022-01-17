@@ -20,8 +20,6 @@ config :live_showy,
     url: "liveshowy.local"
   ]
 
-config :live_showy, ecto_repos: [LiveShowy.Repo]
-
 config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
 # Configures the endpoint

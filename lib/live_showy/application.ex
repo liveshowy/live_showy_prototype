@@ -10,8 +10,6 @@ defmodule LiveShowy.Application do
     children = [
       # Start the Telemetry supervisor
       LiveShowyWeb.Telemetry,
-      # Start the Repo
-      LiveShowy.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: LiveShowy.PubSub},
       # Start the Wifi ETS table
