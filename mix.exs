@@ -49,8 +49,6 @@ defmodule LiveShowy.MixProject do
       {:faker, "~> 0.17.0"},
       {:uuid, "~> 1.1"},
       {:portmidi, git: "https://github.com/thbar/ex-portmidi.git"},
-      {:phoenix_ecto, "~> 4.0"},
-      {:etso, "~> 0.1.6"},
       {:tzdata, "~> 1.1"},
       {:credo, "~> 1.5.6"}
     ]

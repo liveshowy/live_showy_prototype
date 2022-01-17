@@ -8,7 +8,7 @@ defmodule LiveShowy.Chat.BackstageTest do
     user = Users.add()
     body = Faker.Lorem.paragraphs() |> Enum.join("\n\n")
 
-    %{added_message: Backstage.add(%{user_id: user.id, body: body})}
+    %{added_message: Backstage.add(%{user_id: user.id, body: body, status: :public})}
   end
 
   test "a new message may be added", state do
@@ -16,7 +16,8 @@ defmodule LiveShowy.Chat.BackstageTest do
   end
 
   test "a new message is found in the list", state do
-    assert state.added_message in Backstage.list()
+    message_ids = Backstage.list() |> Enum.map(& &1.id)
+    assert state.added_message.id in message_ids
   end
 
   test "a message may be retrieved", state do
