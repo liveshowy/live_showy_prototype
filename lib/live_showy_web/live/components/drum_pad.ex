@@ -29,6 +29,7 @@ defmodule LiveShowyWeb.Components.DrumPad do
       type="button"
       disabled={if @note == nil, do: "disabled"}
       value={@note}
+      id={"drum-pad-pad-#{@note}"}
       phx-hook="HandleDrumPadPresses"
       class="w-32 h-32 uppercase duration-150 bg-gradient-to-b from-purple-600 to-purple-700 transition-color rounded-xl active:bg-purple-700"
     >

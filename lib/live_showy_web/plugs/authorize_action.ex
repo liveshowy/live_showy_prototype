@@ -10,11 +10,7 @@ defmodule LiveShowyWeb.Plugs.AuthorizeAction do
   def init(conn), do: conn
 
   def call(conn, role_name) do
-    current_user =
-      get_session(conn, "current_user_id")
-      |> LiveShowy.Users.get()
-
-    case UserRoles.check({current_user.id, role_name}) do
+    case UserRoles.check({get_session(conn, "current_user_id"), role_name}) do
       true ->
         conn
 

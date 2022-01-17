@@ -13,6 +13,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   alias LiveShowyWeb.Components.Users, as: UsersComponent
   alias LiveShowyWeb.Components.ChatBox
   alias LiveShowyWeb.Components.DynamicInstrument
+  alias LiveShowyWeb.Components.ClientMidiDevices
 
   @presence_topic "backstage_performers"
 
@@ -40,7 +41,10 @@ defmodule LiveShowyWeb.BackstageLive.Index do
        performers: performers,
        messages: BackstageChat.list(),
        form_message: Message.new(),
-       assigned_instrument: assigned_instrument
+       webmidi_supported: nil,
+       assigned_instrument: assigned_instrument,
+       client_input_devices: [],
+       playing_devices: MapSet.new()
      )}
   end
 
@@ -107,6 +111,41 @@ defmodule LiveShowyWeb.BackstageLive.Index do
     |> BackstageChat.add()
 
     update_chat(socket)
+  end
+
+  def handle_event("webmidi-supported", boolean, socket) do
+    {:noreply, assign(socket, webmidi_supported: boolean)}
+  end
+
+  def handle_event("midi-device-change", device, socket) do
+    # IO.inspect(device, pretty: true)
+
+    case {device["state"], device["connection"]} do
+      {"connected", "open"} ->
+        {:noreply, update(socket, :client_input_devices, &[device | &1])}
+
+      _ ->
+        {:noreply,
+         update(
+           socket,
+           :client_input_devices,
+           &Enum.filter(&1, fn listed_device -> listed_device["id"] != device["id"] end)
+         )}
+    end
+  end
+
+  def handle_event(
+        "midi-message",
+        %{"device_id" => device_id, "message" => [status, _note, velocity]},
+        socket
+      ) do
+    cond do
+      velocity == 0 or status in 128..143 ->
+        {:noreply, update(socket, :playing_devices, &MapSet.delete(&1, device_id))}
+
+      status ->
+        {:noreply, update(socket, :playing_devices, &MapSet.put(&1, device_id))}
+    end
   end
 
   def handle_event(event, value, socket) do

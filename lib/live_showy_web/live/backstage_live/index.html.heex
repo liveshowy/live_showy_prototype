@@ -5,7 +5,7 @@
     <p>Welcome. You have been invited backstage, and are awaiting entry to the live stage. You may coordinate with other backstage members via chat.</p>
   </section>
 
-  <section id="instrument" class="flex flex-col w-full gap-2 px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-max">
+  <section id="instrument" phx-hook="HandleWebMidiDevices" class="flex flex-col w-full gap-2 px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-max">
     <h2>Your Instrument</h2>
 
     <DynamicInstrument.render instrument={@assigned_instrument} id="assigned-instrument-component" />
@@ -18,6 +18,20 @@
 
       <button phx-click="instrument-requested" phx-value-user-id={@current_user.id} phx-value-instrument="voice" type="button" class="px-2 py-1 uppercase transition bg-purple-700 rounded shadow hover:bg-purple-600">VOICE</button>
     </div>
+  </section>
+
+  <section id="client-input-devices" class="flex-1 px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-max">
+  <%= case @webmidi_supported do %>
+  <% true ->  %>
+    <h2>Your Input Devices</h2>
+    <p class="text-sm">Your device(s) will change color as notes are played.</p>
+
+    <ClientMidiDevices.list id="client-input-devices-list" devices={@client_input_devices} playing_devices={@playing_devices} />
+  <% false ->  %>
+    <span>WebMIDI is not supported in this browser.</span>
+  <% _ ->  %>
+    <span class="text-purple-300">Awaiting WebMIDI status</span>
+  <% end %>
   </section>
 
   <section id="performers-list" class="flex-1 px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-max">
