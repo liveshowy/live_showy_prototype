@@ -4,8 +4,9 @@ async function init(onMidiSuccess, onMidiFailure, liveView) {
     return await navigator.requestMIDIAccess()
       .then(onMidiSuccess, onMidiFailure)
   }
+
   liveView.pushEvent("webmidi-supported", false)
-  return console.log("WebMIDI is not supported")
+  return console.warn("WebMIDI is not supported")
 }
 
 function onMidiSuccess(midiAccess) {
