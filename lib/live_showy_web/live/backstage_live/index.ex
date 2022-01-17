@@ -140,15 +140,11 @@ defmodule LiveShowyWeb.BackstageLive.Index do
         socket
       ) do
     cond do
-      status in 144..159 ->
-        {:noreply, update(socket, :playing_devices, &MapSet.put(&1, device_id))}
-
       velocity == 0 or status in 128..143 ->
         {:noreply, update(socket, :playing_devices, &MapSet.delete(&1, device_id))}
 
       status ->
-        IO.inspect(status)
-        {:noreply, socket}
+        {:noreply, update(socket, :playing_devices, &MapSet.put(&1, device_id))}
     end
   end
 
