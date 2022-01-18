@@ -53,11 +53,12 @@ config :live_showy, LiveShowyWeb.Endpoint,
 
 # Watch static and templates for browser reloading.
 config :live_showy, LiveShowyWeb.Endpoint,
+  reloadable_compilers: [:gettext, :elixir, :surface],
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/live_showy_web/(live|views)/.*(ex)$",
+      ~r"lib/live_showy_web/(live|views|components)/.*(ex|sface|js)$",
       ~r"lib/live_showy_web/templates/.*(eex)$"
     ]
   ]
