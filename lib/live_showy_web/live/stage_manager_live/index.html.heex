@@ -1,15 +1,15 @@
 <div class="flex flex-wrap justify-between gap-2">
-  <section id="general" class="flex-grow w-full px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md">
+  <section id="general" class="flex-grow w-full px-4 pt-2 pb-4 bg-brand-800 rounded shadow-md">
     <h1>Stage Manager</h1>
     <p>Control user roles and MIDI settings.</p>
   </section>
 
-  <section id="wifi-info" class="px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md">
+  <section id="wifi-info" class="px-4 pt-2 pb-4 bg-brand-800 rounded shadow-md">
     <h2>Wifi</h2>
     <.live_component module={WifiCard} id="wifi-info-stage-manager" />
   </section>
 
-  <section id="performance-metrics" class="flex-grow px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-max">
+  <section id="performance-metrics" class="flex-grow px-4 pt-2 pb-4 bg-brand-800 rounded shadow-md min-w-max">
     <h2>Performance Metrics</h2>
     <ul>
       <li>App CPU</li>
@@ -21,7 +21,7 @@
     </ul>
   </section>
 
-  <section id="stages" class="flex-grow px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md">
+  <section id="stages" class="flex-grow px-4 pt-2 pb-4 bg-brand-800 rounded shadow-md">
     <h2>Stages</h2>
     <ul>
       <li>Dancing Dots</li>
@@ -31,18 +31,18 @@
     </ul>
   </section>
 
-  <section id="midi-devices" class="flex-1 px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-min">
+  <section id="midi-devices" class="flex-1 px-4 pt-2 pb-4 bg-brand-800 rounded shadow-md min-w-min">
     <h2>MIDI Devices</h2>
     <%# <MidiDevicesComponent.button_groups devices={@midi_devices} input={@midi_input} output={@midi_output} /> %>
   </section>
 
-  <section id="user-roles" class="flex-grow w-full px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-max">
+  <section id="user-roles" class="flex-grow w-full px-4 pt-2 pb-4 bg-brand-800 rounded shadow-md min-w-max">
     <h2>Users</h2>
 
     <form class="grid items-center grid-cols-5 gap-2" phx-change="user-role-changed">
-      <span class="font-bold text-purple-300 uppercase"></span>
+      <span class="font-bold text-brand-300 uppercase"></span>
       <%= for role <- @roles do %>
-        <span class="font-bold text-purple-300 uppercase place-self-center"><%= role |> Atom.to_string() |> String.replace(~r/_/, " ") %></span>
+        <span class="font-bold text-brand-300 uppercase place-self-center"><%= role |> Atom.to_string() |> String.replace(~r/_/, " ") %></span>
       <% end %>
 
       <%= for user <- @users do %>
@@ -51,9 +51,9 @@
 
           <%= for role <- @roles do %>
             <%= if role in user.roles do %>
-              <button type="button" phx-click="remove-user-role" phx-value-user-id={user.id} phx-value-role={role} class="px-2 py-1 text-purple-900 transition bg-purple-200 rounded shadow hover:bg-purple-600 hover:text-white">YES</button>
+              <button type="button" phx-click="remove-user-role" phx-value-user-id={user.id} phx-value-role={role} class="px-2 py-1 text-brand-900 transition bg-brand-200 rounded shadow hover:bg-brand-600 hover:text-white">YES</button>
             <% else %>
-              <button type="button" phx-click="add-user-role" phx-value-user-id={user.id} phx-value-role={role} class="px-2 py-1 transition bg-purple-700 rounded shadow hover:bg-purple-600 hover:text-white">ADD</button>
+              <button type="button" phx-click="add-user-role" phx-value-user-id={user.id} phx-value-role={role} class="px-2 py-1 transition bg-brand-700 rounded shadow hover:bg-brand-600 hover:text-white">ADD</button>
             <% end %>
           <% end %>
         </fieldset>

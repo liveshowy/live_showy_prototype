@@ -1,26 +1,26 @@
 <div class="flex flex-wrap flex-initial gap-2">
-  <section class="flex flex-col w-full gap-2 px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md">
+  <section class="flex flex-col w-full gap-2 px-4 pt-2 pb-4 bg-brand-800 rounded shadow-md">
     <h1>Backstage</h1>
 
     <p>Welcome. You have been invited backstage, and are awaiting entry to the live stage. You may coordinate with other backstage members via chat.</p>
   </section>
 
-  <section id="instrument" phx-hook="HandleWebMidiDevices" class="flex flex-col w-full gap-2 px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-max">
+  <section id="instrument" phx-hook="HandleWebMidiDevices" class="flex flex-col w-full gap-2 px-4 pt-2 pb-4 bg-brand-800 rounded shadow-md min-w-max">
     <h2>Your Instrument</h2>
 
     <DynamicInstrument.render instrument={@assigned_instrument} id="assigned-instrument-component" />
 
     <div class="">
-      <span class="font-bold text-purple-2300">REQUEST:</span>
-      <button phx-click="instrument-requested" phx-value-user-id={@current_user.id} phx-value-instrument="drums" type="button" class="px-2 py-1 uppercase transition bg-purple-700 rounded shadow hover:bg-purple-600">DRUMS</button>
+      <span class="font-bold text-brand-2300">REQUEST:</span>
+      <button phx-click="instrument-requested" phx-value-user-id={@current_user.id} phx-value-instrument="drums" type="button" class="px-2 py-1 uppercase transition bg-brand-700 rounded shadow hover:bg-brand-600">DRUMS</button>
 
-      <button phx-click="instrument-requested" phx-value-user-id={@current_user.id} phx-value-instrument="keys" type="button" class="px-2 py-1 uppercase transition bg-purple-700 rounded shadow hover:bg-purple-600">KEYS</button>
+      <button phx-click="instrument-requested" phx-value-user-id={@current_user.id} phx-value-instrument="keys" type="button" class="px-2 py-1 uppercase transition bg-brand-700 rounded shadow hover:bg-brand-600">KEYS</button>
 
-      <button phx-click="instrument-requested" phx-value-user-id={@current_user.id} phx-value-instrument="voice" type="button" class="px-2 py-1 uppercase transition bg-purple-700 rounded shadow hover:bg-purple-600">VOICE</button>
+      <button phx-click="instrument-requested" phx-value-user-id={@current_user.id} phx-value-instrument="voice" type="button" class="px-2 py-1 uppercase transition bg-brand-700 rounded shadow hover:bg-brand-600">VOICE</button>
     </div>
   </section>
 
-  <section id="client-input-devices" class="flex-1 px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-max">
+  <section id="client-input-devices" class="flex-1 px-4 pt-2 pb-4 bg-brand-800 rounded shadow-md min-w-max">
   <%= case @webmidi_supported do %>
   <% true ->  %>
     <h2>Your Input Devices</h2>
@@ -30,17 +30,17 @@
   <% false ->  %>
     <span>WebMIDI is not supported in this browser.</span>
   <% _ ->  %>
-    <span class="text-purple-300">Awaiting WebMIDI status</span>
+    <span class="text-brand-300">Awaiting WebMIDI status</span>
   <% end %>
   </section>
 
-  <section id="performers-list" class="flex-1 px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md min-w-max">
+  <section id="performers-list" class="flex-1 px-4 pt-2 pb-4 bg-brand-800 rounded shadow-md min-w-max">
     <h2>Performers</h2>
 
     <UsersComponent.list users={@performers} current_user={@current_user} id="performers-list" />
   </section>
 
-  <section id="performers-chat" class="flex flex-col justify-between flex-grow gap-1 px-4 pt-2 pb-4 bg-purple-800 rounded shadow-md">
+  <section id="performers-chat" class="flex flex-col justify-between flex-grow gap-1 px-4 pt-2 pb-4 bg-brand-800 rounded shadow-md">
     <h2>Chat</h2>
 
     <ChatBox.list messages={@messages} id="performers-chat-messages" />

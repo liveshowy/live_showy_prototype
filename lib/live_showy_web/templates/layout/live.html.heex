@@ -1,5 +1,5 @@
 <section id="meta-info" class="flex-none w-full max-w-full overflow-hidden bg-black bg-opacity-10 whitespace-nowrap">
-  <div class="flex justify-between gap-2 px-4 py-2 mx-auto overflow-auto text-sm text-purple-300 max-w-7xl">
+  <div class="flex justify-between gap-2 px-4 py-2 mx-auto overflow-auto text-sm text-brand-300 max-w-7xl">
     <.live_component module={LiveShowyWeb.Components.WifiBar} id="wifi-bar" />
     <.live_component module={LiveShowyWeb.Components.LatencyMonitor} id="latency-monitor-bar" user_id={@current_user.id} />
 
@@ -10,13 +10,21 @@
 </section>
 
 <section id="flashes" class="flex-none">
-  <p class="alert alert-info" role="alert"
+  <p class="p-4 rounded-sm shadow-md empty:hidden bg-info-700 text-info-200" role="alert"
     phx-click="lv:clear-flash"
-    phx-value-key="info"><%= live_flash(@flash, :info) %></p>
+    phx-value-key="info">
+    <div class="max-w-7xl">
+      <%= live_flash(@flash, :info) %>
+    </div>
+  </p>
 
-  <p class="alert alert-danger" role="alert"
+  <p class="p-4 rounded-sm shadow-md empty:hidden bg-danger-700 text-danger-200" role="alert"
     phx-click="lv:clear-flash"
-    phx-value-key="error"><%= live_flash(@flash, :error) %></p>
+    phx-value-key="error">
+    <div class="max-w-7xl">
+      <%= live_flash(@flash, :error) %>
+    </div>
+  </p>
 </section>
 
 <main class="flex-1 w-full p-4 mx-auto max-w-7xl">

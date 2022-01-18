@@ -6,11 +6,11 @@ defmodule LiveShowyWeb.Components.DynamicInstrument do
   def render(assigns) do
     assigns =
       if is_struct(assigns.instrument) do
-      Map.merge(assigns, assigns.instrument)
-      |> Map.drop([:instrument])
-    else
-      assigns
-    end
+        Map.merge(assigns, assigns.instrument)
+        |> Map.drop([:instrument])
+      else
+        assigns
+      end
 
     component = Map.get(assigns, :component)
 
@@ -23,12 +23,12 @@ defmodule LiveShowyWeb.Components.DynamicInstrument do
 
       nil ->
         ~H"""
-        <span class="font-bold text-purple-300">Instrument not supported</span>
+        <span class="font-bold text-brand-300">Instrument not supported</span>
         """
 
       _ ->
         ~H"""
-        <span class="font-bold text-purple-300">Instrument not supported</span>
+        <span class="font-bold text-brand-300">Instrument not supported</span>
         """
     end
   end

@@ -67,7 +67,7 @@ defmodule LiveShowyWeb.Components.Keyboard do
 
   defp get_class(:black) do
     @default_class <>
-      " bg-gradient-to-b from-purple-600 to-purple-700 text-white active:to-black"
+      " bg-gradient-to-b from-brand-600 to-brand-700 text-white active:to-black"
   end
 
   defp get_class(:white),
