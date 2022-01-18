@@ -34,3 +34,6 @@ npm-debug.log
 /assets/node_modules/
 
 .DS_Store
+
+# Ignore generated js hook files for components
+assets/js/_hooks/
