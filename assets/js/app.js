@@ -1,9 +1,3 @@
-// We import the CSS which is extracted to its own file by esbuild.
-// Remove this line if you add a your own CSS build pipeline (e.g postcss).
-// import "../css/app.css"
-
-import Alpine from "alpinejs"
-
 // If you want to use Phoenix channels, run `mix help phx.gen.channel`
 // to get started and then uncomment the line below.
 // import "./user_socket.js"
@@ -27,12 +21,8 @@ import "phoenix_html"
 import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
-import _ from 'underscore'
 import latency from './latency'
 import {init as initMidi, onMidiSuccess, onMidiFailure, onMidiMessage, onMidiDeviceChange} from './midi'
-
-window.Alpine = Alpine
-Alpine.start()
 
 let Hooks = {
   TrackTouchEvents: {
@@ -147,13 +137,7 @@ let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("
 let liveSocket = new LiveSocket("/live", Socket, {
   params: {_csrf_token: csrfToken, userToken},
   hooks: Hooks,
-  dom: {
-    onBeforeElUpdated(from, to) {
-      if (from._x_dataStack) {
-        window.Alpine.clone(from, to)
-      }
-    },
-  },
+  dom: {},
 })
 
 // Show progress bar on live navigation and form submits
