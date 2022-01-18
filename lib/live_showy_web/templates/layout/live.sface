@@ -5,28 +5,14 @@
 
     <span class="flex-grow"></span>
 
-    <span>Username: <strong><%= @current_user.username %></strong></span>
+    <span>Username: <strong>{ @current_user.username }</strong></span>
   </div>
 </section>
 
 <section id="flashes" class="flex-none">
-  <p class="p-4 rounded-sm shadow-md empty:hidden bg-info-700 text-info-200" role="alert"
-    phx-click="lv:clear-flash"
-    phx-value-key="info">
-    <div class="max-w-7xl">
-      <%= live_flash(@flash, :info) %>
-    </div>
-  </p>
-
-  <p class="p-4 rounded-sm shadow-md empty:hidden bg-danger-700 text-danger-200" role="alert"
-    phx-click="lv:clear-flash"
-    phx-value-key="error">
-    <div class="max-w-7xl">
-      <%= live_flash(@flash, :error) %>
-    </div>
-  </p>
+  <LiveShowyWeb.Components.Alert flash={@flash} />
 </section>
 
 <main class="flex-1 w-full p-4 mx-auto max-w-7xl">
-  <%= @inner_content %>
+  { @inner_content }
 </main>
