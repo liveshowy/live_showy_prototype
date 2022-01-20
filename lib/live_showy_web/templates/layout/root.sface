@@ -14,29 +14,7 @@
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
   <body class="flex flex-col justify-between w-full h-full max-w-full gap-4 overflow-auto leading-normal tracking-wide text-white bg-brand-900">
-    <header class="sticky top-0 z-50 flex-none shadow-md select-none text-brand-200">
-      <section class="bg-gradient-to-br from-brand-700 to-brand-900">
-        <nav class="mx-auto max-w-7xl">
-          <ul class="flex flex-wrap gap-4 p-4">
-            <li>
-              { link "LiveShowy", to: Routes.landing_index_path(@conn, :index), class: "hover:text-white" }
-            </li>
-
-            <span class="flex-grow"></span>
-
-            <li>
-              { link "Backstage", to: Routes.backstage_index_path(@conn, :index), class: "hover:text-white" }
-            </li>
-            <li>
-              { link "Stage Manager", to: Routes.stage_manager_index_path(@conn, :index), class: "hover:text-white" }
-            </li>
-            {#if function_exported?(Routes, :live_dashboard_path, 2) }
-              <li>{ link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home), class: "hover:text-white" }</li>
-            {/if}
-          </ul>
-        </nav>
-      </section>
-    </header>
+    <LiveShowyWeb.Components.NavBar conn={@conn} />
 
     { @inner_content }
   </body>
