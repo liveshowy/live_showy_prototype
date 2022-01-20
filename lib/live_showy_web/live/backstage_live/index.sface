@@ -8,16 +8,38 @@
   <section id="instrument" phx-hook="HandleWebMidiDevices" class="flex flex-col w-full gap-2 px-4 pt-2 pb-4 rounded shadow-md bg-brand-800 min-w-max">
     <h2>Your Instrument</h2>
 
-    <DynamicInstrument.render instrument={@assigned_instrument} id="assigned-instrument-component" />
-
     <div class="">
       <span class="font-bold text-brand-2300">REQUEST:</span>
-      <button phx-click="instrument-requested" phx-value-user-id={@current_user.id} phx-value-instrument="drums" type="button" class="px-2 py-1 uppercase transition rounded shadow bg-brand-700 hover:bg-brand-600">DRUMS</button>
 
-      <button phx-click="instrument-requested" phx-value-user-id={@current_user.id} phx-value-instrument="keys" type="button" class="px-2 py-1 uppercase transition rounded shadow bg-brand-700 hover:bg-brand-600">KEYS</button>
+      <Button
+        label="DRUMS"
+        click="instrument-requested"
+        attrs={%{
+          "phx-value-user-id" => @current_user.id,
+          "phx-value-instrument" => "drums",
+        }}
+      />
 
-      <button phx-click="instrument-requested" phx-value-user-id={@current_user.id} phx-value-instrument="voice" type="button" class="px-2 py-1 uppercase transition rounded shadow bg-brand-700 hover:bg-brand-600">VOICE</button>
+      <Button
+        label="KEYS"
+        click="instrument-requested"
+        attrs={%{
+          "phx-value-user-id" => @current_user.id,
+          "phx-value-instrument" => "keys",
+        }}
+      />
+
+      <Button
+        label="VOICE"
+        click="instrument-requested"
+        attrs={%{
+          "phx-value-user-id" => @current_user.id,
+          "phx-value-instrument" => "voice",
+        }}
+      />
     </div>
+
+    <DynamicInstrument.render instrument={@assigned_instrument} id="assigned-instrument-component" />
   </section>
 
   <section id="client-input-devices" class="flex-1 px-4 pt-2 pb-4 rounded shadow-md bg-brand-800 min-w-max">
@@ -43,7 +65,6 @@
   <section id="performers-chat" class="flex flex-col justify-between flex-grow gap-1 px-4 pt-2 pb-4 rounded shadow-md bg-brand-800">
     <h2>Chat</h2>
 
-    <ChatBox.list messages={@messages} id="performers-chat-messages" />
-    <ChatBox.new_message message={@form_message} class="place-self-end" id="performers-chat-form" />
+    <ChatBox messages={@messages} show_form={true} current_message={@form_message} />
   </section>
 </div>
