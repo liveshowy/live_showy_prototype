@@ -2,20 +2,30 @@ defmodule LiveShowyWeb.Components.Button do
   @moduledoc false
   use Surface.Component
 
-  prop type, :string, default: "button", values!: ["button", "submit", "reset"]
-  prop rounded_class, :css_class, default: "rounded-sm"
   prop click, :event
+  prop value, :any
+  prop label, :string
+  prop type, :string, default: "button", values!: ["button", "submit", "reset"]
+  prop attrs, :map, default: %{}
 
-  slot default, required: true
+  prop class, :css_class,
+    default: "px-2 py-1 uppercase transition font-bold bg-brand-700 hover:bg-brand-600"
+
+  prop rounded, :css_class, default: "rounded"
+  prop shadow, :css_class, default: "shadow"
+
+  slot default
 
   def render(assigns) do
     ~F"""
     <button
       type={@type}
-      class={@rounded_class}
+      class={@class, @rounded, @shadow}
       :on-click={@click}
+      value={@value}
+      {...@attrs}
     >
-      <#slot />
+      <#slot>{@label}</#slot>
     </button>
     """
   end
