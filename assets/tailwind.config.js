@@ -24,11 +24,15 @@ module.exports = {
           from: { opacity: 0, transform: 'translateY(-0.2rem)'},
           to: { opacity: 1, transform: 'initial'},
         },
+        'fade-out-slide-up': {
+          from: { opacity: 1, transform: 'initial'},
+          to: { opacity: 0, transform: 'translateY(-0.2rem)'},
+        },
       },
       animation: {
         'fade-in': 'fade-in 500ms ease-in-out',
         'fade-in-slide-down': 'fade-in-slide-down 250ms ease-in-out',
-        'fade-out-slide-up': 'fade-in-slide-down 100ms ease-in-out reverse',
+        'fade-out-slide-up': 'fade-out-slide-up 100ms',
       },
     },
   },
