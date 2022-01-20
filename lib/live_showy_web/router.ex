@@ -27,7 +27,7 @@ defmodule LiveShowyWeb.Router do
     plug :accepts, ["json"]
   end
 
-  live_session :default, on_mount: {LiveShowyWeb.InitAssigns, :user} do
+  live_session :default, on_mount: {LiveShowyWeb.SessionHooks.InitAssigns, :user} do
     scope "/", LiveShowyWeb do
       pipe_through [:browser, :require_user]
 
