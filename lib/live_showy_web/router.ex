@@ -33,8 +33,6 @@ defmodule LiveShowyWeb.Router do
 
       live "/", LandingLive.Index, :index
       live "/dots", DotsLive.Index, :index
-      live "/keys", KeysLive.Index, :index
-      live "/drum-pad", DrumPadLive.Index, :index
     end
 
     scope "/backstage", LiveShowyWeb do
