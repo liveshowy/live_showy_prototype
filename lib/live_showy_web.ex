@@ -39,11 +39,15 @@ defmodule LiveShowyWeb do
 
       # Include shared imports and aliases for views
       unquote(view_helpers())
+
       import Surface
+
+      use Surface.View,
+        root: "lib/live_showy_web/templates"
     end
   end
 
-  def surface_view do
+  def live_view do
     quote do
       use Surface.LiveView,
         layout: {LiveShowyWeb.LayoutView, "live.html"},
@@ -53,27 +57,9 @@ defmodule LiveShowyWeb do
     end
   end
 
-  def surface_component do
-    quote do
-      use Surface.LiveComponent
-
-      unquote(view_helpers())
-    end
-  end
-
-  def live_view do
-    quote do
-      use Phoenix.LiveView,
-        layout: {LiveShowyWeb.LayoutView, "live.html"},
-        container: {:div, style: "display: contents;"}
-
-      unquote(view_helpers())
-    end
-  end
-
   def live_component do
     quote do
-      use Phoenix.LiveComponent
+      use Surface.LiveComponent
 
       unquote(view_helpers())
     end

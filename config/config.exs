@@ -22,6 +22,17 @@ config :live_showy,
 
 config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
+config :tailwind,
+  version: "3.0.15",
+  default: [
+    args: ~w(
+      --config=./tailwind.config.js
+      --input=./css/app.css
+      --output=../priv/static/assets/app.css
+    ),
+    cd: Path.expand("../assets", __DIR__)
+  ]
+
 # Configures the endpoint
 config :live_showy, LiveShowyWeb.Endpoint,
   url: [host: "localhost"],
@@ -60,7 +71,8 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 config :surface, :components, [
-  {Surface.Components.Form.ErrorTag, default_translator: {LiveShowyWeb.ErrorHelpers, :translate_error}}
+  {Surface.Components.Form.ErrorTag,
+   default_translator: {LiveShowyWeb.ErrorHelpers, :translate_error}}
 ]
 
 # Import environment specific config. This must remain at the bottom
