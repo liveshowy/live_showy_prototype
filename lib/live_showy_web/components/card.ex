@@ -7,6 +7,7 @@ defmodule LiveShowyWeb.Components.Card do
   prop shadow, :string, default: "shadow"
   prop padding, :css_class, default: "p-4"
   prop transparent, :boolean, default: false
+  prop compact, :boolean, default: false
   prop attrs, :map, default: %{}
 
   slot header
@@ -17,17 +18,23 @@ defmodule LiveShowyWeb.Components.Card do
     ~F"""
     <div
       class={
-        "min-w-min flex flex-col gap-1 overflow-auto w-full h-full",
+        "min-w-min overflow-hidden w-full h-full",
         @class,
         @rounded,
         @shadow,
         @padding,
-        "bg-brand-800": !@transparent
+        "bg-brand-800": !@transparent,
+        "flex flex-wrap gap-2 items-baseline justify-between": @compact,
+        "flex flex-col gap-1": !@compact
       }
       {...@attrs}
     >
       <#slot name="header" />
-      <#slot name="body" />
+
+      <div class="flex-1 overflow-auto">
+        <#slot name="body" />
+      </div>
+
       <#slot name="footer" />
     </div>
     """
