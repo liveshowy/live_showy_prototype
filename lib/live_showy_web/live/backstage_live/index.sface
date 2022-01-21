@@ -18,10 +18,11 @@
 
         <span class="flex-grow"></span>
 
-        <div>
+        <ButtonBar>
           <Button
             label="DRUMS"
             click="instrument-requested"
+            rounded="first:rounded-l last:rounded-r only:rounded"
             active={@assigned_instrument && @assigned_instrument.component == LiveShowyWeb.Components.DrumPad}
             attrs={%{
               "phx-value-user-id" => @current_user.id,
@@ -32,13 +33,14 @@
           <Button
             label="KEYS"
             click="instrument-requested"
+            rounded="first:rounded-l last:rounded-r only:rounded"
             active={@assigned_instrument && @assigned_instrument.component == LiveShowyWeb.Components.Keyboard}
             attrs={%{
               "phx-value-user-id" => @current_user.id,
               "phx-value-instrument" => "keys",
             }}
           />
-        </div>
+        </ButtonBar>
       </div>
     </:header>
 
