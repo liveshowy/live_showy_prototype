@@ -20,7 +20,7 @@ defmodule LiveShowyWeb.Components.Button do
     <button
       type={@type}
       class={
-        "px-2 py-1 uppercase transition font-bold bg-brand-700 active:bg-white active:text-brand-700",
+        "px-2 py-1 uppercase transition font-bold bg-brand-700 active:bg-white active:text-brand-700 outline-none focus:ring-4 focus:ring-accent-400",
         @class,
         @rounded,
         @shadow,
