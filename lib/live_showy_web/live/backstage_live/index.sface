@@ -1,5 +1,5 @@
-<div class="grid justify-between flex-1 h-full max-h-full grid-cols-1 gap-2 xl:grid-cols-4 place-items-stretch place-content-stretch auto-rows-auto">
-  <Card class="col-span-full">
+<div class="grid h-full max-h-full grid-cols-1 gap-2 xl:grid-cols-4 xl:grid-rows-[auto_auto_1fr] auto-rows-min">
+  <Card class="col-span-full" compact={true}>
     <:header>
       <h1>Backstage</h1>
     </:header>
@@ -13,33 +13,36 @@
 
   <Card attrs={%{"phx-hook": "HandleWebMidiDevices", id: "backstage-instrument-preview"}} class="col-span-full">
     <:header>
-      <h2>Your Instrument</h2>
+      <div class="flex flex-wrap gap-2">
+        <h2>Your Instrument</h2>
+
+        <span class="flex-grow"></span>
+
+        <div>
+          <Button
+            label="DRUMS"
+            click="instrument-requested"
+            active={@assigned_instrument && @assigned_instrument.component == LiveShowyWeb.Components.DrumPad}
+            attrs={%{
+              "phx-value-user-id" => @current_user.id,
+              "phx-value-instrument" => "drums",
+            }}
+          />
+
+          <Button
+            label="KEYS"
+            click="instrument-requested"
+            active={@assigned_instrument && @assigned_instrument.component == LiveShowyWeb.Components.Keyboard}
+            attrs={%{
+              "phx-value-user-id" => @current_user.id,
+              "phx-value-instrument" => "keys",
+            }}
+          />
+        </div>
+      </div>
     </:header>
 
     <:body>
-      <div class="">
-        <span class="font-bold text-brand-2300">REQUEST:</span>
-
-        <Button
-          label="DRUMS"
-          click="instrument-requested"
-          active={@assigned_instrument && @assigned_instrument.component == LiveShowyWeb.Components.DrumPad}
-          attrs={%{
-            "phx-value-user-id" => @current_user.id,
-            "phx-value-instrument" => "drums",
-          }}
-        />
-
-        <Button
-          label="KEYS"
-          click="instrument-requested"
-          active={@assigned_instrument && @assigned_instrument.component == LiveShowyWeb.Components.Keyboard}
-          attrs={%{
-            "phx-value-user-id" => @current_user.id,
-            "phx-value-instrument" => "keys",
-          }}
-        />
-      </div>
 
       <DynamicInstrument.render instrument={@assigned_instrument} id="assigned-instrument-component" />
     </:body>
