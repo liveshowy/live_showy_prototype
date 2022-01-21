@@ -8,9 +8,8 @@ defmodule LiveShowyWeb.Components.Button do
   prop type, :string, default: "button", values!: ["button", "submit", "reset"]
   prop attrs, :map, default: %{}
 
-  prop class, :css_class,
-    default: "px-2 py-1 uppercase transition font-bold bg-brand-700 hover:bg-brand-600"
-
+  prop class, :css_class, default: ""
+  prop active, :boolean, default: false
   prop rounded, :css_class, default: "rounded"
   prop shadow, :css_class, default: "shadow"
 
@@ -20,7 +19,14 @@ defmodule LiveShowyWeb.Components.Button do
     ~F"""
     <button
       type={@type}
-      class={@class, @rounded, @shadow}
+      class={
+        "px-2 py-1 uppercase transition font-bold bg-brand-700 active:bg-white active:text-brand-700",
+        @class,
+        @rounded,
+        @shadow,
+        "hover:bg-brand-600": !@active,
+        "bg-white text-brand-700 hover:bg-brand-200": @active
+      }
       :on-click={@click}
       value={@value}
       {...@attrs}

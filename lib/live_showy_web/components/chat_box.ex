@@ -8,11 +8,12 @@ defmodule LiveShowyWeb.Components.ChatBox do
   prop messages, :list, default: []
   prop show_form, :boolean, default: false
   prop current_message, :string, default: ""
+  prop class, :css_class, default: ""
 
   def render(assigns) do
     ~F"""
-    <div class="grid h-full grid-cols-1 overflow-hidden rounded auto-rows-auto max-h-96">
-      <ul class="space-y-2 overflow-y-auto divide-y divide-brand-700 shadow-inner-lg">
+    <div class={"grid h-full max-h-full grid-cols-1 overflow-hidden rounded grid-rows-[1fr_auto]", @class}>
+      <ul class="space-y-2 overflow-y-auto divide-y bg-brand-800 divide-brand-600 shadow-inner-lg">
         {#for message <- @messages}
           <.message_item message={message} />
         {/for}
@@ -61,7 +62,7 @@ defmodule LiveShowyWeb.Components.ChatBox do
     # TODO: convert this to a proper Phoenix form
     ~F"""
     <form phx-submit="submit-message" class={"flex divide-x-2 divide-brand-800 rounded-b w-full #{@class}"}>
-      <input title="may not be empty" name="body" value={@message.body} type="text" class="flex-grow px-2 py-2 transition resize-none bg-brand-700 focus:bg-brand-600 focus:outline-none" />
+      <input title="may not be empty" name="body" value={@message.body} type="text" class="flex-grow px-2 py-2 text-white transition resize-none shadow-inner-lg bg-brand-700 focus:bg-white focus:text-black focus:outline-none" />
 
       <Button label="SEND" type="submit" rounded="rounded-br" shadow={nil} />
     </form>

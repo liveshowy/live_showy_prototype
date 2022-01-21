@@ -5,9 +5,7 @@ defmodule LiveShowyWeb.Components.Alert do
 
   prop flash, :map, default: nil
 
-  prop classes, :css_class,
-    default:
-      "animate-fade-in-slide-down w-full rounded shadow-md text-white p-4 mx-auto max-w-7xl"
+  prop class, :css_class, default: ""
 
   def render(assigns) do
     ~F"""
@@ -15,7 +13,8 @@ defmodule LiveShowyWeb.Components.Alert do
       <aside
         id="alert"
         class={
-          @classes,
+          "animate-fade-in-slide-down w-full 2xl:rounded shadow-md text-white p-4 mx-auto max-w-screen-2xl",
+          @class,
           "bg-danger-700": @flash["error"],
           "bg-info-600": @flash["info"]
         }
