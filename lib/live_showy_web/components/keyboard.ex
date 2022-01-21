@@ -27,7 +27,7 @@ defmodule LiveShowyWeb.Components.Keyboard do
                 "B"
               ])
 
-  @default_class "flex flex-col gap-1 items-center justify-end w-20 h-64 p-1 font-bold transition-color duration-150 rounded-b-xl"
+  @default_class "flex flex-col gap-1 items-center justify-end w-20 h-64 p-1 font-bold transition-color duration-150 rounded-b-lg rounded-t-sm"
 
   def update(assigns, socket) do
     {notes, _index} = @notes |> Enum.at(assigns.octave, [])
