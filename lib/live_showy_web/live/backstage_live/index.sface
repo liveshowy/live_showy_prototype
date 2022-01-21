@@ -1,70 +1,86 @@
-<div class="flex flex-wrap flex-initial gap-2">
-  <section class="flex flex-col w-full gap-2 px-4 pt-2 pb-4 rounded shadow-md bg-brand-800">
-    <h1>Backstage</h1>
+<div class="grid justify-between flex-1 h-full max-h-full grid-cols-1 gap-2 xl:grid-cols-4 place-items-stretch place-content-stretch auto-rows-auto">
+  <Card class="col-span-full">
+    <:header>
+      <h1>Backstage</h1>
+    </:header>
 
-    <p>Welcome. You have been invited backstage, and are awaiting entry to the live stage. You may coordinate with other backstage members via chat.</p>
-  </section>
+    <:body>
+      <p>
+        Welcome. You have been invited backstage, and are awaiting entry to the live stage. You may coordinate with other backstage members via chat.
+      </p>
+    </:body>
+  </Card>
 
-  <section id="instrument" phx-hook="HandleWebMidiDevices" class="flex flex-col w-full gap-2 px-4 pt-2 pb-4 rounded shadow-md bg-brand-800 min-w-max">
-    <h2>Your Instrument</h2>
+  <Card attrs={%{"phx-hook": "HandleWebMidiDevices"}} class="col-span-full">
+    <:header>
+      <h2>Your Instrument</h2>
+    </:header>
 
-    <div class="">
-      <span class="font-bold text-brand-2300">REQUEST:</span>
+    <:body>
+      <div class="">
+        <span class="font-bold text-brand-2300">REQUEST:</span>
 
-      <Button
-        label="DRUMS"
-        click="instrument-requested"
-        attrs={%{
-          "phx-value-user-id" => @current_user.id,
-          "phx-value-instrument" => "drums",
-        }}
-      />
+        <Button
+          label="DRUMS"
+          click="instrument-requested"
+          active={@assigned_instrument && @assigned_instrument.component == LiveShowyWeb.Components.DrumPad}
+          attrs={%{
+            "phx-value-user-id" => @current_user.id,
+            "phx-value-instrument" => "drums",
+          }}
+        />
 
-      <Button
-        label="KEYS"
-        click="instrument-requested"
-        attrs={%{
-          "phx-value-user-id" => @current_user.id,
-          "phx-value-instrument" => "keys",
-        }}
-      />
+        <Button
+          label="KEYS"
+          click="instrument-requested"
+          active={@assigned_instrument && @assigned_instrument.component == LiveShowyWeb.Components.Keyboard}
+          attrs={%{
+            "phx-value-user-id" => @current_user.id,
+            "phx-value-instrument" => "keys",
+          }}
+        />
+      </div>
 
-      <Button
-        label="VOICE"
-        click="instrument-requested"
-        attrs={%{
-          "phx-value-user-id" => @current_user.id,
-          "phx-value-instrument" => "voice",
-        }}
-      />
-    </div>
+      <DynamicInstrument.render instrument={@assigned_instrument} id="assigned-instrument-component" />
+    </:body>
+  </Card>
 
-    <DynamicInstrument.render instrument={@assigned_instrument} id="assigned-instrument-component" />
-  </section>
+  <Card>
+    <:header>
+      <h2>Your MIDI Devices</h2>
+    </:header>
 
-  <section id="client-input-devices" class="flex-1 px-4 pt-2 pb-4 rounded shadow-md bg-brand-800 min-w-max">
-  {#case @webmidi_supported}
-  {#match true}
-    <h2>Your Input Devices</h2>
-    <p class="text-sm">Your device(s) will change color as notes are played.</p>
+    <:body>
+      {#case @webmidi_supported}
+      {#match true}
+        <p class="text-sm">Your device(s) will change color as notes are played.</p>
 
-    <ClientMidiDevices.list id="client-input-devices-list" devices={@client_input_devices} playing_devices={@playing_devices} />
-  {#match false}
-    <span>WebMIDI is not supported in this browser.</span>
-  {#match _}
-    <span class="text-brand-300">Awaiting WebMIDI status</span>
-  {/case}
-  </section>
+        <ClientMidiDevices.list id="client-input-devices-list" devices={@client_input_devices} playing_devices={@playing_devices} />
+      {#match false}
+        <span>WebMIDI is not supported in this browser.</span>
+      {#match _}
+        <span class="text-brand-300">Awaiting WebMIDI status</span>
+      {/case}
+    </:body>
+  </Card>
 
-  <section id="performers-list" class="flex-1 px-4 pt-2 pb-4 rounded shadow-md bg-brand-800 min-w-max">
-    <h2>Performers</h2>
+  <Card>
+    <:header>
+      <h2>Performers</h2>
+    </:header>
 
-    <UsersComponent.list users={@performers} current_user={@current_user} id="performers-list" />
-  </section>
+    <:body>
+      <UsersComponent.list users={@performers} current_user={@current_user} id="performers-list" />
+    </:body>
+  </Card>
 
-  <section id="performers-chat" class="flex flex-col justify-between flex-grow gap-1 px-4 pt-2 pb-4 rounded shadow-md bg-brand-800">
-    <h2>Chat</h2>
+  <Card class="xl:col-span-2">
+    <:header>
+      <h2>Chat</h2>
+    </:header>
 
-    <ChatBox messages={@messages} show_form={true} current_message={@form_message} />
-  </section>
+    <:body>
+      <ChatBox messages={@messages} show_form={true} current_message={@form_message} class="flex-1" />
+    </:body>
+  </Card>
 </div>

@@ -12,6 +12,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   alias LiveShowy.Chat.Backstage, as: BackstageChat
   alias LiveShowyWeb.Components.Users, as: UsersComponent
   alias LiveShowyWeb.Components.Button
+  alias LiveShowyWeb.Components.Card
   alias LiveShowyWeb.Components.ChatBox
   alias LiveShowyWeb.Components.DynamicInstrument
   alias LiveShowyWeb.Components.ClientMidiDevices
