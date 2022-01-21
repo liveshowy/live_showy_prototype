@@ -11,7 +11,7 @@
     </:body>
   </Card>
 
-  <Card attrs={%{"phx-hook": "HandleWebMidiDevices"}} class="col-span-full">
+  <Card attrs={%{"phx-hook": "HandleWebMidiDevices", id: "backstage-instrument-preview"}} class="col-span-full">
     <:header>
       <h2>Your Instrument</h2>
     </:header>
