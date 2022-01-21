@@ -90,8 +90,8 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   end
 
   defp subscribe do
-    Phoenix.PubSub.subscribe(LiveShowy.PubSub, LiveShowy.Users.get_topic())
-    Phoenix.PubSub.subscribe(LiveShowy.PubSub, LiveShowy.UserRoles.get_topic())
-    Phoenix.PubSub.subscribe(LiveShowy.PubSub, Wifi.get_topic())
+    LiveShowy.Users.subscribe()
+    LiveShowy.UserRoles.subscribe()
+    Wifi.subscribe()
   end
 end

@@ -8,7 +8,7 @@ defmodule LiveShowy.Wifi do
 
   @topic "wifi"
 
-  def get_topic, do: @topic
+  def subscribe, do: PubSub.subscribe(LiveShowy.PubSub, @topic)
 
   def start_link(state) do
     GenServer.start_link(__MODULE__, state, name: __MODULE__)

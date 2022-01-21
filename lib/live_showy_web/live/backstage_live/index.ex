@@ -18,9 +18,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   alias LiveShowyWeb.Components.DynamicInstrument
   alias LiveShowyWeb.Components.ClientMidiDevices
 
-  @presence_topic "backstage_performers"
-
-  def get_topic, do: @presence_topic
+  @topic "backstage_performers"
 
   @impl true
   def mount(_params, _session, %{assigns: %{current_user: current_user}} = socket) do
@@ -28,13 +26,13 @@ defmodule LiveShowyWeb.BackstageLive.Index do
 
     Presence.track(
       self(),
-      @presence_topic,
+      @topic,
       current_user.id,
       current_user
     )
 
     performers =
-      Presence.list(@presence_topic)
+      Presence.list(@topic)
       |> Enum.map(fn {_user_id, performer} -> List.first(performer[:metas]) end)
 
     {_user_id, assigned_instrument} = UserInstruments.get(current_user.id)
@@ -52,22 +50,22 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   end
 
   defp subscribe do
-    Phoenix.PubSub.subscribe(LiveShowy.PubSub, @presence_topic)
-    Phoenix.PubSub.subscribe(LiveShowy.PubSub, BackstageChat.get_topic())
-    Phoenix.PubSub.subscribe(LiveShowy.PubSub, Users.get_topic())
+    Phoenix.PubSub.subscribe(LiveShowy.PubSub, @topic)
+    BackstageChat.subscribe()
+    Users.subscribe()
   end
 
   @impl true
   def handle_info(%{event: "presence_diff"}, socket) do
     performers =
-      Presence.list(@presence_topic)
+      Presence.list(@topic)
       |> Enum.map(fn {_user_id, performer} -> List.first(performer[:metas]) end)
 
     {:noreply, assign(socket, performers: performers)}
   end
 
   def handle_info({:user_updated, user}, socket) do
-    present_user_metas = Presence.get_by_key(@presence_topic, user.id)[:metas]
+    present_user_metas = Presence.get_by_key(@topic, user.id)[:metas]
 
     if present_user_metas do
       metas =
@@ -75,7 +73,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
         |> List.first()
         |> Map.merge(user)
 
-      Presence.update(self(), @presence_topic, metas.id, metas)
+      Presence.update(self(), @topic, metas.id, metas)
     end
 
     update_chat(socket)

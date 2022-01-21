@@ -13,7 +13,7 @@ defmodule LiveShowyWeb.LandingLive.Index do
   end
 
   defp subscribe do
-    Phoenix.PubSub.subscribe(LiveShowy.PubSub, Wifi.get_topic())
+    Wifi.subscribe()
   end
 
   @impl true
