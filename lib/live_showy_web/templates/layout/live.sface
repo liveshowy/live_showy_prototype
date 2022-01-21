@@ -1,5 +1,5 @@
-<LiveShowyWeb.Components.Alert flash={@flash} />
+<LiveShowyWeb.Components.Alert flash={@flash} class="self-start" />
 
-<main class="flex-1 w-full p-4 mx-auto max-w-7xl">
+<main class="flex-1 w-full p-4 mx-auto max-w-screen-2xl">
   { @inner_content }
 </main>

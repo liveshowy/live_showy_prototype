@@ -13,7 +13,7 @@
     </script>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
-  <body class="flex flex-col justify-between w-full h-full max-w-full gap-4 overflow-auto leading-normal tracking-wide text-white bg-brand-900">
+  <body class="flex flex-col w-full h-full max-w-full gap-2 overflow-auto leading-normal tracking-wide text-white bg-brand-900">
     <LiveShowyWeb.Components.NavBar conn={@conn} />
 
     { @inner_content }
