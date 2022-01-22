@@ -79,13 +79,18 @@
     </:body>
   </Card>
 
-  <Card class="xl:col-span-2">
+  <Card class="xl:col-span-2" padding="pt-4">
     <:header>
-      <h2>Chat</h2>
+      <h2 class="px-4">Chat</h2>
     </:header>
 
     <:body>
-      <ChatBox messages={@messages} show_form={true} current_message={@form_message} class="flex-1" />
+      <Chat
+        chat_module={BackstageChat}
+        current_user={@current_user}
+        id={@chat_component_id}
+        messages={BackstageChat.list()}
+      />
     </:body>
   </Card>
 </div>

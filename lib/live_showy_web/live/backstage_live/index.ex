@@ -6,15 +6,14 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   use LiveShowyWeb, :live_view
   alias LiveShowyWeb.Presence
   alias LiveShowy.Users
+  alias LiveShowy.Chat.Backstage, as: BackstageChat
   alias LiveShowy.Instrument
   alias LiveShowy.UserInstruments
-  alias LiveShowy.Chat.Message
-  alias LiveShowy.Chat.Backstage, as: BackstageChat
   alias LiveShowyWeb.Components.Users, as: UsersComponent
   alias LiveShowyWeb.Components.Button
   alias LiveShowyWeb.Components.ButtonBar
   alias LiveShowyWeb.Components.Card
-  alias LiveShowyWeb.Components.ChatBox
+  alias LiveShowyWeb.Components.Chat
   alias LiveShowyWeb.Components.DynamicInstrument
   alias LiveShowyWeb.Components.ClientMidiDevices
 
@@ -40,18 +39,16 @@ defmodule LiveShowyWeb.BackstageLive.Index do
     {:ok,
      assign(socket,
        performers: performers,
-       messages: BackstageChat.list(),
-       form_message: Message.new(),
        webmidi_supported: nil,
        assigned_instrument: assigned_instrument,
        client_input_devices: [],
+       chat_component_id: "backstage-chat",
        playing_devices: MapSet.new()
      )}
   end
 
   defp subscribe do
     Phoenix.PubSub.subscribe(LiveShowy.PubSub, @topic)
-    BackstageChat.subscribe()
     Users.subscribe()
   end
 
@@ -76,16 +73,17 @@ defmodule LiveShowyWeb.BackstageLive.Index do
       Presence.update(self(), @topic, metas.id, metas)
     end
 
-    update_chat(socket)
+    {:noreply, socket}
   end
 
-  def handle_info({event, _message}, socket)
+  def handle_info({event, message}, %{assigns: %{chat_component_id: chat_component_id}} = socket)
       when event in [:message_added, :message_updated] do
-    update_chat(socket)
+    Chat.add_message(chat_component_id, message, socket)
+    {:noreply, socket}
   end
 
   def handle_info(message, socket) do
-    Logger.warn(unknown_info: message)
+    Logger.warn(unknown_info: {__MODULE__, message})
     {:noreply, socket}
   end
 
@@ -98,20 +96,6 @@ defmodule LiveShowyWeb.BackstageLive.Index do
     Logger.info(instrument_requested: {user_id, instrument})
     {_user_id, new_instrument} = set_instrument(user_id, instrument)
     {:noreply, assign(socket, assigned_instrument: new_instrument)}
-  end
-
-  def handle_event(
-        "submit-message",
-        %{"body" => body},
-        %{assigns: %{current_user: current_user}} = socket
-      ) do
-    %{
-      body: body,
-      user_id: current_user.id
-    }
-    |> BackstageChat.add()
-
-    update_chat(socket)
   end
 
   def handle_event("webmidi-supported", boolean, socket) do
@@ -152,10 +136,6 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   def handle_event(event, value, socket) do
     Logger.warning(unknown_event: {event, value})
     {:noreply, socket}
-  end
-
-  defp update_chat(socket) do
-    {:noreply, assign(socket, messages: BackstageChat.list())}
   end
 
   defp set_instrument(user_id, instrument) do
