@@ -36,7 +36,7 @@ defmodule LiveShowy.Chat.Backstage do
     case Enum.all?(statuses, &is_atom/1) do
       true ->
         :ets.tab2list(__MODULE__)
-        |> Enum.reduce([], &filter_and_match_user/2)
+        |> Enum.reduce([], &filter_and_match_user(&1, &2, statuses))
         |> Enum.sort(&(DateTime.compare(&1.created_at, &2.created_at) != :gt))
 
       _ ->
@@ -44,10 +44,10 @@ defmodule LiveShowy.Chat.Backstage do
     end
   end
 
-  defp filter_and_match_user({_id, message}, acc) do
+  defp filter_and_match_user({_id, message}, acc, statuses) do
     usernames = Users.map_usernames()
 
-    if message.status in [:public] do
+    if message.status in statuses do
       username = Map.get(usernames, message.user_id)
       [Map.put(message, :username, username) | acc]
     else
