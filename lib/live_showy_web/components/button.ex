@@ -2,7 +2,7 @@ defmodule LiveShowyWeb.Components.Button do
   @moduledoc false
   use Surface.Component
 
-  prop click, :event
+  prop click, :event, required: true
   prop value, :any
   prop label, :string
   prop type, :string, default: "button", values!: ["button", "submit", "reset"]
@@ -12,6 +12,7 @@ defmodule LiveShowyWeb.Components.Button do
   prop active, :boolean, default: false
   prop rounded, :css_class, default: "rounded"
   prop shadow, :css_class, default: "shadow"
+  prop uppercase, :boolean, default: true
 
   slot default
 
@@ -24,6 +25,7 @@ defmodule LiveShowyWeb.Components.Button do
         @class,
         @rounded,
         @shadow,
+        uppercase: @uppercase,
         "hover:bg-brand-600": !@active,
         "bg-white text-brand-700 hover:bg-brand-200": @active
       }
