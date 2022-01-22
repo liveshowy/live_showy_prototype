@@ -40,10 +40,10 @@ defmodule LiveShowyWeb do
       # Include shared imports and aliases for views
       unquote(view_helpers())
 
-      import Surface
-
       use Surface.View,
         root: "lib/live_showy_web/templates"
+
+      import Surface
     end
   end
 
@@ -52,6 +52,8 @@ defmodule LiveShowyWeb do
       use Surface.LiveView,
         layout: {LiveShowyWeb.LayoutView, "live.html"},
         container: {:div, style: "display: contents;"}
+
+      import Surface
 
       unquote(view_helpers())
     end
