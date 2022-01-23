@@ -7,7 +7,7 @@ module.exports = {
       colors: {
         default: colors.stone,
         brand: colors.violet,
-        primary: colors.cyan,
+        primary: colors.blue,
         success: colors.emerald,
         warning: colors.orange,
         danger: colors.rose,
