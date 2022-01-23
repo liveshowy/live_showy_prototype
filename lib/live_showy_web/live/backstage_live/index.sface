@@ -1,4 +1,4 @@
-<div class="grid h-full max-h-full grid-cols-1 gap-2 xl:grid-cols-4 xl:grid-rows-[auto_max-content_auto] auto-rows-min">
+<div class="grid h-full max-h-full grid-cols-1 gap-2 xl:grid-cols-4 xl:grid-rows-[min-content_max-content_minmax(30rem,auto)] auto-rows-min">
   <Card class="col-span-full" compact={true}>
     <:header>
       <h1>Backstage</h1>
@@ -6,7 +6,7 @@
 
     <:body>
       <p>
-        Welcome. You have been invited backstage, and are awaiting entry to the live stage. You may coordinate with other backstage members via chat.
+        You are awaiting entry to the live stage. You may coordinate with other backstage members via chat.
       </p>
     </:body>
   </Card>
@@ -47,7 +47,6 @@
     </:header>
 
     <:body>
-
       <DynamicInstrument.render instrument={@assigned_instrument} id="assigned-instrument-component" />
     </:body>
   </Card>
@@ -81,11 +80,7 @@
     </:body>
   </Card>
 
-  <Card class="xl:col-span-2 max-h-[30rem]" padding="pt-4">
-    <:header>
-      <h2 class="px-4">Chat</h2>
-    </:header>
-
+  <Card class="xl:col-span-2 max-h-[30rem] xl:max-h-full" padding="p-0">
     <:body>
       <Chat
         chat_module={BackstageChat}
