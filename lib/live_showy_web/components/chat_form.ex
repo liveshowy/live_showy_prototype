@@ -11,7 +11,7 @@ defmodule LiveShowyWeb.Components.ChatForm do
 
   def render(assigns) do
     ~F"""
-    <Form for={:message} submit={@submit} opts={autocomplete: "off"} class="flex gap-1 p-2 border-t-4 border-default-600">
+    <Form for={:message} submit={@submit} opts={autocomplete: "off"} class="flex gap-1 p-1">
 
       <TextInput
         name="body"

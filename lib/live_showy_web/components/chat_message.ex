@@ -6,24 +6,26 @@ defmodule LiveShowyWeb.Components.ChatMessage do
   prop time, :string
   prop body, :string, required: true
   prop current_user?, :boolean, default: false
+  prop class, :css_class
 
   def render(assigns) do
     ~F"""
     <li
       class={
         "grid items-baseline grid-cols-1 w-5/6 px-4 py-2 rounded-xl shadow-md animate-fade-in-slide-down auto-rows-auto",
-        "bg-default-700 rounded-br-none self-end": @current_user?,
-        "bg-default-800 rounded-bl-none": !@current_user?
+        @class,
+        "bg-gradient-to-bl from-default-100 to-default-400 text-default-900 rounded-br-none self-end": @current_user?,
+        "bg-gradient-to-br from-primary-700 to-primary-900 rounded-bl-none": !@current_user?
       }
       title={"Sent at #{@time}"}
     >
-      <span :if={@username} class={"font-bold text-sm", "justify-self-end text-default-400": @current_user?}>
+      <span :if={@username} class={"font-bold text-sm", "justify-self-end text-primary-800": @current_user?}>
         {#if @current_user?}
-          <span class="font-mono text-xs font-normal transition opacity-50 hover:opacity-100">{@time}</span>
           <span>You</span>
+          @ <span class="font-mono text-xs font-normal">{@time}</span>
         {#else}
           <span>{@username}</span>
-          <span class="font-mono text-xs font-normal transition opacity-50 hover:opacity-100">{@time}</span>
+          @ <span class="font-mono text-xs font-normal">{@time}</span>
         {/if}
       </span>
 

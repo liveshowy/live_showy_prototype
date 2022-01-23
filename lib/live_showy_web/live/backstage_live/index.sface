@@ -1,4 +1,4 @@
-<div class="grid h-full max-h-full grid-cols-1 gap-2 xl:grid-cols-4 xl:grid-rows-[min-content_max-content_minmax(30rem,auto)] auto-rows-min">
+<div class="grid h-full max-h-full grid-cols-1 gap-2 lg:grid-cols-4 lg:grid-rows-[min-content_max-content_min-content_minmax(8rem,auto)] auto-rows-min">
   <Card class="col-span-full" compact={true}>
     <:header>
       <h1>Backstage</h1>
@@ -51,7 +51,7 @@
     </:body>
   </Card>
 
-  <Card>
+  <Card class="col-span-2 lg:col-start-1">
     <:header>
       <h2>Your MIDI Devices</h2>
     </:header>
@@ -61,7 +61,7 @@
       {#match true}
         <p class="text-sm">Your device(s) will change color as notes are played.</p>
 
-        <ClientMidiDevices.list id="client-input-devices-list" devices={@client_input_devices} playing_devices={@playing_devices} />
+        <ClientMidiDevices devices={@client_input_devices} playing_devices={@playing_devices} />
       {#match false}
         <span>WebMIDI is not supported in this browser.</span>
       {#match _}
@@ -70,7 +70,7 @@
     </:body>
   </Card>
 
-  <Card>
+  <Card class="col-span-2 lg:col-start-1">
     <:header>
       <h2>Performers</h2>
     </:header>
@@ -80,7 +80,11 @@
     </:body>
   </Card>
 
-  <Card class="xl:col-span-2 max-h-[30rem] xl:max-h-full" padding="p-0">
+  <Card class="lg:col-start-3 lg:row-start-3 lg:row-span-2 lg:col-span-2 max-h-[30rem] lg:max-h-full bg-default-900" padding="p-0">
+    <:header>
+      <h2 class="px-4 py-2">Chat</h2>
+    </:header>
+
     <:body>
       <Chat
         chat_module={BackstageChat}

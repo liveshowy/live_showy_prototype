@@ -12,6 +12,7 @@ defmodule LiveShowyWeb.Components.Chat do
   prop messages, :list, default: []
   data new_message, :struct, default: Message.new()
   prop show_form, :boolean, default: true
+  prop class, :css_class
 
   def mount(socket) do
     if connected?(socket) do
@@ -48,8 +49,8 @@ defmodule LiveShowyWeb.Components.Chat do
 
   def render(assigns) do
     ~F"""
-    <div class="grid gap-1 bg-default-900 py-1 content-end overscroll-none h-full max-h-full grid-cols-1 grid-rows-[1fr_auto] overflow-hidden">
-      <ul class="flex flex-col gap-2 px-2 overflow-y-auto shadow-inner-lg">
+    <div class={"grid gap-1 content-end overscroll-none h-full max-h-full grid-cols-1 grid-rows-[1fr_auto] overflow-hidden", @class}>
+      <ul class="flex flex-col gap-2 px-1 py-2 overflow-y-auto shadow-inner-lg">
         {#for message <- @messages}
           <ChatMessageComponent
             username={message.username}
@@ -59,7 +60,7 @@ defmodule LiveShowyWeb.Components.Chat do
           />
         {/for}
 
-        <ChatMessageComponent :if={Enum.empty?(@messages)} body="No messages yet" />
+        <ChatMessageComponent :if={Enum.empty?(@messages)} body="No messages yet" class="rounded-sm place-self-center" />
       </ul>
 
       <ChatForm :if={@show_form} submit="submit-message" message={@new_message} />
