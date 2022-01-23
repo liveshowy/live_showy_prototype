@@ -48,7 +48,7 @@ defmodule LiveShowyWeb.Components.Users do
         <%= user_count %> active <%= if user_count == 1, do: "user", else: "users" %>
       </caption>
 
-      <thead class="text-brand-300">
+      <thead class="text-default-300">
         <tr>
           <th>USER</th>
           <th>COLOR</th>

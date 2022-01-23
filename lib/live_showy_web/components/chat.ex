@@ -16,7 +16,6 @@ defmodule LiveShowyWeb.Components.Chat do
   def mount(socket) do
     if connected?(socket) do
       Backstage.subscribe()
-      Logger.info(subscribed: Backstage)
     end
 
     {:ok, socket}
@@ -76,7 +75,7 @@ defmodule LiveShowyWeb.Components.Chat do
       |> assign(time: Calendar.strftime(timestamp, "%H:%M:%S"))
 
     ~F"""
-    <li class="grid items-baseline grid-cols-2 gap-1 px-4 py-2 rounded shadow auto-rows-auto bg-brand-900">
+    <li class="grid items-baseline grid-cols-2 gap-1 px-4 py-2 rounded shadow auto-rows-auto bg-default-900">
       <span class="font-bold">{ @message.username }</span>
       <span class="font-mono text-xs justify-self-end opacity-70">{ @time }</span>
       <span class="col-span-full">{ @message.body }</span>

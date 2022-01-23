@@ -9,8 +9,8 @@ defmodule LiveShowyWeb.Components.NavBar do
 
   def render(assigns) do
     ~F"""
-    <header class="sticky top-0 z-50 self-start w-full shadow-md select-none col-span-full text-brand-200">
-      <section class="bg-gradient-to-br from-brand-700 to-brand-900">
+    <header class="sticky top-0 z-50 self-start w-full shadow-md select-none col-span-full text-default-200">
+      <section class="bg-gradient-to-br from-default-700 to-default-900">
         <nav class="mx-auto max-w-screen-2xl">
           <ul class="flex flex-wrap gap-4 p-4">
             <li>

@@ -11,8 +11,8 @@ defmodule LiveShowyWeb.Components.ChatMessage do
     ~F"""
     <li class={
       "grid items-baseline grid-cols-2 gap-1 px-4 py-2 shadow-md animate-fade-in-slide-down auto-rows-auto",
-      "bg-brand-200 text-brand-900": @current_user?,
-      "bg-brand-700": !@current_user?,
+      "bg-default-200 text-default-900": @current_user?,
+      "bg-default-700": !@current_user?,
     }>
       <span :if={@username} class="font-bold">
         {@username}

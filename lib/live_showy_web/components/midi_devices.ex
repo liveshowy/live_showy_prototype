@@ -23,7 +23,7 @@ defmodule LiveShowyWeb.Components.MidiDevices do
              type="button"
              phx-click="set-midi-input"
              phx-value-device-name={device.name}
-             class={"bg-brand-600 flex-1 px-2 py-1 rounded-sm shadow #{get_class(@input_name, device.name)}"}>
+             class={"bg-default-600 flex-1 px-2 py-1 rounded-sm shadow #{get_class(@input_name, device.name)}"}>
               <%= device.name %>
             </button>
           <% end %>
@@ -38,7 +38,7 @@ defmodule LiveShowyWeb.Components.MidiDevices do
           type="button"
           phx-click="set-midi-output"
           phx-value-device-name={device.name}
-          class={"bg-brand-600 flex-1 px-2 py-1 rounded-sm shadow #{get_class(@output_name, device.name)}"}>
+          class={"bg-default-600 flex-1 px-2 py-1 rounded-sm shadow #{get_class(@output_name, device.name)}"}>
            <%= device.name %>
          </button>
           <% end %>

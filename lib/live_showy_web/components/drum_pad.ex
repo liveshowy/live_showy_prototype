@@ -31,7 +31,7 @@ defmodule LiveShowyWeb.Components.DrumPad do
       value={@note}
       id={"drum-pad-pad-#{@note}"}
       phx-hook="HandleDrumPadPresses"
-      class="p-2 text-xs uppercase break-words duration-150 md:text-base lg:text-lg aspect-square min-w-12 max-w-32 bg-gradient-to-b from-brand-600 to-brand-700 transition-color rounded-xl active:bg-brand-700"
+      class="p-2 text-xs uppercase break-words duration-150 md:text-base lg:text-lg aspect-square min-w-12 max-w-32 bg-gradient-to-b from-default-600 to-default-700 transition-color rounded-xl active:bg-default-700"
     >
       <%= @label %>
     </button>

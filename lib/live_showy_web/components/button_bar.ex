@@ -6,7 +6,7 @@ defmodule LiveShowyWeb.Components.ButtonBar do
 
   def render(assigns) do
     ~F"""
-    <div class="flex divide-x button-bar divide-brand-900">
+    <div class="flex divide-x button-bar divide-default-900">
       <#slot />
     </div>
     """

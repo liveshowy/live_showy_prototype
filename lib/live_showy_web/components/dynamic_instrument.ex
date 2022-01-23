@@ -23,12 +23,12 @@ defmodule LiveShowyWeb.Components.DynamicInstrument do
 
       nil ->
         ~H"""
-        <span class="font-bold text-brand-300">Instrument not supported</span>
+        <span class="font-bold text-default-300">Instrument not supported</span>
         """
 
       _ ->
         ~H"""
-        <span class="font-bold text-brand-300">Instrument not supported</span>
+        <span class="font-bold text-default-300">Instrument not supported</span>
         """
     end
   end
