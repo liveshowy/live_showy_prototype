@@ -1,4 +1,4 @@
-<div class="grid h-full max-h-full grid-cols-1 gap-2 xl:grid-cols-4 xl:grid-rows-[auto_auto_1fr] auto-rows-min">
+<div class="grid h-full max-h-full grid-cols-1 gap-2 xl:grid-cols-4 xl:grid-rows-[auto_max-content_auto] auto-rows-min">
   <Card class="col-span-full" compact={true}>
     <:header>
       <h1>Backstage</h1>
@@ -21,6 +21,7 @@
         <ButtonBar>
           <Button
             label="DRUMS"
+            kind="primary"
             click="instrument-requested"
             rounded="first:rounded-l last:rounded-r only:rounded"
             active={@assigned_instrument && @assigned_instrument.component == LiveShowyWeb.Components.DrumPad}
@@ -32,6 +33,7 @@
 
           <Button
             label="KEYS"
+            kind="primary"
             click="instrument-requested"
             rounded="first:rounded-l last:rounded-r only:rounded"
             active={@assigned_instrument && @assigned_instrument.component == LiveShowyWeb.Components.Keyboard}
@@ -79,7 +81,7 @@
     </:body>
   </Card>
 
-  <Card class="xl:col-span-2" padding="pt-4">
+  <Card class="xl:col-span-2 max-h-[30rem]" padding="pt-4">
     <:header>
       <h2 class="px-4">Chat</h2>
     </:header>
