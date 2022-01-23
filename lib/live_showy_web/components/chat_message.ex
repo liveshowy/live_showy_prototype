@@ -5,10 +5,15 @@ defmodule LiveShowyWeb.Components.ChatMessage do
   prop username, :string
   prop time, :string
   prop body, :string, required: true
+  prop current_user?, :boolean, default: false
 
   def render(assigns) do
     ~F"""
-    <li class="grid items-baseline grid-cols-2 gap-1 px-4 py-2 shadow-md animate-fade-in-slide-down auto-rows-auto bg-brand-700">
+    <li class={
+      "grid items-baseline grid-cols-2 gap-1 px-4 py-2 shadow-md animate-fade-in-slide-down auto-rows-auto",
+      "bg-brand-200 text-brand-900": @current_user?,
+      "bg-brand-700": !@current_user?,
+    }>
       <span :if={@username} class="font-bold">
         {@username}
       </span>

@@ -56,6 +56,7 @@ defmodule LiveShowyWeb.Components.Chat do
             username={message.username}
             time={DateTime.shift_zone!(message.created_at, "America/Detroit") |> Calendar.strftime("%H:%M:%S")}
             body={message.body}
+            current_user?={message.user_id == @current_user.id}
           />
         {/for}
 
