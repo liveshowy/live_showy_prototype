@@ -5,13 +5,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        default: colors.stone,
         brand: colors.violet,
         accent: colors.cyan,
         success: colors.emerald,
         warning: colors.orange,
         danger: colors.rose,
         info: colors.sky,
-        gray: colors.stone,
       },
       boxShadow: {
         "inner-lg": "inset 0 10px 10px -5px rgb(0 0 0 / 0.1), inset 0 -10px 10px -5px rgb(0 0 0 / 0.1)"
