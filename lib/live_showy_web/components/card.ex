@@ -5,7 +5,7 @@ defmodule LiveShowyWeb.Components.Card do
   prop class, :css_class, default: ""
   prop rounded, :string, default: "rounded"
   prop shadow, :string, default: "shadow"
-  prop padding, :css_class, default: "p-4"
+  prop padding, :css_class, default: "py-2 px-4"
   prop transparent, :boolean, default: false
   prop compact, :boolean, default: false
   prop attrs, :map, default: %{}
@@ -18,7 +18,7 @@ defmodule LiveShowyWeb.Components.Card do
     ~F"""
     <div
       class={
-        "min-w-min overflow-hidden w-full h-full",
+        "min-w-min overflow-hidden w-full h-full max-w-full",
         @class,
         @rounded,
         @shadow,
@@ -31,7 +31,7 @@ defmodule LiveShowyWeb.Components.Card do
     >
       <#slot name="header" />
 
-      <div class="flex-1 overflow-auto">
+      <div class={"overflow-auto", "flex-1": !@compact}>
         <#slot name="body" />
       </div>
 
