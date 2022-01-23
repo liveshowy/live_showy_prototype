@@ -49,7 +49,7 @@ defmodule LiveShowyWeb.Components.Chat do
   def render(assigns) do
     ~F"""
     <div class="grid gap-1 h-full max-h-full grid-cols-1 grid-rows-[1fr_auto] overflow-hidden scroll-pb-8">
-      <ul class="flex flex-col gap-1 overflow-y-auto shadow-inner scroll-pb-0">
+      <ul class="flex flex-col gap-1 overflow-y-auto shadow-inner-lg scroll-pb-0">
         {#for message <- @messages}
           <ChatMessageComponent
             username={message.username}
