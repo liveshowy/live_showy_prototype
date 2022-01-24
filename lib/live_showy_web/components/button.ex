@@ -24,24 +24,38 @@ defmodule LiveShowyWeb.Components.Button do
     <button
       type={@type}
       class={
-        "px-2 py-1 uppercase transition font-bold text-white outline-none hover:bg-white focus:outline-2",
+        "px-2 py-1 uppercase transition select-none text-white font-bold outline-none outline-offset-0 active:bg-white border-2 focus:outline-2",
         @class,
         @rounded,
         @shadow,
-        "bg-primary-700 focus:outline-primary-700 hover:text-primary-700": @kind == "primary",
-        "bg-primary-500 focus:outline-primary-500": @kind == "primary" && @active,
-        "bg-default-700 focus:outline-default-700 hover:text-default-700": @kind == "default",
-        "bg-default-500 focus:outline-default-500": @kind == "default" && @active,
-        "bg-brand-700 focus:outline-brand-700 hover:text-brand-700": @kind == "brand",
-        "bg-brand-500 focus:outline-brand-500": @kind == "brand" && @active,
-        "bg-info-700 focus:outline-info-700 hover:text-info-700": @kind == "info",
-        "bg-info-500 focus:outline-info-500": @kind == "info" && @active,
-        "bg-warning-700 focus:outline-warning-700 hover:text-warning-700": @kind == "warning",
-        "bg-warning-500 focus:outline-warning-500": @kind == "warning" && @active,
-        "bg-success-700 focus:outline-success-700 hover:text-success-700": @kind == "success",
-        "bg-success-500 focus:outline-success-500": @kind == "success" && @active,
-        "bg-danger-700 focus:outline-danger-700 hover:text-danger-700": @kind == "danger",
-        "bg-danger-500 focus:outline-danger-500": @kind == "danger" && @active
+
+        "border-primary-800 hover:bg-primary-700 hover:border-primary-700 focus:border-white active:text-primary-800": @kind == "primary",
+        "bg-primary-800": @kind == "primary" && @active,
+        "bg-transparent": @kind == "primary" && !@active,
+
+        "border-default-800 hover:bg-default-700 hover:border-default-700 focus:border-white active:text-default-800": @kind == "default",
+        "bg-default-800": @kind == "default" && @active,
+        "bg-transparent": @kind == "default" && !@active,
+
+        "border-brand-800 hover:bg-brand-700 hover:border-brand-700 focus:border-white active:text-brand-800": @kind == "brand",
+        "bg-brand-800": @kind == "brand" && @active,
+        "bg-transparent": @kind == "brand" && !@active,
+
+        "border-info-800 hover:bg-info-700 hover:border-info-700 focus:border-white active:text-info-800": @kind == "info",
+        "bg-info-800": @kind == "info" && @active,
+        "bg-transparent": @kind == "info" && !@active,
+
+        "border-warning-800 hover:bg-warning-700 hover:border-warning-700 focus:border-white active:text-warning-800": @kind == "warning",
+        "bg-warning-800": @kind == "warning" && @active,
+        "bg-transparent": @kind == "warning" && !@active,
+
+        "border-success-800 hover:bg-success-700 hover:border-success-700 focus:border-white active:text-success-800": @kind == "success",
+        "bg-success-800": @kind == "success" && @active,
+        "bg-transparent": @kind == "success" && !@active,
+
+        "border-danger-800 hover:bg-danger-700 hover:border-danger-700 focus:border-white active:text-danger-800": @kind == "danger",
+        "bg-danger-800": @kind == "danger" && @active,
+        "bg-transparent": @kind == "danger" && !@active
       }
       :on-click={@click}
       value={@value}
