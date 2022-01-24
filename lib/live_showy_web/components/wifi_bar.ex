@@ -15,20 +15,24 @@ defmodule LiveShowyWeb.Components.WifiBar do
     {:ok, assign(socket, assigns)}
   end
 
+  data ssid, :string
+  data password, :string
+  data url, :uri
+
   @impl true
   def render(assigns) do
-    ~H"""
+    ~F"""
     <ul class="flex gap-2">
       <li>
-        SSID: <strong><%= @ssid %></strong>
+        SSID: <strong>{@ssid}</strong>
       </li>
 
       <li>
-        Password: <strong><%= @password %></strong>
+        Password: <strong>{@password}</strong>
       </li>
 
       <li>
-        URL: <strong><%= @url %></strong>
+        URL: <strong>{@url}</strong>
       </li>
     </ul>
     """

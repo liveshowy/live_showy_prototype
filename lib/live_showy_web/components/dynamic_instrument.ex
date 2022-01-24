@@ -1,5 +1,5 @@
 defmodule LiveShowyWeb.Components.DynamicInstrument do
-  use Phoenix.Component
+  use Surface.Component
   alias LiveShowyWeb.Components.Keyboard
   alias LiveShowyWeb.Components.DrumPad
 
@@ -16,18 +16,18 @@ defmodule LiveShowyWeb.Components.DynamicInstrument do
 
     case component do
       Keyboard ->
-        Keyboard.large(assigns)
+        Keyboard.render(assigns)
 
       DrumPad ->
-        DrumPad.grid(assigns)
+        DrumPad.render(assigns)
 
       nil ->
-        ~H"""
+        ~F"""
         <span class="font-bold text-default-300">Instrument not supported</span>
         """
 
       _ ->
-        ~H"""
+        ~F"""
         <span class="font-bold text-default-300">Instrument not supported</span>
         """
     end

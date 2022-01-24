@@ -2,10 +2,10 @@ defmodule LiveShowyWeb.Components.DrumPad do
   @moduledoc """
   A user interface for drum and other rhythmic instruments
   """
-  use Phoenix.Component
+  use Surface.Component
 
-  def grid(assigns) do
-    ~H"""
+  def render(assigns) do
+    ~F"""
     <div class="inline-grid grid-cols-4 gap-1 auto-rows-fr place-self-center place-content-center place-items-stretch">
       <.single_pad label="kick 1" note={36} />
       <.single_pad label="kick 2" note={37} />
@@ -24,7 +24,7 @@ defmodule LiveShowyWeb.Components.DrumPad do
   end
 
   defp single_pad(assigns) do
-    ~H"""
+    ~F"""
     <button
       type="button"
       disabled={if @note == nil, do: "disabled"}
@@ -33,7 +33,7 @@ defmodule LiveShowyWeb.Components.DrumPad do
       phx-hook="HandleDrumPadPresses"
       class="p-2 text-xs uppercase break-words duration-150 md:text-base lg:text-lg aspect-square min-w-12 max-w-32 bg-gradient-to-b from-default-600 to-default-700 transition-color rounded-xl active:bg-default-700"
     >
-      <%= @label %>
+      {@label}
     </button>
     """
   end
