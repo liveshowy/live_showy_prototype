@@ -15,6 +15,7 @@ defmodule LiveShowyWeb.Components.Button do
   prop rounded, :css_class, default: "rounded"
   prop shadow, :css_class, default: "shadow"
   prop type, :string, default: "button", values!: ~w(button submit reset)
+  prop disabled, :boolean, default: false
   prop value, :any
 
   slot default
@@ -23,11 +24,13 @@ defmodule LiveShowyWeb.Components.Button do
     ~F"""
     <button
       type={@type}
+      disabled={@disabled}
       class={
         "px-2 py-1 uppercase transition select-none text-white font-bold outline-none outline-offset-0 active:bg-white border-2 focus:outline-2",
         @class,
         @rounded,
         @shadow,
+        "cursor-not-allowed opacity-70": @disabled,
 
         "border-primary-800 hover:bg-primary-700 hover:border-primary-700 focus:border-white active:text-primary-800": @kind == "primary",
         "bg-primary-800": @kind == "primary" && @active,
