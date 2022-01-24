@@ -1,4 +1,4 @@
-<div class="grid h-full max-h-full grid-cols-1 gap-2 lg:grid-cols-4 lg:grid-rows-[min-content_max-content_min-content_minmax(8rem,auto)] auto-rows-min">
+<div class="grid h-full max-h-full grid-cols-1 gap-2 lg:grid-cols-4 lg:grid-rows-[min-content_max-content_auto_auto] auto-rows-min">
   <Card class="col-span-full" compact={true}>
     <:header>
       <h1>Backstage</h1>
