@@ -16,7 +16,7 @@ defmodule LiveShowyWeb.Components.ChatForm do
       <TextInput
         name="body"
         value={@message.body}
-        class="flex-grow px-2 py-1 transition rounded-l focus:bg-default-600 focus:outline-none bg-default-700"
+        class="flex-grow px-2 py-1 transition border-2 border-transparent rounded-l focus:border-white focus:bg-default-700 focus:outline-none bg-default-800"
         opts={autofocus: true, required: true}
       />
 
