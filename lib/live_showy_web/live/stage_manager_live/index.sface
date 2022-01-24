@@ -51,9 +51,9 @@
 
           {#for role <- @roles}
             {#if role in user.roles}
-              <button type="button" phx-click="remove-user-role" phx-value-user-id={user.id} phx-value-role={role} class="px-2 py-1 transition rounded shadow text-default-900 bg-default-200 hover:bg-default-600 hover:text-white">YES</button>
+              <Button click="remove-user-role" label="YES" active={true} attrs={%{"phx-value-user-id": user.id, "phx-value-role": role}} />
             {#else}
-              <button type="button" phx-click="add-user-role" phx-value-user-id={user.id} phx-value-role={role} class="px-2 py-1 transition rounded shadow bg-default-700 hover:bg-default-600 hover:text-white">ADD</button>
+              <Button click="add-user-role" label="ADD" attrs={%{"phx-value-user-id": user.id, "phx-value-role": role}} />
             {/if}
           {/for}
         </fieldset>
