@@ -1,0 +1,23 @@
+<div class="grid gap-1 content-end overscroll-none h-full max-h-full grid-cols-1 grid-rows-[auto_1fr] overflow-hidden">
+  <ChatForm submit="submit-message" message={@new_message} />
+
+  <ul phx-update="prepend" id="chat-messages" class="flex flex-col gap-2 px-1 py-2 overflow-y-auto shadow-inner-lg">
+    {#for message <- @messages}
+      <ChatMessageComponent
+        status={message.status}
+        username={message.username}
+        time={DateTime.shift_zone!(message.created_at, "America/Detroit") |> Calendar.strftime("%H:%M:%S")}
+        body={message.body}
+        current_user?={message.user_id == @current_user.id}
+        id={"message-#{message.id}"}
+        attrs={%{
+          "phx-update" => "append"
+        }}
+      />
+    {/for}
+
+    {#if Enum.empty?(@messages)}
+      <ChatMessageComponent id="chat-message-empty" body="No messages yet" class="rounded-sm place-self-center" />
+    {/if}
+  </ul>
+</div>
