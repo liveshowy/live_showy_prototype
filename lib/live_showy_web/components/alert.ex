@@ -4,13 +4,12 @@ defmodule LiveShowyWeb.Components.Alert do
   alias Phoenix.LiveView.JS
 
   prop flash, :map, default: nil
-
   prop class, :css_class, default: ""
 
   def render(assigns) do
     ~F"""
     <aside
-    :if={@flash != %{}}
+      :if={@flash != %{}}
       id="alert"
       class={
         "animate-fade-in-slide-down w-full 2xl:rounded shadow-md text-white p-4 mx-auto max-w-screen-2xl",
@@ -22,7 +21,7 @@ defmodule LiveShowyWeb.Components.Alert do
       phx-click-away={hide_alert()}
       phx-value-key={if @flash["error"], do: "error", else: "info"}
     >
-      <p>{ @flash["error"] || @flash["info"] }</p>
+      <p>{@flash["error"] || @flash["info"]}</p>
     </aside>
     """
   end

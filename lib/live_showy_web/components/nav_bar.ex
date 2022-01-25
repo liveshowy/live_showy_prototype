@@ -17,7 +17,7 @@ defmodule LiveShowyWeb.Components.NavBar do
               <Link to={Routes.landing_index_path(@conn, :index)}>LiveShowy</Link>
             </li>
 
-            <span class="flex-grow"></span>
+            <span class="flex-grow" />
 
             <li>
               <Link to={Routes.backstage_index_path(@conn, :index)}>Backstage</Link>
@@ -27,7 +27,7 @@ defmodule LiveShowyWeb.Components.NavBar do
                 Stage Manager
               </Link>
             </li>
-            {#if function_exported?(Routes, :live_dashboard_path, 2) }
+            {#if function_exported?(Routes, :live_dashboard_path, 2)}
               <li>
                 <Link to={Routes.live_dashboard_path(@conn, :home)}>
                   Live Dashboard

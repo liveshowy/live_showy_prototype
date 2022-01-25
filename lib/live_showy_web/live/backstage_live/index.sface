@@ -1,5 +1,5 @@
 <div class="grid h-full max-h-full grid-cols-1 gap-2 lg:grid-cols-4 lg:grid-rows-[min-content_max-content_auto_auto] auto-rows-min">
-  <Card class="col-span-full" compact={true}>
+  <Card class="col-span-full" compact>
     <:header>
       <h1>Backstage</h1>
     </:header>
@@ -11,12 +11,15 @@
     </:body>
   </Card>
 
-  <Card attrs={%{"phx-hook": "HandleWebMidiDevices", id: "backstage-instrument-preview"}} class="col-span-full">
+  <Card
+    attrs={%{"phx-hook": "HandleWebMidiDevices", id: "backstage-instrument-preview"}}
+    class="col-span-full"
+  >
     <:header>
       <div class="flex flex-wrap gap-2">
         <h2>Your Instrument</h2>
 
-        <span class="flex-grow"></span>
+        <span class="flex-grow" />
 
         <ButtonBar>
           <Button
@@ -27,7 +30,7 @@
             active={@assigned_instrument && @assigned_instrument.component == LiveShowyWeb.Components.DrumPad}
             attrs={%{
               "phx-value-user-id" => @current_user.id,
-              "phx-value-instrument" => "drums",
+              "phx-value-instrument" => "drums"
             }}
           />
 
@@ -39,7 +42,7 @@
             active={@assigned_instrument && @assigned_instrument.component == LiveShowyWeb.Components.Keyboard}
             attrs={%{
               "phx-value-user-id" => @current_user.id,
-              "phx-value-instrument" => "keys",
+              "phx-value-instrument" => "keys"
             }}
           />
         </ButtonBar>
@@ -47,7 +50,11 @@
     </:header>
 
     <:body>
-      <DynamicInstrument.render :if={@assigned_instrument} instrument={@assigned_instrument} id="assigned-instrument-component" />
+      <DynamicInstrument.render
+        :if={@assigned_instrument}
+        instrument={@assigned_instrument}
+        id="assigned-instrument-component"
+      />
     </:body>
   </Card>
 
@@ -58,14 +65,14 @@
 
     <:body>
       {#case @webmidi_supported}
-      {#match true}
-        <p class="text-sm">Your device(s) will change color as notes are played.</p>
+        {#match true}
+          <p class="text-sm">Your device(s) will change color as notes are played.</p>
 
-        <ClientMidiDevices devices={@client_input_devices} playing_devices={@playing_devices} />
-      {#match false}
-        <span>WebMIDI is not supported in this browser.</span>
-      {#match _}
-        <span class="text-default-300">Awaiting WebMIDI status</span>
+          <ClientMidiDevices devices={@client_input_devices} playing_devices={@playing_devices} />
+        {#match false}
+          <span>WebMIDI is not supported in this browser.</span>
+        {#match _}
+          <span class="text-default-300">Awaiting WebMIDI status</span>
       {/case}
     </:body>
   </Card>
@@ -80,17 +87,21 @@
     </:body>
   </Card>
 
-  <Card class="lg:col-start-3 lg:row-start-3 lg:row-span-2 lg:col-span-2 max-h-[30rem] lg:max-h-full bg-default-900" padding="p-0">
+  <Card
+    class="lg:col-start-3 lg:row-start-3 lg:row-span-2 lg:col-span-2 max-h-[30rem] lg:max-h-full bg-default-900"
+    padding="p-0"
+  >
     <:header>
       <h2 class="px-4 py-2">Chat</h2>
     </:header>
 
     <:body>
-      {live_render @socket,
+      {live_render(
+        @socket,
         LiveShowyWeb.ChatLive.Index,
         id: "backstage-chat",
         session: %{"chat_module" => LiveShowy.Chat.Backstage}
-      }
+      )}
     </:body>
   </Card>
 </div>

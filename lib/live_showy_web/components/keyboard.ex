@@ -55,12 +55,7 @@ defmodule LiveShowyWeb.Components.Keyboard do
     <div>
       <div class="flex justify-center gap-1 p-2 pt-0 select-none">
         {#for {note, label, index} <- @notes}
-          <.key
-            id={"keyboard-key-#{note}"}
-            color={get_key_color(index)}
-            label={label}
-            note={note}
-          />
+          <.key id={"keyboard-key-#{note}"} color={get_key_color(index)} label={label} note={note} />
         {/for}
       </div>
     </div>

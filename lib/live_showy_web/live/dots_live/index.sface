@@ -1,5 +1,4 @@
 <div class="flex flex-wrap justify-center gap-4 select-none place-items-stretch">
-
   <div class="w-full">
     <h1>Dancing Dots</h1>
   </div>
@@ -12,5 +11,4 @@
     <h2>Dancers</h2>
     <Users.list id="user-list-dots" users={@users} current_user={@current_user} />
   </section>
-
 </div>

@@ -9,16 +9,15 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
     ~F"""
     <ul>
       {#for device <- @devices}
-      <li class="flex items-center gap-2">
-        <span class={
-          "rounded-full w-4 h-4 shadow-inner",
-          "bg-success-500": device["id"] in @playing_devices,
-          "bg-default-600": device["id"] not in @playing_devices
-          }
-        ></span>
+        <li class="flex items-center gap-2">
+          <span class={
+            "rounded-full w-4 h-4 shadow-inner",
+            "bg-success-500": device["id"] in @playing_devices,
+            "bg-default-600": device["id"] not in @playing_devices
+          } />
 
-        <span>{device["name"]}</span>
-      </li>
+          <span>{device["name"]}</span>
+        </li>
       {/for}
     </ul>
     """

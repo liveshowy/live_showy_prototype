@@ -7,7 +7,7 @@ defmodule LiveShowyWeb.Components.XYPad do
 
   def render(assigns) do
     ~F"""
-      <svg
+    <svg
       class="w-[350px] h-[350px] bg-default-800 rounded-lg border-2 border-default-700 shadow-lg overscroll-none"
       id="touchpad"
       phx-hook="TrackTouchEvents"

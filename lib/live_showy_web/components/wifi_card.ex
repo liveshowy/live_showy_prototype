@@ -31,7 +31,7 @@ defmodule LiveShowyWeb.Components.WifiCard do
 
       <dt class="font-bold uppercase text-default-300">URL</dt>
       <dd>{@url}</dd>
-      </dl>
+    </dl>
     """
   end
 end

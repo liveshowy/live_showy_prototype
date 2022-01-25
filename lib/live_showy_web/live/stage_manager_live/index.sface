@@ -1,5 +1,5 @@
 <div class="grid grid-cols-1 gap-2 lg:grid-cols-4">
-  <Card class="col-span-full" compact={true}>
+  <Card class="col-span-full" compact>
     <:header><h1>Stage Manager</h1></:header>
     <:body><p>Manage users, settings, and monitor the system.</p></:body>
   </Card>
@@ -36,7 +36,7 @@
 
     <:body>
       <form class="grid items-center grid-cols-5 gap-1" phx-change="user-role-changed">
-        <span class="font-bold uppercase text-default-300"></span>
+        <span class="font-bold uppercase text-default-300" />
         {#for role <- @roles}
           <span class="font-bold uppercase text-default-300 place-self-center">{role |> Atom.to_string() |> String.replace(~r/_/, " ")}</span>
         {/for}
@@ -47,9 +47,18 @@
 
             {#for role <- @roles}
               {#if role in user.roles}
-                <Button click="remove-user-role" label="YES" active={true} attrs={%{"phx-value-user-id": user.id, "phx-value-role": role}} />
+                <Button
+                  click="remove-user-role"
+                  label="YES"
+                  active
+                  attrs={%{"phx-value-user-id": user.id, "phx-value-role": role}}
+                />
               {#else}
-                <Button click="add-user-role" label="ADD" attrs={%{"phx-value-user-id": user.id, "phx-value-role": role}} />
+                <Button
+                  click="add-user-role"
+                  label="ADD"
+                  attrs={%{"phx-value-user-id": user.id, "phx-value-role": role}}
+                />
               {/if}
             {/for}
           </fieldset>
