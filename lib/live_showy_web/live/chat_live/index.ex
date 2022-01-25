@@ -15,6 +15,9 @@ defmodule LiveShowyWeb.ChatLive.Index do
     if connected?(socket) do
       apply(chat_module, :subscribe, [])
       Logger.info(subscribed_to: chat_module)
+
+      Users.subscribe()
+      Logger.info(subscribed_to: Users)
     end
 
     # What's this?!
@@ -58,6 +61,10 @@ defmodule LiveShowyWeb.ChatLive.Index do
   def handle_info({:message_updated, message}, socket) do
     IO.inspect(message, label: "UPDATED_MESSAGE")
     {:noreply, update(socket, :messages, fn messages -> [message | messages] end)}
+  end
+
+  def handle_info({:user_updated, _user}, %{assigns: %{chat_module: chat_module}} = socket) do
+    {:noreply, assign(socket, messages: apply(chat_module, :list, []))}
   end
 
   def handle_info(message, socket) do
