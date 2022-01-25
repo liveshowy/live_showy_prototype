@@ -47,7 +47,7 @@
     </:header>
 
     <:body>
-      <DynamicInstrument.render instrument={@assigned_instrument} id="assigned-instrument-component" />
+      <DynamicInstrument.render :if={@assigned_instrument} instrument={@assigned_instrument} id="assigned-instrument-component" />
     </:body>
   </Card>
 
@@ -86,12 +86,11 @@
     </:header>
 
     <:body>
-      <Chat
-        chat_module={BackstageChat}
-        current_user={@current_user}
-        id={@chat_component_id}
-        messages={BackstageChat.list()}
-      />
+      {live_render @socket,
+        LiveShowyWeb.ChatLive.Index,
+        id: "backstage-chat",
+        session: %{"chat_module" => LiveShowy.Chat.Backstage}
+      }
     </:body>
   </Card>
 </div>

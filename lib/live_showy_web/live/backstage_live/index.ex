@@ -6,14 +6,12 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   use LiveShowyWeb, :live_view
   alias LiveShowyWeb.Presence
   alias LiveShowy.Users
-  alias LiveShowy.Chat.Backstage, as: BackstageChat
   alias LiveShowy.Instrument
   alias LiveShowy.UserInstruments
   alias LiveShowyWeb.Components.Users, as: UsersComponent
   alias LiveShowyWeb.Components.Button
   alias LiveShowyWeb.Components.ButtonBar
   alias LiveShowyWeb.Components.Card
-  alias LiveShowyWeb.Components.Chat
   alias LiveShowyWeb.Components.DynamicInstrument
   alias LiveShowyWeb.Components.ClientMidiDevices
 
@@ -42,7 +40,6 @@ defmodule LiveShowyWeb.BackstageLive.Index do
        webmidi_supported: nil,
        assigned_instrument: assigned_instrument,
        client_input_devices: [],
-       chat_component_id: "backstage-chat",
        playing_devices: MapSet.new()
      )}
   end
@@ -73,12 +70,6 @@ defmodule LiveShowyWeb.BackstageLive.Index do
       Presence.update(self(), @topic, metas.id, metas)
     end
 
-    {:noreply, socket}
-  end
-
-  def handle_info({event, message}, %{assigns: %{chat_component_id: chat_component_id}} = socket)
-      when event in [:message_added, :message_updated] do
-    Chat.add_message(chat_component_id, message, socket)
     {:noreply, socket}
   end
 
