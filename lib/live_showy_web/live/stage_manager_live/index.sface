@@ -1,7 +1,7 @@
 <div class="grid grid-cols-1 gap-2 lg:grid-cols-4">
   <Card class="col-span-full" compact={true}>
     <:header><h1>Stage Manager</h1></:header>
-    <:body><p>Control user roles and MIDI settings.</p></:body>
+    <:body><p>Manage users, settings, and monitor the system.</p></:body>
   </Card>
 
   <Card>
