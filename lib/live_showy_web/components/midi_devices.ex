@@ -1,18 +1,14 @@
 defmodule LiveShowyWeb.Components.MidiDevices do
-  @moduledoc """
-  Lists Midi devices.
-  """
+  @moduledoc false
   use Surface.Component
+  alias LiveShowyWeb.Components.Button
 
-  def button_groups(assigns) do
-    {_type, output_name, _pid} = assigns.output || {nil, nil, nil}
-    {_type, input_name, _pid} = assigns.input || {nil, nil, nil}
+  prop available_inputs, :list, default: []
+  prop available_outputs, :list, default: []
+  prop active_input, :any
+  prop active_output, :any
 
-    assigns =
-      assigns
-      |> assign(:output_name, output_name)
-      |> assign(:input_name, input_name)
-
+  def render(assigns) do
     ~F"""
     <div
       id="midi-device-list"
@@ -22,15 +18,16 @@ defmodule LiveShowyWeb.Components.MidiDevices do
       <div>
         <label class="font-bold">Inputs</label>
         <div class="flex flex-wrap gap-1">
-          {#for device <- @devices.input}
-            <button
+          {#for device <- @available_inputs}
+            <Button
               type="button"
-              phx-click="set-midi-input"
-              phx-value-device-name={device.name}
-              class={"bg-default-600 flex-1 px-2 py-1 rounded-sm shadow #{get_class(@input_name, device.name)}"}
-            >
-              {device.name}
-            </button>
+              click="set-midi-input"
+              attrs={%{
+                "phx-value-device-name": device.name,
+              }}
+              active={@active_input == device.name}
+              label={device.name}
+            />
           {/for}
         </div>
       </div>
@@ -38,23 +35,20 @@ defmodule LiveShowyWeb.Components.MidiDevices do
       <div>
         <label class="font-bold">Outputs</label>
         <div class="flex flex-wrap gap-1">
-          {#for device <- @devices.output}
-            <button
+          {#for device <- @available_outputs}
+            <Button
               type="button"
-              phx-click="set-midi-output"
-              phx-value-device-name={device.name}
-              class={"bg-default-600 flex-1 px-2 py-1 rounded-sm shadow #{get_class(@output_name, device.name)}"}
-            >
-              {device.name}
-            </button>
+              click="set-midi-output"
+              attrs={%{
+                "phx-value-device-name": device.name
+              }}
+              active={@active_output == device.name}
+              label={device.name}
+            />
           {/for}
         </div>
       </div>
     </div>
     """
-  end
-
-  defp get_class(name1, name2) do
-    if name1 == name2, do: "font-bold", else: "opacity-70"
   end
 end
