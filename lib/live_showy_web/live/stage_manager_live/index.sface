@@ -39,7 +39,7 @@
     <:header><h2>Users</h2></:header>
 
     <:body>
-      <form class="grid items-center grid-cols-5 gap-1" phx-change="user-role-changed">
+      <form class="grid items-center grid-cols-6 gap-1" phx-change="user-role-changed">
         <span class="font-bold uppercase text-default-300" />
         {#for role <- @roles}
           <span class="self-end text-xs font-bold uppercase lg:text-base justify-self-center text-default-300">{role |> Atom.to_string() |> String.replace(~r/_/, " ")}</span>
