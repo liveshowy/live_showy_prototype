@@ -7,13 +7,14 @@ defmodule LiveShowyWeb.Components.MidiDevices do
   prop available_outputs, :list, default: []
   prop active_input, :any
   prop active_output, :any
+  prop attrs, :map, default: %{}
 
   def render(assigns) do
     ~F"""
     <div
       id="midi-device-list"
       class="flex flex-wrap gap-2 whitespace-nowrap"
-      phx-hook="HandleWebMidiDevices"
+      {...@attrs}
     >
       <div>
         <label class="font-bold">Inputs</label>
