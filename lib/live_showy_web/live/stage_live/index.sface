@@ -1,0 +1,8 @@
+<div class="grid grid-cols-1 gap-2 lg:grid-cols-4">
+  <Card class="col-span-full">
+    <:header><h2>Stage</h2></:header>
+    <:body>
+      TBD
+    </:body>
+  </Card>
+</div>

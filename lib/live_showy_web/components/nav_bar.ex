@@ -23,6 +23,9 @@ defmodule LiveShowyWeb.Components.NavBar do
               <Link to={Routes.backstage_index_path(@conn, :index)}>Backstage</Link>
             </li>
             <li>
+              <Link to={Routes.stage_index_path(@conn, :index)}>LiveStage</Link>
+            </li>
+            <li>
               <Link to={Routes.stage_manager_index_path(@conn, :index)}>
                 Stage Manager
               </Link>
