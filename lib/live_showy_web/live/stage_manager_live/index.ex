@@ -3,6 +3,7 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   Users with a stage manager role may access this LiveView to coordinate other users and performances.
   """
   use LiveShowyWeb, :live_view
+  require Logger
   alias LiveShowy.Users
   alias LiveShowy.Roles
   alias LiveShowy.UserRoles
@@ -85,9 +86,7 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
 
   @impl true
   def handle_event(event, params, socket) do
-    require Logger
-    Logger.warn("UNKNOWN EVENT: #{event}")
-    IO.inspect(params)
+    Logger.warning(unknown_event: {__MODULE__, event, params})
     {:noreply, socket}
   end
 
