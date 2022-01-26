@@ -1,4 +1,4 @@
-defmodule LiveShowyWeb.InitAssigns do
+defmodule LiveShowyWeb.SessionHooks.InitAssigns do
   @moduledoc """
   Ensures common assigns are applied to all LiveViews attaching to this hook.
   """

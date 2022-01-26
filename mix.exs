@@ -66,7 +66,7 @@ defmodule LiveShowy.MixProject do
     [
       setup: ["deps.get"],
       "assets.deploy": [
-        "cmd --cd assets npm run deploy",
+        "tailwind default --minify",
         "esbuild default --minify",
         "phx.digest"
       ]

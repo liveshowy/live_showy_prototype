@@ -2,7 +2,7 @@ defmodule LiveShowyWeb.Components.LatencyMonitor do
   @moduledoc """
   Displays latency in milliseconds as reported by the client.
   """
-  use Phoenix.LiveComponent
+  use LiveShowyWeb, :live_component
 
   def mount(socket) do
     {:ok, assign(socket, :latency, nil)}
@@ -17,9 +17,9 @@ defmodule LiveShowyWeb.Components.LatencyMonitor do
   end
 
   def render(assigns) do
-    ~H"""
+    ~F"""
     <span id="latency-monitor" phx-hook="MonitorLatency">
-      Latency: <strong><%= @latency %>ms</strong>
+      Latency: <strong>{@latency}ms</strong>
     </span>
     """
   end

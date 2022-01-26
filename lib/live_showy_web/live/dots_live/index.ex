@@ -112,6 +112,6 @@ defmodule LiveShowyWeb.DotsLive.Index do
 
   def subscribe do
     Phoenix.PubSub.subscribe(LiveShowy.PubSub, @topic)
-    Phoenix.PubSub.subscribe(LiveShowy.PubSub, LiveShowy.Users.get_topic())
+    LiveShowy.Users.subscribe()
   end
 end

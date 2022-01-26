@@ -1,5 +1,3 @@
-<LiveShowyWeb.Components.Alert flash={@flash} />
-
-<main class="flex-1 w-full p-4 mx-auto max-w-7xl">
-  { @inner_content }
+<main class="flex-1 w-full p-4 mx-auto overflow-auto max-w-screen-2xl">
+  {@inner_content}
 </main>

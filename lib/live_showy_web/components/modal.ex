@@ -2,9 +2,13 @@ defmodule LiveShowyWeb.Components.Modal do
   @moduledoc false
   use LiveShowyWeb, :live_component
 
+  prop opts, :list, required: true
+  prop return_to, :path, required: true
+  prop component, :module, required: true
+
   @impl true
   def render(assigns) do
-    ~H"""
+    ~F"""
     <div
       id={@id}
       class="phx-modal"
@@ -12,11 +16,11 @@ defmodule LiveShowyWeb.Components.Modal do
       phx-window-keydown="close"
       phx-key="escape"
       phx-target={@myself}
-      phx-page-loading>
-
+      phx-page-loading
+    >
       <div class="phx-modal-content">
-        <%= live_patch raw("&times;"), to: @return_to, class: "phx-modal-close" %>
-        <%= live_component @component, @opts %>
+        <.live_patch raw("&times;"), to: @return_to, class: "phx-modal-close" />
+        <.live_component @component, @opts />
       </div>
     </div>
     """

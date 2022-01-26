@@ -10,6 +10,8 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   alias LiveShowy.MidiDevices
   alias LiveShowyWeb.Components.MidiDevices, as: MidiDevicesComponent
   alias LiveShowyWeb.Components.WifiCard
+  alias LiveShowyWeb.Components.Button
+  alias LiveShowyWeb.Components.Card
 
   @impl true
   def mount(_params, _session, socket) do
@@ -19,7 +21,7 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
      assign(socket,
        users: Users.list_with_roles(),
        roles: Roles.list(),
-       midi_devices: MidiDevices.list(),
+       midi_devices: PortMidi.devices(),
        midi_input: nil,
        midi_output: nil
      )}
@@ -90,8 +92,8 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   end
 
   defp subscribe do
-    Phoenix.PubSub.subscribe(LiveShowy.PubSub, LiveShowy.Users.get_topic())
-    Phoenix.PubSub.subscribe(LiveShowy.PubSub, LiveShowy.UserRoles.get_topic())
-    Phoenix.PubSub.subscribe(LiveShowy.PubSub, Wifi.get_topic())
+    LiveShowy.Users.subscribe()
+    LiveShowy.UserRoles.subscribe()
+    Wifi.subscribe()
   end
 end

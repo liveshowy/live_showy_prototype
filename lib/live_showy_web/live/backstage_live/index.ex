@@ -8,16 +8,14 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   alias LiveShowy.Users
   alias LiveShowy.Instrument
   alias LiveShowy.UserInstruments
-  alias LiveShowy.Chat.Message
-  alias LiveShowy.Chat.Backstage, as: BackstageChat
   alias LiveShowyWeb.Components.Users, as: UsersComponent
-  alias LiveShowyWeb.Components.ChatBox
+  alias LiveShowyWeb.Components.Button
+  alias LiveShowyWeb.Components.ButtonBar
+  alias LiveShowyWeb.Components.Card
   alias LiveShowyWeb.Components.DynamicInstrument
   alias LiveShowyWeb.Components.ClientMidiDevices
 
-  @presence_topic "backstage_performers"
-
-  def get_topic, do: @presence_topic
+  @topic "backstage_performers"
 
   @impl true
   def mount(_params, _session, %{assigns: %{current_user: current_user}} = socket) do
@@ -25,13 +23,13 @@ defmodule LiveShowyWeb.BackstageLive.Index do
 
     Presence.track(
       self(),
-      @presence_topic,
+      @topic,
       current_user.id,
       current_user
     )
 
     performers =
-      Presence.list(@presence_topic)
+      Presence.list(@topic)
       |> Enum.map(fn {_user_id, performer} -> List.first(performer[:metas]) end)
 
     {_user_id, assigned_instrument} = UserInstruments.get(current_user.id)
@@ -39,8 +37,6 @@ defmodule LiveShowyWeb.BackstageLive.Index do
     {:ok,
      assign(socket,
        performers: performers,
-       messages: BackstageChat.list(),
-       form_message: Message.new(),
        webmidi_supported: nil,
        assigned_instrument: assigned_instrument,
        client_input_devices: [],
@@ -49,22 +45,21 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   end
 
   defp subscribe do
-    Phoenix.PubSub.subscribe(LiveShowy.PubSub, @presence_topic)
-    Phoenix.PubSub.subscribe(LiveShowy.PubSub, BackstageChat.get_topic())
-    Phoenix.PubSub.subscribe(LiveShowy.PubSub, Users.get_topic())
+    Phoenix.PubSub.subscribe(LiveShowy.PubSub, @topic)
+    Users.subscribe()
   end
 
   @impl true
   def handle_info(%{event: "presence_diff"}, socket) do
     performers =
-      Presence.list(@presence_topic)
+      Presence.list(@topic)
       |> Enum.map(fn {_user_id, performer} -> List.first(performer[:metas]) end)
 
     {:noreply, assign(socket, performers: performers)}
   end
 
   def handle_info({:user_updated, user}, socket) do
-    present_user_metas = Presence.get_by_key(@presence_topic, user.id)[:metas]
+    present_user_metas = Presence.get_by_key(@topic, user.id)[:metas]
 
     if present_user_metas do
       metas =
@@ -72,19 +67,14 @@ defmodule LiveShowyWeb.BackstageLive.Index do
         |> List.first()
         |> Map.merge(user)
 
-      Presence.update(self(), @presence_topic, metas.id, metas)
+      Presence.update(self(), @topic, metas.id, metas)
     end
 
-    update_chat(socket)
-  end
-
-  def handle_info({event, _message}, socket)
-      when event in [:message_added, :message_updated] do
-    update_chat(socket)
+    {:noreply, socket}
   end
 
   def handle_info(message, socket) do
-    Logger.warn(unknown_info: message)
+    Logger.warn(unknown_info: {__MODULE__, message})
     {:noreply, socket}
   end
 
@@ -97,20 +87,6 @@ defmodule LiveShowyWeb.BackstageLive.Index do
     Logger.info(instrument_requested: {user_id, instrument})
     {_user_id, new_instrument} = set_instrument(user_id, instrument)
     {:noreply, assign(socket, assigned_instrument: new_instrument)}
-  end
-
-  def handle_event(
-        "submit-message",
-        %{"body" => body},
-        %{assigns: %{current_user: current_user}} = socket
-      ) do
-    %{
-      body: body,
-      user_id: current_user.id
-    }
-    |> BackstageChat.add()
-
-    update_chat(socket)
   end
 
   def handle_event("webmidi-supported", boolean, socket) do
@@ -151,10 +127,6 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   def handle_event(event, value, socket) do
     Logger.warning(unknown_event: {event, value})
     {:noreply, socket}
-  end
-
-  defp update_chat(socket) do
-    {:noreply, assign(socket, messages: BackstageChat.list())}
   end
 
   defp set_instrument(user_id, instrument) do

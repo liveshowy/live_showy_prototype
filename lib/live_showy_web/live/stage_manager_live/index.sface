@@ -1,63 +1,73 @@
-<div class="flex flex-wrap justify-between gap-2">
-  <section id="general" class="flex-grow w-full px-4 pt-2 pb-4 rounded shadow-md bg-brand-800">
-    <h1>Stage Manager</h1>
-    <p>Control user roles and MIDI settings.</p>
-  </section>
+<div class="grid grid-cols-1 gap-2 lg:grid-cols-4">
+  <Card class="col-span-full" compact>
+    <:header><h1>Stage Manager</h1></:header>
+    <:body><p>Manage users, settings, and monitor the system.</p></:body>
+  </Card>
 
-  <section id="wifi-info" class="px-4 pt-2 pb-4 rounded shadow-md bg-brand-800">
-    <h2>Wifi</h2>
-    <.live_component module={WifiCard} id="wifi-info-stage-manager" />
-  </section>
+  <Card>
+    <:header><h2>Wifi</h2></:header>
+    <:body><WifiCard id="wifi-info-stage-manager" /></:body>
+  </Card>
 
-  <section id="performance-metrics" class="flex-grow px-4 pt-2 pb-4 rounded shadow-md bg-brand-800 min-w-max">
-    <h2>Performance Metrics</h2>
-    <ul>
-      <li>App CPU</li>
-      <li>System CPU</li>
-      <li>App RAM</li>
-      <li>System RAM</li>
-      <li>App IO</li>
-      <li>System IO</li>
-    </ul>
-  </section>
+  <Card class="lg:col-span-2">
+    <:header><h2>Performance Metrics</h2></:header>
+    <:body>
+      <ul>
+        <li>App CPU</li>
+        <li>System CPU</li>
+        <li>App RAM</li>
+        <li>System RAM</li>
+        <li>App IO</li>
+        <li>System IO</li>
+      </ul>
+    </:body>
+  </Card>
 
-  <section id="stages" class="flex-grow px-4 pt-2 pb-4 rounded shadow-md bg-brand-800">
-    <h2>Stages</h2>
-    <ul>
-      <li>Dancing Dots</li>
-      <li>Solo</li>
-      <li>Band</li>
-      <li>Choir</li>
-    </ul>
-  </section>
+  <Card>
+    <:header><h2>MIDI Devices</h2></:header>
+    <:body>
+      <MidiDevicesComponent
+        available_inputs={@midi_devices.input}
+        available_outputs={@midi_devices.output}
+        active_input={@midi_input}
+        active_output={@midi_output}
+      />
+    </:body>
+  </Card>
 
-  <section id="midi-devices" class="flex-1 px-4 pt-2 pb-4 rounded shadow-md bg-brand-800 min-w-min">
-    <h2>MIDI Devices</h2>
-    <%# <MidiDevicesComponent.button_groups devices={@midi_devices} input={@midi_input} output={@midi_output} /> %>
-  </section>
+  <Card class="col-span-full">
+    <:header><h2>Users</h2></:header>
 
-  <section id="user-roles" class="flex-grow w-full px-4 pt-2 pb-4 rounded shadow-md bg-brand-800 min-w-max">
-    <h2>Users</h2>
+    <:body>
+      <form class="grid items-center grid-cols-5 gap-1" phx-change="user-role-changed">
+        <span class="font-bold uppercase text-default-300" />
+        {#for role <- @roles}
+          <span class="self-end text-xs font-bold uppercase lg:text-base justify-self-center text-default-300">{role |> Atom.to_string() |> String.replace(~r/_/, " ")}</span>
+        {/for}
 
-    <form class="grid items-center grid-cols-5 gap-2" phx-change="user-role-changed">
-      <span class="font-bold uppercase text-brand-300"></span>
-      {#for role <- @roles}
-        <span class="font-bold uppercase text-brand-300 place-self-center">{role |> Atom.to_string() |> String.replace(~r/_/, " ")}</span>
-      {/for}
+        {#for user <- @users}
+          <fieldset class="contents">
+            <span>{user.username}</span>
 
-      {#for user <- @users}
-        <fieldset class="contents">
-          <span class="font-mono text-sm">{user.username}</span>
-
-          {#for role <- @roles}
-            {#if role in user.roles}
-              <button type="button" phx-click="remove-user-role" phx-value-user-id={user.id} phx-value-role={role} class="px-2 py-1 transition rounded shadow text-brand-900 bg-brand-200 hover:bg-brand-600 hover:text-white">YES</button>
-            {#else}
-              <button type="button" phx-click="add-user-role" phx-value-user-id={user.id} phx-value-role={role} class="px-2 py-1 transition rounded shadow bg-brand-700 hover:bg-brand-600 hover:text-white">ADD</button>
-            {/if}
-          {/for}
-        </fieldset>
-      {/for}
-    </form>
-  </section>
+            {#for role <- @roles}
+              {#if role in user.roles}
+                <Button
+                  click="remove-user-role"
+                  label="YES"
+                  active
+                  attrs={%{"phx-value-user-id": user.id, "phx-value-role": role}}
+                />
+              {#else}
+                <Button
+                  click="add-user-role"
+                  label="ADD"
+                  attrs={%{"phx-value-user-id": user.id, "phx-value-role": role}}
+                />
+              {/if}
+            {/for}
+          </fieldset>
+        {/for}
+      </form>
+    </:body>
+  </Card>
 </div>

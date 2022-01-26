@@ -25,12 +25,12 @@ config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 config :tailwind,
   version: "3.0.15",
   default: [
+    cd: Path.expand("../assets", __DIR__),
     args: ~w(
       --config=./tailwind.config.js
       --input=./css/app.css
       --output=../priv/static/assets/app.css
-    ),
-    cd: Path.expand("../assets", __DIR__)
+    )
   ]
 
 # Configures the endpoint

@@ -1,12 +1,14 @@
 defmodule LiveShowyWeb.Components.XYPad do
   @moduledoc false
-  use Phoenix.Component
-  alias LiveShowyWeb.Components.UserDot
+  use Surface.Component
 
-  def square(assigns) do
-    ~H"""
-      <svg
-      class="w-[350px] h-[350px] bg-brand-800 rounded-lg border-2 border-brand-700 shadow-lg overscroll-none"
+  prop users, :list, required: true
+  prop current_user_id, :string, required: true
+
+  def render(assigns) do
+    ~F"""
+    <svg
+      class="w-[350px] h-[350px] bg-default-800 rounded-lg border-2 border-default-700 shadow-lg overscroll-none"
       id="touchpad"
       phx-hook="TrackTouchEvents"
       viewBox="0 0 350 350"
@@ -16,9 +18,9 @@ defmodule LiveShowyWeb.Components.XYPad do
       <line x1="0" x2="350" y1="175" y2="175" stroke="rgb(109, 40, 217)" stroke-width="2" />
       <line x1="175" x2="175" y1="0" y2="350" stroke="rgb(109, 40, 217)" stroke-width="2" />
 
-      <%= for user <- @users do %>
+      {#for user <- @users}
         <.dot id={"dot-" <> user.id} user={user} current_user_id={@current_user_id} />
-      <% end %>
+      {/for}
 
       <use xlink:href={"#dot-" <> @current_user_id} />
     </svg>
@@ -28,7 +30,7 @@ defmodule LiveShowyWeb.Components.XYPad do
   defp dot(assigns) do
     [x, y] = assigns.user.coords
 
-    ~H"""
+    ~F"""
     <circle
       id={"dot-" <> @user.id}
       fill={@user.color}

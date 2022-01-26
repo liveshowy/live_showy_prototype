@@ -15,19 +15,23 @@ defmodule LiveShowyWeb.Components.WifiCard do
     {:ok, assign(socket, assigns)}
   end
 
+  data ssid, :string
+  data password, :string
+  data url, :uri
+
   @impl true
   def render(assigns) do
-    ~H"""
+    ~F"""
     <dl class="grid grid-cols-2 gap-1">
-      <dt class="font-bold text-brand-300 uppercase">SSID</dt>
-      <dd><%= @ssid %></dd>
+      <dt class="font-bold uppercase text-default-300">SSID</dt>
+      <dd>{@ssid}</dd>
 
-      <dt class="font-bold text-brand-300 uppercase">Password</dt>
-      <dd><%= @password %></dd>
+      <dt class="font-bold uppercase text-default-300">Password</dt>
+      <dd>{@password}</dd>
 
-      <dt class="font-bold text-brand-300 uppercase">URL</dt>
-      <dd><%= @url %></dd>
-      </dl>
+      <dt class="font-bold uppercase text-default-300">URL</dt>
+      <dd>{@url}</dd>
+    </dl>
     """
   end
 end

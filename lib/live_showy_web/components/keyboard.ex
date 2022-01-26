@@ -5,7 +5,9 @@ defmodule LiveShowyWeb.Components.Keyboard do
   - Index each note within the octaves
   - Index the list of octaves
   """
-  use Phoenix.Component
+  use Surface.Component
+
+  prop octave, :integer, default: 5
 
   @notes 0..127
          |> Enum.chunk_every(12)
@@ -27,14 +29,14 @@ defmodule LiveShowyWeb.Components.Keyboard do
                 "B"
               ])
 
-  @default_class "flex flex-col gap-1 items-center justify-end w-20 h-64 p-1 font-bold transition-color duration-150 rounded-b-xl"
+  @default_class "flex flex-col gap-1 items-center justify-end w-20 h-64 p-1 font-bold transition-color duration-150 rounded-b-lg rounded-t-sm"
 
   def update(assigns, socket) do
     {notes, _index} = @notes |> Enum.at(assigns.octave, [])
     {:ok, assign(socket, octave: assigns.octave, notes: notes)}
   end
 
-  def large(assigns) do
+  def render(assigns) do
     {notes, _index} = Enum.at(@notes, assigns.octave, [])
 
     notes =
@@ -49,17 +51,12 @@ defmodule LiveShowyWeb.Components.Keyboard do
 
     assigns = assign(assigns, :notes, notes)
 
-    ~H"""
+    ~F"""
     <div>
       <div class="flex justify-center gap-1 p-2 pt-0 select-none">
-        <%= for {note, label, index} <- @notes do %>
-          <.key
-            id={"keyboard-key-#{note}"}
-            color={get_key_color(index)}
-            label={label}
-            note={note}
-          />
-        <% end %>
+        {#for {note, label, index} <- @notes}
+          <.key id={"keyboard-key-#{note}"} color={get_key_color(index)} label={label} note={note} />
+        {/for}
       </div>
     </div>
     """
@@ -67,7 +64,7 @@ defmodule LiveShowyWeb.Components.Keyboard do
 
   defp get_class(:black) do
     @default_class <>
-      " bg-gradient-to-b from-brand-600 to-brand-700 text-white active:to-black"
+      " bg-gradient-to-b from-default-600 to-default-700 text-white active:to-black"
   end
 
   defp get_class(:white),
@@ -76,7 +73,7 @@ defmodule LiveShowyWeb.Components.Keyboard do
         " bg-gradient-to-b from-gray-100 to-white text-black active:to-gray-300"
 
   defp key(assigns) do
-    ~H"""
+    ~F"""
     <button
       type="button"
       phx-hook="HandleKeyboardPresses"
@@ -84,8 +81,8 @@ defmodule LiveShowyWeb.Components.Keyboard do
       id={"key-#{@note}"}
       class={get_class(@color)}
     >
-      <span><%= @label %></span>
-      <span class="opacity-50"><%= @note %></span>
+      <span>{@label}</span>
+      <span class="opacity-50">{@note}</span>
     </button>
     """
   end

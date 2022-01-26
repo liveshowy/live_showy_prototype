@@ -1,35 +1,14 @@
 defmodule LiveShowyWeb.Components.DynamicInstrument do
   use Phoenix.Component
-  alias LiveShowyWeb.Components.Keyboard
-  alias LiveShowyWeb.Components.DrumPad
+
+  def render(%{instrument: instrument} = assigns) when is_struct(instrument) do
+    assigns = Map.merge(assigns, instrument) |> Map.drop([:instrument])
+    component(&instrument.component.render/1, assigns)
+  end
 
   def render(assigns) do
-    assigns =
-      if is_struct(assigns.instrument) do
-        Map.merge(assigns, assigns.instrument)
-        |> Map.drop([:instrument])
-      else
-        assigns
-      end
-
-    component = Map.get(assigns, :component)
-
-    case component do
-      Keyboard ->
-        Keyboard.large(assigns)
-
-      DrumPad ->
-        DrumPad.grid(assigns)
-
-      nil ->
-        ~H"""
-        <span class="font-bold text-brand-300">Instrument not supported</span>
-        """
-
-      _ ->
-        ~H"""
-        <span class="font-bold text-brand-300">Instrument not supported</span>
-        """
-    end
+    ~H"""
+    <p class="text-right text-default-400">Please select an instrument.</p>
+    """
   end
 end

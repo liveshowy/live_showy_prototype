@@ -1,49 +1,107 @@
-<div class="flex flex-wrap flex-initial gap-2">
-  <section class="flex flex-col w-full gap-2 px-4 pt-2 pb-4 rounded shadow-md bg-brand-800">
-    <h1>Backstage</h1>
+<div class="grid h-full max-h-full grid-cols-1 gap-2 lg:grid-cols-4 lg:grid-rows-[min-content_max-content_auto_auto] auto-rows-min">
+  <Card class="col-span-full" compact>
+    <:header>
+      <h1>Backstage</h1>
+    </:header>
 
-    <p>Welcome. You have been invited backstage, and are awaiting entry to the live stage. You may coordinate with other backstage members via chat.</p>
-  </section>
+    <:body>
+      <p>
+        You are awaiting entry to the live stage. You may coordinate with other backstage members via chat.
+      </p>
+    </:body>
+  </Card>
 
-  <section id="instrument" phx-hook="HandleWebMidiDevices" class="flex flex-col w-full gap-2 px-4 pt-2 pb-4 rounded shadow-md bg-brand-800 min-w-max">
-    <h2>Your Instrument</h2>
+  <Card
+    attrs={%{"phx-hook": "HandleWebMidiDevices", id: "backstage-instrument-preview"}}
+    class="col-span-full"
+  >
+    <:header>
+      <div class="flex flex-wrap gap-2">
+        <h2>Your Instrument</h2>
 
-    <DynamicInstrument.render instrument={@assigned_instrument} id="assigned-instrument-component" />
+        <span class="flex-grow" />
 
-    <div class="">
-      <span class="font-bold text-brand-2300">REQUEST:</span>
-      <button phx-click="instrument-requested" phx-value-user-id={@current_user.id} phx-value-instrument="drums" type="button" class="px-2 py-1 uppercase transition rounded shadow bg-brand-700 hover:bg-brand-600">DRUMS</button>
+        <ButtonBar>
+          <Button
+            label="DRUMS"
+            kind="primary"
+            click="instrument-requested"
+            rounded="first:rounded-l last:rounded-r only:rounded"
+            active={@assigned_instrument && @assigned_instrument.component == LiveShowyWeb.Components.DrumPad}
+            attrs={%{
+              "phx-value-user-id" => @current_user.id,
+              "phx-value-instrument" => "drums"
+            }}
+          />
 
-      <button phx-click="instrument-requested" phx-value-user-id={@current_user.id} phx-value-instrument="keys" type="button" class="px-2 py-1 uppercase transition rounded shadow bg-brand-700 hover:bg-brand-600">KEYS</button>
+          <Button
+            label="KEYS"
+            kind="primary"
+            click="instrument-requested"
+            rounded="first:rounded-l last:rounded-r only:rounded"
+            active={@assigned_instrument && @assigned_instrument.component == LiveShowyWeb.Components.Keyboard}
+            attrs={%{
+              "phx-value-user-id" => @current_user.id,
+              "phx-value-instrument" => "keys"
+            }}
+          />
+        </ButtonBar>
+      </div>
+    </:header>
 
-      <button phx-click="instrument-requested" phx-value-user-id={@current_user.id} phx-value-instrument="voice" type="button" class="px-2 py-1 uppercase transition rounded shadow bg-brand-700 hover:bg-brand-600">VOICE</button>
-    </div>
-  </section>
+    <:body>
+      <DynamicInstrument.render
+        :if={@assigned_instrument}
+        instrument={@assigned_instrument}
+        id="assigned-instrument-component"
+      />
+    </:body>
+  </Card>
 
-  <section id="client-input-devices" class="flex-1 px-4 pt-2 pb-4 rounded shadow-md bg-brand-800 min-w-max">
-  {#case @webmidi_supported}
-  {#match true}
-    <h2>Your Input Devices</h2>
-    <p class="text-sm">Your device(s) will change color as notes are played.</p>
+  <Card class="col-span-2 lg:col-start-1">
+    <:header>
+      <h2>Your MIDI Devices</h2>
+    </:header>
 
-    <ClientMidiDevices.list id="client-input-devices-list" devices={@client_input_devices} playing_devices={@playing_devices} />
-  {#match false}
-    <span>WebMIDI is not supported in this browser.</span>
-  {#match _}
-    <span class="text-brand-300">Awaiting WebMIDI status</span>
-  {/case}
-  </section>
+    <:body>
+      {#case @webmidi_supported}
+        {#match true}
+          <p class="text-sm">Your device(s) will change color as notes are played.</p>
 
-  <section id="performers-list" class="flex-1 px-4 pt-2 pb-4 rounded shadow-md bg-brand-800 min-w-max">
-    <h2>Performers</h2>
+          <ClientMidiDevices devices={@client_input_devices} playing_devices={@playing_devices} />
+        {#match false}
+          <span>WebMIDI is not supported in this browser.</span>
+        {#match _}
+          <span class="text-default-300">Awaiting WebMIDI status</span>
+      {/case}
+    </:body>
+  </Card>
 
-    <UsersComponent.list users={@performers} current_user={@current_user} id="performers-list" />
-  </section>
+  <Card class="col-span-2 lg:col-start-1">
+    <:header>
+      <h2>Performers</h2>
+    </:header>
 
-  <section id="performers-chat" class="flex flex-col justify-between flex-grow gap-1 px-4 pt-2 pb-4 rounded shadow-md bg-brand-800">
-    <h2>Chat</h2>
+    <:body>
+      <UsersComponent.list users={@performers} current_user={@current_user} id="performers-list" />
+    </:body>
+  </Card>
 
-    <ChatBox.list messages={@messages} id="performers-chat-messages" />
-    <ChatBox.new_message message={@form_message} class="place-self-end" id="performers-chat-form" />
-  </section>
+  <Card
+    class="lg:col-start-3 lg:row-start-3 lg:row-span-2 lg:col-span-2 max-h-[30rem] lg:max-h-full bg-default-900"
+    padding="p-0"
+  >
+    <:header>
+      <h2 class="px-4 py-2">Chat</h2>
+    </:header>
+
+    <:body>
+      {live_render(
+        @socket,
+        LiveShowyWeb.ChatLive.Index,
+        id: "backstage-chat",
+        session: %{"chat_module" => LiveShowy.Chat.Backstage}
+      )}
+    </:body>
+  </Card>
 </div>
