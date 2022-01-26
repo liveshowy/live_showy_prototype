@@ -1,7 +1,5 @@
 defmodule LiveShowyWeb.StageManagerLive.Index do
-  @moduledoc """
-  Users with a stage manager role may access this LiveView to coordinate other users and performances.
-  """
+  @moduledoc false
   use LiveShowyWeb, :live_view
   require Logger
   alias LiveShowy.Users

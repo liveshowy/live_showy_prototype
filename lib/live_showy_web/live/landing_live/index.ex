@@ -1,7 +1,5 @@
 defmodule LiveShowyWeb.LandingLive.Index do
-  @moduledoc """
-  The landing page for LiveShowy.
-  """
+  @moduledoc false
   use LiveShowyWeb, :live_view
   alias LiveShowy.Wifi
   alias LiveShowyWeb.Components.WifiBar

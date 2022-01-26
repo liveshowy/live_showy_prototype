@@ -1,13 +1,16 @@
 defmodule LiveShowyWeb.BackstageLive.Index do
-  @moduledoc """
-  A chat room for coordinating performers and instruments.
-  """
+  @moduledoc false
+  # FRAMEWORK / APP
   require Logger
   use LiveShowyWeb, :live_view
   alias LiveShowyWeb.Presence
+
+  # CORE
   alias LiveShowy.Users
   alias LiveShowy.Instrument
   alias LiveShowy.UserInstruments
+
+  # COMPONENTS
   alias LiveShowyWeb.Components.Users, as: UsersComponent
   alias LiveShowyWeb.Components.Button
   alias LiveShowyWeb.Components.ButtonBar

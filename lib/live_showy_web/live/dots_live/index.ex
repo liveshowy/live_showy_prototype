@@ -1,7 +1,5 @@
 defmodule LiveShowyWeb.DotsLive.Index do
-  @moduledoc """
-  A stage for multiple users to move shapes.
-  """
+  @moduledoc false
 
   alias LiveShowy.UserCoordinates
   use LiveShowyWeb, :live_view

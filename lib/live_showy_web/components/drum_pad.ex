@@ -1,7 +1,5 @@
 defmodule LiveShowyWeb.Components.DrumPad do
-  @moduledoc """
-  A user interface for drum and other rhythmic instruments
-  """
+  @moduledoc false
   use Surface.Component
 
   def render(assigns) do

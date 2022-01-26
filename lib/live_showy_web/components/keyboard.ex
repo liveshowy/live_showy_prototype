@@ -1,10 +1,5 @@
 defmodule LiveShowyWeb.Components.Keyboard do
-  @moduledoc """
-  - Create a range of notes from 0 to 126
-  - Group notes into octaves (12 notes each)
-  - Index each note within the octaves
-  - Index the list of octaves
-  """
+  @moduledoc false
   use Surface.Component
 
   prop octave, :integer, default: 5
