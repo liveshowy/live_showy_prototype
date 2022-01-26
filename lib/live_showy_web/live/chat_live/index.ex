@@ -50,7 +50,6 @@ defmodule LiveShowyWeb.ChatLive.Index do
 
   def handle_event(event, value, socket) do
     Logger.warning(unknown_event: {__MODULE__, event, value})
-    IO.inspect(socket.assigns)
     {:noreply, socket}
   end
 
@@ -59,7 +58,6 @@ defmodule LiveShowyWeb.ChatLive.Index do
   end
 
   def handle_info({:message_updated, message}, socket) do
-    IO.inspect(message, label: "UPDATED_MESSAGE")
     {:noreply, update(socket, :messages, fn messages -> [message | messages] end)}
   end
 
