@@ -12,7 +12,7 @@
   </Card>
 
   <Card
-    attrs={%{"phx-hook": "HandleWebMidiDevices", id: "backstage-instrument-preview"}}
+    attrs={%{id: "backstage-instrument-preview"}}
     class="col-span-full"
   >
     <:header>
@@ -50,10 +50,9 @@
     </:header>
 
     <:body>
-      <DynamicInstrument.render
+      <DynamicInstrument
         :if={@assigned_instrument}
         instrument={@assigned_instrument}
-        id="assigned-instrument-component"
       />
     </:body>
   </Card>
@@ -64,7 +63,7 @@
     </:header>
 
     <:body>
-      {#case @webmidi_supported}
+      {#case @webmidi_supported?}
         {#match true}
           <p class="text-sm">Your device(s) will change color as notes are played.</p>
 
@@ -88,8 +87,7 @@
   </Card>
 
   <Card
-    class="lg:col-start-3 lg:row-start-3 lg:row-span-2 lg:col-span-2 max-h-[30rem] lg:max-h-full bg-default-900"
-    padding="p-0"
+    class="lg:col-start-3 lg:row-start-3 lg:row-span-2 lg:col-span-2 max-h-[30rem] lg:max-h-full"
   >
     <:header>
       <h2 class="px-4 py-2">Chat</h2>

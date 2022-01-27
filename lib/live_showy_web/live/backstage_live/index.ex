@@ -40,7 +40,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
     {:ok,
      assign(socket,
        performers: performers,
-       webmidi_supported: nil,
+       webmidi_supported?: nil,
        assigned_instrument: assigned_instrument,
        client_input_devices: [],
        playing_devices: MapSet.new()
@@ -93,12 +93,10 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   end
 
   def handle_event("webmidi-supported", boolean, socket) do
-    {:noreply, assign(socket, webmidi_supported: boolean)}
+    {:noreply, assign(socket, webmidi_supported?: boolean)}
   end
 
   def handle_event("midi-device-change", device, socket) do
-    # IO.inspect(device, pretty: true)
-
     case {device["state"], device["connection"]} do
       {"connected", "open"} ->
         {:noreply, update(socket, :client_input_devices, &[device | &1])}
