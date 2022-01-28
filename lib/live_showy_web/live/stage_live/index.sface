@@ -1,8 +1,38 @@
-<div class="grid grid-cols-1 gap-2 lg:grid-cols-4">
-  <Card class="col-span-full">
-    <:header><h2>Stage</h2></:header>
+<div class="grid grid-cols-1 gap-2 lg:grid-cols-4 auto-rows-auto">
+  <Card class="col-span-full" compact={true}>
+    <:header><h1>Stage</h1></:header>
+
     <:body>
-      TBD
+      <p>You are live! This is where the fun stuff happens.</p>
+    </:body>
+  </Card>
+
+  <Card class="lg:col-span-2">
+    <:header>
+      <h2>
+        You:
+        <span class="font-mono">{@current_user.username}</span>
+      </h2>
+    </:header>
+
+    <:body>
+      <DynamicInstrument instrument={@assigned_instrument} />
+    </:body>
+  </Card>
+
+  <Card>
+    <:header><h2>Your MIDI Devices</h2></:header>
+
+    <:body>
+      <ClientMidiDevices id="live-stage-client-midi-devices" current_user_id={@current_user.id} />
+    </:body>
+  </Card>
+
+  <Card>
+    <:header><h2>Performers</h2></:header>
+
+    <:body>
+      <UsersComponent.list users={@performers} current_user={@current_user} />
     </:body>
   </Card>
 </div>
