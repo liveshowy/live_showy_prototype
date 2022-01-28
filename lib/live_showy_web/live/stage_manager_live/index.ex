@@ -1,16 +1,22 @@
 defmodule LiveShowyWeb.StageManagerLive.Index do
   @moduledoc false
-  use LiveShowyWeb, :live_view
+  # FRAMEWORK / APP
   require Logger
+  use LiveShowyWeb, :live_view
+
+  # CORE
   alias LiveShowy.Users
   alias LiveShowy.Roles
   alias LiveShowy.UserRoles
   alias LiveShowy.Wifi
   alias LiveShowy.MidiDevices
-  alias LiveShowyWeb.Components.MidiDevices, as: MidiDevicesComponent
-  alias LiveShowyWeb.Components.WifiCard
-  alias LiveShowyWeb.Components.Button
+
+  # COMPONENTS
   alias LiveShowyWeb.Components.Card
+  alias LiveShowyWeb.Components.Button
+  alias LiveShowyWeb.Components.WifiCard
+  alias LiveShowyWeb.Components.MidiDevices, as: MidiDevicesComponent
+  alias LiveShowyWeb.ChatLive
 
   @impl true
   def mount(_params, _session, socket) do
