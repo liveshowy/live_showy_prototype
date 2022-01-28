@@ -1,7 +1,9 @@
 defmodule LiveShowyWeb.Components.DynamicInstrument do
-  use Phoenix.Component
+  use Surface.Component
 
-  def render(%{instrument: instrument} = assigns) when is_struct(instrument) do
+  prop instrument, :struct
+
+  def render(%{instrument: instrument} = assigns) do
     assigns = Map.merge(assigns, instrument) |> Map.drop([:instrument])
     component(&instrument.component.render/1, assigns)
   end
