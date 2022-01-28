@@ -92,39 +92,6 @@ defmodule LiveShowyWeb.BackstageLive.Index do
     {:noreply, assign(socket, assigned_instrument: new_instrument)}
   end
 
-  def handle_event("webmidi-supported", boolean, socket) do
-    {:noreply, assign(socket, webmidi_supported?: boolean)}
-  end
-
-  def handle_event("midi-device-change", device, socket) do
-    case {device["state"], device["connection"]} do
-      {"connected", "open"} ->
-        {:noreply, update(socket, :client_input_devices, &[device | &1])}
-
-      _ ->
-        {:noreply,
-         update(
-           socket,
-           :client_input_devices,
-           &Enum.filter(&1, fn listed_device -> listed_device["id"] != device["id"] end)
-         )}
-    end
-  end
-
-  def handle_event(
-        "midi-message",
-        %{"device_id" => device_id, "message" => [status, _note, velocity]},
-        socket
-      ) do
-    cond do
-      velocity == 0 or status in 128..143 ->
-        {:noreply, update(socket, :playing_devices, &MapSet.delete(&1, device_id))}
-
-      status ->
-        {:noreply, update(socket, :playing_devices, &MapSet.put(&1, device_id))}
-    end
-  end
-
   def handle_event(event, value, socket) do
     Logger.warning(unknown_event: {event, value})
     {:noreply, socket}
