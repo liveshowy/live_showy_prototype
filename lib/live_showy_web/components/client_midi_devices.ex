@@ -2,12 +2,11 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
   @moduledoc false
   require Logger
   use LiveShowyWeb, :live_component
+  alias LiveShowyWeb.Components.ClientMidiDevice
 
   prop current_user_id, :string
   data webmidi_supported?, :boolean, default: nil
-  data client_inputs, :list, default: []
-  data playing_inputs, :mapset, default: MapSet.new()
-  data current_message, :list, default: [:status, :note, :velocity]
+  data client_inputs, :map, default: %{}
 
   def render(assigns) do
     ~F"""
@@ -21,22 +20,19 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
       {/case}
 
       <h3>Inputs</h3>
-      <ul>
-        {#for device <- @client_inputs}
-          <li class="flex items-center gap-2">
-            <span class={
-              "rounded-full w-4 h-4 shadow-inner",
-              "bg-success-500": device["id"] in @playing_inputs,
-              "bg-default-600": device["id"] not in @playing_inputs
-            } />
-
-            <span>{device["name"]}</span>
-          </li>
+      <div>
+        {#for {_id, device} <- @client_inputs}
+          <ClientMidiDevice
+            id={device["id"]}
+            connection={device["connection"]}
+            manufacturer={device["manufacturer"]}
+            name={device["name"]}
+            state={device["state"]}
+            type={device["type"]}
+            active_notes={device["active_notes"]}
+          />
         {/for}
-      </ul>
-
-      <h3>Current Message</h3>
-      <pre>{Jason.encode!(@current_message)}</pre>
+      </div>
     </div>
     """
   end
@@ -45,17 +41,23 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
     {:noreply, assign(socket, :webmidi_supported?, boolean)}
   end
 
-  def handle_event("midi-device-change", %{"state" => state, "type" => type} = device, socket) do
+  def handle_event(
+        "midi-device-change",
+        %{"id" => device_id, "state" => state, "type" => type} = device,
+        socket
+      ) do
     case {state, type} do
       {"connected", "input"} ->
-        {:noreply, update(socket, :client_inputs, &Enum.uniq([device | &1]))}
+        device = Map.put_new(device, "active_notes", MapSet.new())
+
+        {:noreply, update(socket, :client_inputs, &Map.put_new(&1, device_id, device))}
 
       {_, "input"} ->
         {:noreply,
          update(
            socket,
            :client_inputs,
-           &Enum.filter(&1, fn existing_device -> existing_device["id"] != device["id"] end)
+           &Map.delete(&1, device_id)
          )}
 
       _ ->
@@ -65,11 +67,9 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
 
   def handle_event(
         "midi-message",
-        %{"device_id" => device_id, "message" => [status, _note, velocity] = message},
+        %{"device_id" => device_id, "message" => [status, note, velocity]},
         socket
       ) do
-    socket = assign(socket, current_message: message)
-
     cond do
       status in [176, 224] ->
         # CC and Pitch Bend
@@ -77,25 +77,51 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
           __MODULE__,
           [
             id: socket.assigns.id,
-            playing_inputs: MapSet.delete(socket.assigns.playing_inputs, device_id)
+            client_inputs:
+              update_active_notes(socket.assigns.client_inputs, device_id, note, :delete)
           ],
           250
         )
 
-        {:noreply, update(socket, :playing_inputs, &MapSet.put(&1, device_id))}
+        socket =
+          update(
+            socket,
+            :client_inputs,
+            &update_active_notes(&1, device_id, note, :put)
+          )
+
+        {:noreply, socket}
 
       # NoteOff
-      velocity == 0 or status in 128..143 ->
-        {:noreply, update(socket, :playing_inputs, &MapSet.delete(&1, device_id))}
+      velocity in [nil, 0] or status in 128..143 ->
+        {:noreply,
+         update(
+           socket,
+           :client_inputs,
+           &update_active_notes(&1, device_id, note, :delete)
+         )}
 
       # All other messages
       status ->
-        {:noreply, update(socket, :playing_inputs, &MapSet.put(&1, device_id))}
+        {:noreply,
+         update(
+           socket,
+           :client_inputs,
+           &update_active_notes(&1, device_id, note, :put)
+         )}
     end
   end
 
   def handle_event(event, params, socket) do
     Logger.warn(unknown_event: {__MODULE__, event, params})
     {:noreply, socket}
+  end
+
+  defp update_active_notes(inputs, device_id, note, action) when action in [:put, :delete] do
+    update_in(
+      inputs,
+      [device_id],
+      &Map.update!(&1, "active_notes", fn notes -> apply(MapSet, action, [notes, note]) end)
+    )
   end
 end
