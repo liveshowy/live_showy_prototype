@@ -125,9 +125,13 @@ let Hooks = {
       console.info(`HandleWebMidiDevices mounted`)
       midiAccess = await initMidi(onMidiSuccess, onMidiFailure, this)
 
-      midiAccess.inputs.forEach(input => {
-        input.onmidimessage = event => onMidiMessage(event, this)
-        input.onstatechange = event => onMidiDeviceChange(event, this)
+      midiAccess.inputs.forEach(device => {
+        device.onmidimessage = event => onMidiMessage(event, this)
+        device.onstatechange = event => onMidiDeviceChange(event, this)
+      })
+
+      midiAccess.outputs.forEach(device => {
+        device.onstatechange = event => onMidiDeviceChange(event, this)
       })
     },
   },
