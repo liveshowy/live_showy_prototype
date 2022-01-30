@@ -9,12 +9,12 @@ defmodule LiveShowyWeb.Components.NavBar do
 
   def render(assigns) do
     ~F"""
-    <header class="sticky top-0 z-50 self-start w-full shadow-md select-none col-span-full text-default-200">
-      <section class="bg-gradient-to-br from-default-700 to-default-900">
+    <header class="sticky top-0 z-50 self-start w-full shadow-md select-none col-span-full text-default-800 dark:text-default-200">
+      <section class="bg-gradient-to-br from-white to-default-300 dark:from-default-700 dark:to-default-900">
         <nav class="mx-auto max-w-screen-2xl">
-          <ul class="flex flex-wrap gap-4 p-4">
+          <ul class="flex flex-wrap items-center gap-4 px-4 py-2">
             <li>
-              <Link to={Routes.landing_index_path(@conn, :index)}>LiveShowy</Link>
+              <Link to={Routes.landing_index_path(@conn, :index)} class="text-2xl text-brand-500 dark:text-brand-400 font-logo">LiveShowy</Link>
             </li>
 
             <span class="flex-grow" />
