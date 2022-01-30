@@ -126,6 +126,10 @@ let Hooks = {
       midiAccess = await initMidi(onMidiSuccess, onMidiFailure, this)
 
       midiAccess.inputs.forEach(device => {
+        if (device.name.match(/^iac/i)) {
+          // Ignore IAC pseudo devices
+          return
+        }
         device.onmidimessage = event => onMidiMessage(event, this)
         device.onstatechange = event => onMidiDeviceChange(event, this)
       })
