@@ -24,7 +24,7 @@ defmodule LiveShowyWeb.Components.Keyboard do
                 "B"
               ])
 
-  @default_class "flex flex-col gap-1 items-center justify-end w-20 h-64 p-1 font-bold transition-color duration-150 rounded-b-lg rounded-t-sm"
+  @default_class "flex flex-col gap-1 items-center justify-end w-20 h-64 p-1 font-bold transition rounded-b-lg rounded-t-sm shadow-md active:shadow-sm"
 
   def update(assigns, socket) do
     {notes, _index} = @notes |> Enum.at(assigns.octave, [])
@@ -59,13 +59,13 @@ defmodule LiveShowyWeb.Components.Keyboard do
 
   defp get_class(:black) do
     @default_class <>
-      " bg-gradient-to-b from-default-600 to-default-700 text-white active:to-black"
+      " bg-gradient-to-b from-default-400 to-default-500 dark:from-default-600 dark:to-default-700 text-white active:to-default-600 dark:active:to-default-800"
   end
 
   defp get_class(:white),
     do:
       @default_class <>
-        " bg-gradient-to-b from-gray-100 to-white text-black active:to-gray-300"
+        " bg-gradient-to-b from-white to-default-200 dark:from-default-100 dark:to-white text-black active:to-default-300 dark:active:to-default-400"
 
   defp key(assigns) do
     ~F"""

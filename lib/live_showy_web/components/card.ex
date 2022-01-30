@@ -23,7 +23,7 @@ defmodule LiveShowyWeb.Components.Card do
         @rounded,
         @shadow,
         @padding,
-        "bg-default-800": !@transparent,
+        "bg-default-100 dark:bg-default-800": !@transparent,
         "flex flex-wrap gap-2 items-baseline justify-between": @compact,
         "flex flex-col gap-1": !@compact
       }

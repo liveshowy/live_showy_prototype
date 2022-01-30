@@ -8,6 +8,11 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
   data webmidi_supported?, :boolean, default: nil
   data client_inputs, :map, default: %{}
 
+  def mount(socket) do
+    {:ok, midi_output_pid} = PortMidi.open(:output, "IAC Device Bus 1")
+    {:ok, assign(socket, midi_output_pid: midi_output_pid)}
+  end
+
   def render(assigns) do
     ~F"""
     <div id={@id} phx-hook="HandleWebMidiDevices">
@@ -68,8 +73,11 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
   def handle_event(
         "midi-message",
         %{"device_id" => device_id, "message" => [status, note, velocity]},
-        socket
+        %{assigns: %{midi_output_pid: midi_output_pid}} = socket
       ) do
+    # IO.inspect({status, note, velocity}, label: "MIDI MESSAGE")
+    PortMidi.write(midi_output_pid, {status, note, velocity})
+
     cond do
       status in [176, 224] ->
         # CC and Pitch Bend
@@ -110,6 +118,15 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
            &update_active_notes(&1, device_id, note, :put)
          )}
     end
+  end
+
+  def handle_event(
+        "midi-message",
+        %{"message" => [status, note, velocity]},
+        %{assigns: %{midi_output_pid: midi_output_pid}} = socket
+      ) do
+    PortMidi.write(midi_output_pid, {status, note, velocity})
+    {:noreply, socket}
   end
 
   def handle_event(event, params, socket) do
