@@ -75,7 +75,6 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
         %{"device_id" => device_id, "message" => [status, note, velocity]},
         %{assigns: %{midi_output_pid: midi_output_pid}} = socket
       ) do
-    # IO.inspect({status, note, velocity}, label: "MIDI MESSAGE")
     PortMidi.write(midi_output_pid, {status, note, velocity})
 
     cond do
