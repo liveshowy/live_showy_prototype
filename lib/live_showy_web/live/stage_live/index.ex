@@ -76,6 +76,10 @@ defmodule LiveShowyWeb.StageLive.Index do
     {:noreply, socket}
   end
 
+  def handle_info({:user_instrument_added, instrument}, socket) do
+    {:noreply, assign(socket, assigned_instrument: instrument)}
+  end
+
   def handle_info(message, socket) do
     Logger.warn(unknown_message: {__MODULE__, message})
     {:noreply, socket}
