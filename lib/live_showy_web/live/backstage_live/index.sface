@@ -63,16 +63,7 @@
     </:header>
 
     <:body>
-      {#case @webmidi_supported?}
-        {#match true}
-          <p class="text-sm">Your device(s) will change color as notes are played.</p>
-
-          <ClientMidiDevices devices={@client_input_devices} playing_devices={@playing_devices} />
-        {#match false}
-          <span>WebMIDI is not supported in this browser.</span>
-        {#match _}
-          <span class="text-default-300">Awaiting WebMIDI status</span>
-      {/case}
+      <ClientMidiDevices id="backstage-client-midi-devices" current_user_id={@current_user.id} />
     </:body>
   </Card>
 

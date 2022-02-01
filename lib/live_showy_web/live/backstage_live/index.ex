@@ -40,7 +40,6 @@ defmodule LiveShowyWeb.BackstageLive.Index do
     {:ok,
      assign(socket,
        performers: performers,
-       webmidi_supported?: nil,
        assigned_instrument: assigned_instrument,
        client_input_devices: [],
        playing_devices: MapSet.new()
