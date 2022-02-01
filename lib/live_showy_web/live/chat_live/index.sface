@@ -4,7 +4,7 @@
   <ul
     phx-update="prepend"
     id="chat-messages"
-    class="flex flex-col gap-2 px-1 py-2 overflow-y-auto shadow-inner-lg"
+    class="flex flex-col gap-2 px-1 py-2 overflow-y-auto"
   >
     {#for message <- @messages}
       <ChatMessageComponent

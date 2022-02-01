@@ -7,7 +7,7 @@
     </:body>
   </Card>
 
-  <Card class="lg:col-span-2">
+  <Card class="col-span-full">
     <:header>
       <h2>
         You:
@@ -20,7 +20,7 @@
     </:body>
   </Card>
 
-  <Card>
+  <Card class="lg:col-span-2">
     <:header><h2>Your MIDI Devices</h2></:header>
 
     <:body>
@@ -28,7 +28,7 @@
     </:body>
   </Card>
 
-  <Card>
+  <Card class="lg:col-span-2">
     <:header><h2>Performers</h2></:header>
 
     <:body>
