@@ -45,7 +45,7 @@ defmodule LiveShowyWeb.Router do
       live "/", BackstageLive.Index, :index
     end
 
-    scope "/main", LiveShowyWeb do
+    scope "/mainstage", LiveShowyWeb do
       pipe_through [:browser, :require_user, :authorize_live_performers]
 
       live "/", StageLive.Index, :index
@@ -55,13 +55,6 @@ defmodule LiveShowyWeb.Router do
       pipe_through [:browser, :require_user, :authorize_stage_managers]
 
       live "/stage-manager", StageManagerLive.Index, :index
-    end
-
-    scope "/stage", LiveShowyWeb do
-      pipe_through [:browser, :require_user, :authorize_performers]
-
-      # band route
-      # choir route
     end
   end
 
