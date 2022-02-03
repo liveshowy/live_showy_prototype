@@ -20,10 +20,13 @@ defmodule LiveShowyWeb.Components.NavBar do
             <span class="flex-grow" />
 
             <li>
+              <Link to={Routes.landing_index_path(@conn, :index)}>Lobby</Link>
+            </li>
+            <li>
               <Link to={Routes.backstage_index_path(@conn, :index)}>Backstage</Link>
             </li>
             <li>
-              <Link to={Routes.stage_index_path(@conn, :index)}>LiveStage</Link>
+              <Link to={Routes.stage_index_path(@conn, :index)}>Main Stage</Link>
             </li>
             <li>
               <Link to={Routes.stage_manager_index_path(@conn, :index)}>
