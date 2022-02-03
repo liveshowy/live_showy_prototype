@@ -1,3 +1,30 @@
-<section class="flex flex-wrap content-end justify-end w-full h-full gap-4 text-4xl font-thin text-default-400">
-  <p>It's like a live show, but showier.</p>
+<section class="flex flex-col lg:grid h-full gap-4 text-lg grid-cols-4 auto-rows-auto place-content-center">
+  <div class="flex flex-col col-span-full place-items-center text-brand-500 dark:text-brand-400">
+    <h1 class="text-6xl lg:text-8xl font-logo text-inherit">LiveShowy</h1>
+
+    <p class="text-3xl font-thin">It's like a live show, but showier.</p>
+  </div>
+
+  <div class="lg:col-span-2">
+    <h2>Lobby</h2>
+    <p>
+      Welcome to LiveShowy. You are currently in the lobby. If a stage manager assigns a performer role, you will be redirected to Backstage.
+    </p>
+
+    <p>
+      From Backstage, you may request an instrument and chat with other performers and stage managers.
+    </p>
+  </div>
+
+  <div class="lg:col-span-2">
+
+    <h3>Your Profile</h3>
+
+    <p>
+      Hello, <strong class="text-brand-500 dark:text-brand-400">{@current_user.username}</strong>!<br/>
+      You have been assigned a random username for this performance.
+    </p>
+  </div>
+
+  <UserCard user={@current_user} class="col-start-2 max-w-max lg:col-span-2" transparent={true} shadow={nil} padding={nil} />
 </section>
