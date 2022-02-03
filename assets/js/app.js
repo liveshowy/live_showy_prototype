@@ -73,12 +73,12 @@ let Hooks = {
 
         const y = e.offsetY
         const velocity = parseInt(parseFloat(y / height) * 127, 10)
-        this.pushEventTo("#live-stage-client-midi-devices", "midi-message", {message: [144, value, velocity]})
+        this.pushEventTo("#client-midi-devices", "midi-message", {message: [144, value, velocity]})
       }
 
       const noteoff = e => {
         const value = parseInt(e.target.value, 10)
-        this.pushEventTo("#live-stage-client-midi-devices", "midi-message", {message: [128, value, 0]})
+        this.pushEventTo("#client-midi-devices", "midi-message", {message: [128, value, 0]})
       }
 
       if ('ontouchstart' in window) {
@@ -100,12 +100,12 @@ let Hooks = {
 
       const noteon = e => {
         const value = parseInt(e.target.value, 10)
-        this.pushEventTo("#live-stage-client-midi-devices", "midi-message", [144, value, 127])
+        this.pushEventTo("#client-midi-devices", "midi-message", [144, value, 127])
       }
 
       const noteoff = e => {
         const value = parseInt(e.target.value, 10)
-        this.pushEventTo("#live-stage-client-midi-devices", "midi-message", [128, value, 0])
+        this.pushEventTo("#client-midi-devices", "midi-message", [128, value, 0])
       }
 
       if ('ontouchstart' in window) {

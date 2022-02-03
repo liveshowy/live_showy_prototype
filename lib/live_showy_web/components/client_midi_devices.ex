@@ -15,7 +15,7 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
 
   def render(assigns) do
     ~F"""
-    <div id={@id} phx-hook="HandleWebMidiDevices">
+    <div id="client-midi-devices" phx-hook="HandleWebMidiDevices">
       {#case @webmidi_supported?}
       {#match false}
         <span>WebMIDI is NOT supported</span>
