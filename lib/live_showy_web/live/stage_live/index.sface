@@ -24,7 +24,7 @@
     <:header><h2>Your MIDI Devices</h2></:header>
 
     <:body>
-      <ClientMidiDevices id="live-stage-client-midi-devices" current_user_id={@current_user.id} />
+      <ClientMidiDevices id="client-midi-devices" current_user_id={@current_user.id} />
     </:body>
   </Card>
 

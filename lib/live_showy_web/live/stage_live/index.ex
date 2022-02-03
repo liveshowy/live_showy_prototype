@@ -8,6 +8,7 @@ defmodule LiveShowyWeb.StageLive.Index do
   # CORE
   alias LiveShowy.Users
   alias LiveShowy.UserRoles
+  alias LiveShowy.Instrument
   alias LiveShowy.UserInstruments
 
   # COMPONENTS
@@ -18,7 +19,16 @@ defmodule LiveShowyWeb.StageLive.Index do
 
   @topic "stage"
 
-  def mount(_params, _session, %{assigns: %{current_user: current_user}} = socket) do
+  def mount(
+        _params,
+        _session,
+        %{
+          assigns: %{
+            current_user:
+              %{assigned_instrument: %Instrument{} = _assigned_instrument} = current_user
+          }
+        } = socket
+      ) do
     if connected?(socket), do: subscribe()
 
     Presence.track(
@@ -39,6 +49,15 @@ defmodule LiveShowyWeb.StageLive.Index do
        performers: performers,
        assigned_instrument: assigned_instrument
      )}
+  end
+
+  def mount(_params, _session, socket) do
+    socket =
+      socket
+      |> put_flash(:error, "Please select an instrument")
+      |> push_redirect(to: Routes.backstage_index_path(socket, :index))
+
+    {:ok, socket}
   end
 
   defp subscribe do
