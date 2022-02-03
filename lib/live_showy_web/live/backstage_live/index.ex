@@ -7,6 +7,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
 
   # CORE
   alias LiveShowy.Users
+  alias LiveShowy.UserRoles
   alias LiveShowy.Instrument
   alias LiveShowy.UserInstruments
 
@@ -49,6 +50,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   defp subscribe do
     Phoenix.PubSub.subscribe(LiveShowy.PubSub, @topic)
     Users.subscribe()
+    UserRoles.subscribe()
   end
 
   @impl true
@@ -73,6 +75,20 @@ defmodule LiveShowyWeb.BackstageLive.Index do
     end
 
     {:noreply, socket}
+  end
+
+  def handle_info(
+        {:user_role_removed, {user_id, :performer}},
+        %{assigns: %{current_user: current_user}} = socket
+      )
+      when current_user.id == user_id do
+    {
+      :noreply,
+      socket
+      |> clear_flash()
+      |> put_flash(:error, "Your performer role has been removed")
+      |> push_redirect(to: Routes.landing_index_path(socket, :index))
+    }
   end
 
   def handle_info(message, socket) do
