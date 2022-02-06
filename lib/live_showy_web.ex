@@ -42,8 +42,6 @@ defmodule LiveShowyWeb do
 
       use Surface.View,
         root: "lib/live_showy_web/templates"
-
-      import Surface
     end
   end
 

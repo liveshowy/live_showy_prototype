@@ -73,12 +73,12 @@ let Hooks = {
 
         const y = e.offsetY
         const velocity = parseInt(parseFloat(y / height) * 127, 10)
-        this.pushEvent("note-on", [value, velocity])
+        this.pushEventTo("#client-midi-devices", "midi-message", {message: [144, value, velocity]})
       }
 
       const noteoff = e => {
         const value = parseInt(e.target.value, 10)
-        this.pushEvent("note-off", value)
+        this.pushEventTo("#client-midi-devices", "midi-message", {message: [128, value, 0]})
       }
 
       if ('ontouchstart' in window) {
@@ -100,12 +100,12 @@ let Hooks = {
 
       const noteon = e => {
         const value = parseInt(e.target.value, 10)
-        this.pushEvent("note-on", value)
+        this.pushEventTo("#client-midi-devices", "midi-message", [144, value, 127])
       }
 
       const noteoff = e => {
         const value = parseInt(e.target.value, 10)
-        this.pushEvent("note-off", value)
+        this.pushEventTo("#client-midi-devices", "midi-message", [128, value, 0])
       }
 
       if ('ontouchstart' in window) {
@@ -125,9 +125,17 @@ let Hooks = {
       console.info(`HandleWebMidiDevices mounted`)
       midiAccess = await initMidi(onMidiSuccess, onMidiFailure, this)
 
-      midiAccess.inputs.forEach(input => {
-        input.onmidimessage = event => onMidiMessage(event, this)
-        input.onstatechange = event => onMidiDeviceChange(event, this)
+      midiAccess.inputs.forEach(device => {
+        if (device.name.match(/^iac/i)) {
+          // Ignore IAC pseudo devices
+          return
+        }
+        device.onmidimessage = event => onMidiMessage(event, this)
+        device.onstatechange = event => onMidiDeviceChange(event, this)
+      })
+
+      midiAccess.outputs.forEach(device => {
+        device.onstatechange = event => onMidiDeviceChange(event, this)
       })
     },
   },

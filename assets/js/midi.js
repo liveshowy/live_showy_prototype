@@ -1,11 +1,11 @@
 async function init(onMidiSuccess, onMidiFailure, liveView) {
   if (navigator.requestMIDIAccess) {
-    liveView.pushEvent("webmidi-supported", true)
+    liveView.pushEventTo(`#${liveView.el.id}`, "webmidi-supported", true)
     return await navigator.requestMIDIAccess()
       .then(onMidiSuccess, onMidiFailure)
   }
 
-  liveView.pushEvent("webmidi-supported", false)
+  liveView.pushEventTo(`#${liveView.el.id}`, "webmidi-supported", false)
   return console.warn("WebMIDI is not supported")
 }
 
@@ -20,7 +20,8 @@ function onMidiFailure(message) {
 
 function onMidiMessage(event, liveView) {
   const [status, note, velocity] = event.data
-  liveView.pushEvent(
+  liveView.pushEventTo(
+    `#${liveView.el.id}`,
     "midi-message",
     {
       device_id: event.currentTarget.id,
@@ -31,7 +32,7 @@ function onMidiMessage(event, liveView) {
 
 function onMidiDeviceChange(event, liveView) {
   const {connection, id, manufacturer, name, state, type} = event.currentTarget
-  liveView.pushEvent("midi-device-change", { connection, id, manufacturer, name, state, type })
+  liveView.pushEventTo(`#${liveView.el.id}`, "midi-device-change", { connection, id, manufacturer, name, state, type })
 }
 
 module.exports = {

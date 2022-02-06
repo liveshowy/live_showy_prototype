@@ -1,17 +1,22 @@
 defmodule LiveShowyWeb.StageManagerLive.Index do
-  @moduledoc """
-  Users with a stage manager role may access this LiveView to coordinate other users and performances.
-  """
+  @moduledoc false
+  # FRAMEWORK / APP
+  require Logger
   use LiveShowyWeb, :live_view
+
+  # CORE
   alias LiveShowy.Users
   alias LiveShowy.Roles
   alias LiveShowy.UserRoles
   alias LiveShowy.Wifi
   alias LiveShowy.MidiDevices
-  alias LiveShowyWeb.Components.MidiDevices, as: MidiDevicesComponent
-  alias LiveShowyWeb.Components.WifiCard
-  alias LiveShowyWeb.Components.Button
+
+  # COMPONENTS
   alias LiveShowyWeb.Components.Card
+  alias LiveShowyWeb.Components.Button
+  alias LiveShowyWeb.Components.WifiCard
+  alias LiveShowyWeb.Components.MidiDevices, as: MidiDevicesComponent
+  alias LiveShowyWeb.ChatLive
 
   @impl true
   def mount(_params, _session, socket) do
@@ -73,6 +78,10 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
     {:noreply, socket}
   end
 
+  def handle_event("midi-message", _message, socket) do
+    {:noreply, socket}
+  end
+
   # def handle_event("set-midi-input", %{"device-name" => device_name}, socket) do
   #   device = MidiDevices.set_device(:input, device_name)
   #   {:noreply, assign(socket, midi_input: device)}
@@ -83,11 +92,8 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   #   {:noreply, assign(socket, midi_output: device)}
   # end
 
-  @impl true
   def handle_event(event, params, socket) do
-    require Logger
-    Logger.warn("UNKNOWN EVENT: #{event}")
-    IO.inspect(params)
+    Logger.warning(unknown_event: {__MODULE__, event, params})
     {:noreply, socket}
   end
 

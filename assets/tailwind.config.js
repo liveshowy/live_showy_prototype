@@ -35,6 +35,11 @@ module.exports = {
         'fade-in-slide-down': 'fade-in-slide-down 250ms ease-in-out',
         'fade-out-slide-up': 'fade-out-slide-up 100ms',
       },
+      fontFamily: {
+        logo: ['"Atma Bold"', 'sans-serif'],
+        display: ['"Baloo 2"', 'sans-serif'],
+        sans: ['Montserrat', 'sans-serif'],
+      },
     },
   },
   plugins: [],

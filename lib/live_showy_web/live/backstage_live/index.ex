@@ -1,13 +1,17 @@
 defmodule LiveShowyWeb.BackstageLive.Index do
-  @moduledoc """
-  A chat room for coordinating performers and instruments.
-  """
+  @moduledoc false
+  # FRAMEWORK / APP
   require Logger
   use LiveShowyWeb, :live_view
   alias LiveShowyWeb.Presence
+
+  # CORE
   alias LiveShowy.Users
+  alias LiveShowy.UserRoles
   alias LiveShowy.Instrument
   alias LiveShowy.UserInstruments
+
+  # COMPONENTS
   alias LiveShowyWeb.Components.Users, as: UsersComponent
   alias LiveShowyWeb.Components.Button
   alias LiveShowyWeb.Components.ButtonBar
@@ -37,7 +41,6 @@ defmodule LiveShowyWeb.BackstageLive.Index do
     {:ok,
      assign(socket,
        performers: performers,
-       webmidi_supported: nil,
        assigned_instrument: assigned_instrument,
        client_input_devices: [],
        playing_devices: MapSet.new()
@@ -47,6 +50,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   defp subscribe do
     Phoenix.PubSub.subscribe(LiveShowy.PubSub, @topic)
     Users.subscribe()
+    UserRoles.subscribe()
   end
 
   @impl true
@@ -73,6 +77,20 @@ defmodule LiveShowyWeb.BackstageLive.Index do
     {:noreply, socket}
   end
 
+  def handle_info(
+        {:user_role_removed, {user_id, :performer}},
+        %{assigns: %{current_user: current_user}} = socket
+      )
+      when current_user.id == user_id do
+    {
+      :noreply,
+      socket
+      |> clear_flash()
+      |> put_flash(:error, "Your performer role has been removed")
+      |> push_redirect(to: Routes.landing_index_path(socket, :index))
+    }
+  end
+
   def handle_info(message, socket) do
     Logger.warn(unknown_info: {__MODULE__, message})
     {:noreply, socket}
@@ -87,41 +105,6 @@ defmodule LiveShowyWeb.BackstageLive.Index do
     Logger.info(instrument_requested: {user_id, instrument})
     {_user_id, new_instrument} = set_instrument(user_id, instrument)
     {:noreply, assign(socket, assigned_instrument: new_instrument)}
-  end
-
-  def handle_event("webmidi-supported", boolean, socket) do
-    {:noreply, assign(socket, webmidi_supported: boolean)}
-  end
-
-  def handle_event("midi-device-change", device, socket) do
-    # IO.inspect(device, pretty: true)
-
-    case {device["state"], device["connection"]} do
-      {"connected", "open"} ->
-        {:noreply, update(socket, :client_input_devices, &[device | &1])}
-
-      _ ->
-        {:noreply,
-         update(
-           socket,
-           :client_input_devices,
-           &Enum.filter(&1, fn listed_device -> listed_device["id"] != device["id"] end)
-         )}
-    end
-  end
-
-  def handle_event(
-        "midi-message",
-        %{"device_id" => device_id, "message" => [status, _note, velocity]},
-        socket
-      ) do
-    cond do
-      velocity == 0 or status in 128..143 ->
-        {:noreply, update(socket, :playing_devices, &MapSet.delete(&1, device_id))}
-
-      status ->
-        {:noreply, update(socket, :playing_devices, &MapSet.put(&1, device_id))}
-    end
   end
 
   def handle_event(event, value, socket) do

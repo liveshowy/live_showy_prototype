@@ -15,12 +15,12 @@ defmodule LiveShowyWeb.Components.ChatMessage do
     ~F"""
     <li
       class={
-        "grid items-baseline grid-cols-1 w-5/6 px-4 py-2 rounded-xl shadow-md animate-fade-in-slide-down auto-rows-auto",
+        "grid items-baseline grid-cols-1 w-5/6 px-4 py-2 rounded-xl shadow-md animate-fade-in-slide-down auto-rows-auto dark:text-white",
         @class,
         hidden: @status != :public,
-        "bg-gradient-to-bl from-default-100 to-default-400 text-default-900 rounded-br-none self-end":
+        "bg-default-200 dark:bg-default-700 rounded-br-none self-end":
           @current_user?,
-        "bg-gradient-to-br from-primary-700 to-primary-900 rounded-bl-none": !@current_user?
+        "bg-primary-200 text-primary-700 dark:bg-primary-800 rounded-bl-none": !@current_user?
       }
       title={"Sent at #{@time}"}
       id={@id}
@@ -28,7 +28,7 @@ defmodule LiveShowyWeb.Components.ChatMessage do
     >
       <span
         :if={@username}
-        class={"font-bold text-sm", "justify-self-end text-primary-800": @current_user?}
+        class={"font-bold text-sm", "justify-self-end": @current_user?}
         id={"chat-message-user-#{@id}"}
       >
         <span id={"chat-message-username-#{@id}"}>

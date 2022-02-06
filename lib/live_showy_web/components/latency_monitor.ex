@@ -4,9 +4,7 @@ defmodule LiveShowyWeb.Components.LatencyMonitor do
   """
   use LiveShowyWeb, :live_component
 
-  def mount(socket) do
-    {:ok, assign(socket, :latency, nil)}
-  end
+  data latency, :integer, default: nil
 
   def handle_event("ping", _timestamp, socket) do
     {:noreply, socket}
@@ -19,7 +17,7 @@ defmodule LiveShowyWeb.Components.LatencyMonitor do
   def render(assigns) do
     ~F"""
     <span id="latency-monitor" phx-hook="MonitorLatency">
-      Latency: <strong>{@latency}ms</strong>
+      {@latency}ms
     </span>
     """
   end

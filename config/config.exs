@@ -12,6 +12,7 @@ config :live_showy,
     :guest,
     :attendee,
     :performer,
+    :live_performer,
     :stage_manager
   ],
   wifi: [

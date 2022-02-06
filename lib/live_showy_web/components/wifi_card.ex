@@ -23,13 +23,13 @@ defmodule LiveShowyWeb.Components.WifiCard do
   def render(assigns) do
     ~F"""
     <dl class="grid grid-cols-2 gap-1">
-      <dt class="font-bold uppercase text-default-300">SSID</dt>
+      <dt class="font-bold uppercase text-default-500 dark:text-default-300">SSID</dt>
       <dd>{@ssid}</dd>
 
-      <dt class="font-bold uppercase text-default-300">Password</dt>
+      <dt class="font-bold uppercase text-default-500 dark:text-default-300">Password</dt>
       <dd>{@password}</dd>
 
-      <dt class="font-bold uppercase text-default-300">URL</dt>
+      <dt class="font-bold uppercase text-default-500 dark:text-default-300">URL</dt>
       <dd>{@url}</dd>
     </dl>
     """

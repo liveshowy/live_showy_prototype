@@ -11,11 +11,11 @@ defmodule LiveShowyWeb.Components.ChatForm do
 
   def render(assigns) do
     ~F"""
-    <Form for={:message} submit={@submit} opts={autocomplete: "off"} class="flex p-1">
+    <Form for={:message} submit={@submit} opts={autocomplete: "off"} class="flex p-1 pb-2 transition drop-shadow-md focus-within:drop-shadow-lg focus-within:-translate-y-0.5">
       <TextInput
         name="body"
         value={@message.body}
-        class="flex-grow px-2 py-1 transition border-2 border-transparent rounded-l focus:border-white focus:bg-default-600 focus:outline-none bg-default-700 placeholder:text-default-500"
+        class="flex-grow px-4 py-2 transition rounded-l bg-default-200 focus:bg-white dark:focus:bg-default-600 focus:outline-none dark:bg-default-700 dark:placeholder:text-default-300"
         opts={autofocus: true, required: true, placeholder: "Message Backstage"}
       />
 

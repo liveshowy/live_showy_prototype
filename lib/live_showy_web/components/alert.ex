@@ -3,7 +3,7 @@ defmodule LiveShowyWeb.Components.Alert do
   use Surface.Component
   alias Phoenix.LiveView.JS
 
-  prop flash, :map, default: nil
+  prop flash, :map, default: %{}
   prop class, :css_class, default: ""
 
   def render(assigns) do

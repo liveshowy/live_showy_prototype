@@ -1,4 +1,4 @@
-<div class="grid grid-cols-1 gap-2 lg:grid-cols-4">
+<div class="grid grid-cols-1 gap-2 lg:grid-cols-4 h-full lg:grid-rows-[min-content_auto_1fr] auto-rows-auto">
   <Card class="col-span-full" compact>
     <:header><h1>Stage Manager</h1></:header>
     <:body><p>Manage users, settings, and monitor the system.</p></:body>
@@ -35,14 +35,14 @@
     </:body>
   </Card>
 
-  <Card class="col-span-full">
+  <Card class="lg:col-span-2 min-w-min">
     <:header><h2>Users</h2></:header>
 
     <:body>
-      <form class="grid items-center grid-cols-5 gap-1" phx-change="user-role-changed">
+      <form class="grid items-center grid-cols-6 gap-1" phx-change="user-role-changed">
         <span class="font-bold uppercase text-default-300" />
         {#for role <- @roles}
-          <span class="self-end text-xs font-bold uppercase lg:text-base justify-self-center text-default-300">{role |> Atom.to_string() |> String.replace(~r/_/, " ")}</span>
+          <span class="self-end text-xs font-bold uppercase lg:text-base justify-self-center text-default-500 dark:text-default-300">{role |> Atom.to_string() |> String.replace(~r/_/, " ")}</span>
         {/for}
 
         {#for user <- @users}
@@ -68,6 +68,19 @@
           </fieldset>
         {/for}
       </form>
+    </:body>
+  </Card>
+
+  <Card class="lg:col-span-2">
+    <:header><h2>Backstage Chat</h2></:header>
+
+    <:body>
+      {live_render(
+        @socket,
+        LiveShowyWeb.ChatLive.Index,
+        id: "backstage-chat",
+        session: %{"chat_module" => LiveShowy.Chat.Backstage}
+      )}
     </:body>
   </Card>
 </div>
