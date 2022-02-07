@@ -3,55 +3,74 @@ defmodule LiveShowy.MidiDevicesTest do
   alias LiveShowy.MidiDevices
   doctest MidiDevices
 
-  setup do
-    device = %PortMidi.Device{
-      input: 0,
-      interf: "CoreMIDI",
-      name: "IAC Device Bus 1",
-      opened: 0,
-      output: 1
-    }
+  # The following tests depend on a virtual MIDI device enabled in MacOS. Thus, these tests handle possible `:ok` and `:error` tuples.
 
-    {:ok, {:output, pid, added_device}} = MidiDevices.add(device)
+  describe "open/2" do
+    test "a valid output may be opened" do
+      type = :output
+      name = "IAC Device Bus 1"
 
-    %{
-      device: device,
-      added_device: added_device,
-      pid: pid
-    }
-  end
+      case MidiDevices.open(type, name) do
+        {:ok, device_pid} ->
+          assert is_pid(device_pid)
+          MidiDevices.close(type, name)
 
-  describe "list/0" do
-    test "device list returns a list", state do
-      results = MidiDevices.list()
-      assert is_list(results)
-
-      assert Enum.any?(results, fn {_type, _pid, device} ->
-               device.name == state.added_device.name
-             end)
+        {:error, reason} ->
+          assert is_atom(reason)
+      end
     end
   end
 
-  describe "add/1" do
-    test "a portmidi device may be added", state do
-      assert %PortMidi.Device{} = state.added_device
-    end
+  describe "close/2" do
+    test "an opened output may be closed" do
+      type = :output
+      name = "IAC Device Bus 1"
 
-    test "an already open portmidi input device may not be added", state do
-      assert {:error, _message} = MidiDevices.add(state.device)
+      case MidiDevices.open(type, name) do
+        {:ok, _device_pid} ->
+          assert :ok == MidiDevices.close(type, name)
+
+        {:error, reason} ->
+          assert is_atom(reason)
+      end
     end
   end
 
-  describe "remove/1" do
-    test "an added device may be removed", state do
-      assert {:ok, _deleted_device} = MidiDevices.remove(state.added_device)
-    end
-  end
+  describe "write/2" do
+    test "an opened output may receive messages" do
+      type = :output
+      name = "IAC Device Bus 1"
 
-  describe "get_by_name/2" do
-    test "an added device may be found by its type and name", state do
-      added_device = state.added_device
-      assert {:output, _pid, ^added_device} = MidiDevices.get_by_name(:output, added_device.name)
+      case MidiDevices.open(type, name) do
+        {:ok, _device_pid} ->
+          assert :ok == MidiDevices.write(type, name, {144, 60, 127})
+          Process.sleep(100)
+          assert :ok == MidiDevices.write(type, name, {128, 60, 0})
+          Process.sleep(100)
+
+          assert :ok ==
+                   MidiDevices.write(
+                     type,
+                     name,
+                     {{144, 60, 127}, DateTime.to_unix(DateTime.now!("UTC"))}
+                   )
+
+          Process.sleep(100)
+
+          assert :ok ==
+                   MidiDevices.write(
+                     type,
+                     name,
+                     {{128, 60, 0}, DateTime.to_unix(DateTime.now!("UTC"))}
+                   )
+
+          Process.sleep(100)
+
+          MidiDevices.close(type, name)
+
+        {:error, reason} ->
+          assert is_atom(reason)
+      end
     end
   end
 end
