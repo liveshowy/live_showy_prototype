@@ -41,6 +41,13 @@ defmodule LiveShowy.MidiDevices do
     |> Registry.keys(registry_pid)
   end
 
+  def list_portmidi_devices(type) when type in [:input, :output] do
+    PortMidi.devices()
+    |> Map.get(type)
+  end
+
+  defdelegate list_portmidi_devices, to: PortMidi.devices()
+
   def write(type, name, {_status, _note, _velocity} = message) do
     %{device_pid: device_pid} = get_pid(type, name)
     PortMidi.write(device_pid, message)
