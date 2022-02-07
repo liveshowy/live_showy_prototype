@@ -26,8 +26,7 @@ defmodule LiveShowy.MidiDevices do
   end
 
   def close(type, name) when type in [:input, :output] and is_binary(name) do
-    %{device_pid: device_pid} = get_pid(type, name)
-    PortMidi.close(type, device_pid)
+    PortMidi.close(type, get_pid(type, name).device_pid)
 
     Map.get(@registries, type)
     |> Registry.unregister(name)
