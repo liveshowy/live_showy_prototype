@@ -12,6 +12,9 @@ defmodule LiveShowy.Application do
       LiveShowyWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: LiveShowy.PubSub},
+      # Start a registry for host midi devices
+      {Registry, keys: :unique, name: HostMidiOutputRegistry},
+      {Registry, keys: :unique, name: HostMidiInputRegistry},
       # Start the Wifi ETS table
       LiveShowy.Wifi,
       # Start the Roles ETS table
@@ -24,8 +27,6 @@ defmodule LiveShowy.Application do
       LiveShowy.UserCoordinates,
       # Start the UserInstruments ETS table
       LiveShowy.UserInstruments,
-      # Start the Midi ETS table
-      LiveShowy.MidiDevices,
       # Start the Presence system
       LiveShowyWeb.Presence,
       # Start the Backstage ETS table
