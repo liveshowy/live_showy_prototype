@@ -5,13 +5,11 @@ defmodule LiveShowyWeb.Components.UserCard do
 
   prop user, :struct, required: true
   prop transparent, :boolean
-  prop shadow, :string
-  prop padding, :string
   prop class, :css_class
 
   def render(assigns) do
     ~F"""
-    <Card transparent={@transparent} shadow={@shadow} padding={@padding} class={@class}>
+    <Card transparent={@transparent} class={@class}>
       <:body>
         <dl class="grid grid-cols-1 gap-1 lg:grid-cols-2">
           <dt class="font-bold uppercase text-default-500 dark:text-default-400">Username</dt>

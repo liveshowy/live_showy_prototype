@@ -7,7 +7,7 @@ defmodule LiveShowyWeb.Components.UserBar do
 
   def render(assigns) do
     ~F"""
-    <dl class="flex justify-end gap-2 px-2 py-1 overflow-x-auto bg-black bg-opacity-10 whitespace-nowrap">
+    <dl class="flex justify-end gap-2 px-2 py-1 overflow-x-auto bg-black bg-opacity-5 whitespace-nowrap">
       <dt class="font-bold uppercase text-default-500 dark:text-default-400">Username</dt>
       <dd class="font-mono text-sm break-normal">{@user.username}</dd>
 

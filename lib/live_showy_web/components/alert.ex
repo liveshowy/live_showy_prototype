@@ -14,8 +14,8 @@ defmodule LiveShowyWeb.Components.Alert do
       class={
         "animate-fade-in-slide-down w-full 2xl:rounded shadow-md text-white p-4 mx-auto max-w-screen-2xl",
         @class,
-        "bg-danger-700": @flash["error"],
-        "bg-info-600": @flash["info"]
+        "bg-danger-500 dark:bg-danger-700": @flash["error"],
+        "bg-info-500 dark:bg-info-700": @flash["info"]
       }
       phx-click={hide_alert()}
       phx-click-away={hide_alert()}
