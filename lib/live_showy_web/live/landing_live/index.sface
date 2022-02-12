@@ -1,6 +1,7 @@
-<section class="flex flex-col h-full gap-4 text-lg place-content-center">
-  <div class="flex flex-col col-span-full place-items-center text-brand-500 dark:text-brand-400">
+<section class="grid h-full grid-cols-1 gap-4 mx-auto text-lg w-max auto-rows-fr place-content-center">
+  <div class="flex flex-col px-4 col-span-full place-content-end place-items-start text-brand-500 dark:text-brand-400">
     <h1 class="text-6xl lg:text-8xl font-logo text-inherit">LiveShowy</h1>
     <p class="text-3xl font-thin">It's like a live show, but showier.</p>
   </div>
+  <UserCard user={@current_user} title="About You" transparent={true} shadow={false} class="w-auto" />
 </section>
