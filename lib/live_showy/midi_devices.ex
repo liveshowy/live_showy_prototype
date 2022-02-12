@@ -45,7 +45,7 @@ defmodule LiveShowy.MidiDevices do
     |> Map.get(type)
   end
 
-  defdelegate list_portmidi_devices, to: PortMidi.devices()
+  def list_portmidi_devices, do: PortMidi.devices()
 
   def write(type, name, {_status, _note, _velocity} = message) do
     %{device_pid: device_pid} = get_pid(type, name)
