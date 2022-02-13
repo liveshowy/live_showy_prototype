@@ -6,8 +6,6 @@ defmodule LiveShowy.Instrument do
   defstruct id: nil,
             created_at: nil,
             component: nil,
-            output_device: nil,
-            input_device: nil,
             octave: 5,
             channel: 1
 
