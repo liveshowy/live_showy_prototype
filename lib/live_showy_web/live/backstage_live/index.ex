@@ -19,7 +19,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   alias LiveShowyWeb.Components.DynamicInstrument
   alias LiveShowyWeb.Components.ClientMidiDevices
 
-  @topic "backstage_performers"
+  @topic "backstage"
 
   @impl true
   def mount(_params, _session, %{assigns: %{current_user: current_user}} = socket) do
@@ -41,9 +41,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
     {:ok,
      assign(socket,
        performers: performers,
-       assigned_instrument: assigned_instrument,
-       client_input_devices: [],
-       playing_devices: MapSet.new()
+       assigned_instrument: assigned_instrument
      )}
   end
 
@@ -78,7 +76,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   end
 
   def handle_info(
-        {:user_role_removed, {user_id, :performer}},
+        {:user_role_removed, {user_id, :backstage_performer}},
         %{assigns: %{current_user: current_user}} = socket
       )
       when current_user.id == user_id do
