@@ -114,25 +114,22 @@ defmodule LiveShowyWeb.BackstageLive.Index do
     {:noreply, socket}
   end
 
+  @instrument_components %{
+    "keys" => LiveShowyWeb.Components.Keyboard,
+    "midi" => LiveShowyWeb.Components.MidiIndicator,
+    "drums" => LiveShowyWeb.Components.DrumPad
+  }
+
   defp set_instrument(user_id, instrument) do
-    case instrument do
-      "keys" ->
-        UserInstruments.add(
-          {user_id, Instrument.new(%{component: LiveShowyWeb.Components.Keyboard})}
-        )
-
-      "voice" ->
-        UserInstruments.add(
-          {user_id, Instrument.new(%{component: LiveShowyWeb.Components.Keyboard})}
-        )
-
-      "drums" ->
-        UserInstruments.add(
-          {user_id, Instrument.new(%{component: LiveShowyWeb.Components.DrumPad})}
-        )
-
-      _ ->
+    case Map.get(@instrument_components, instrument) do
+      nil ->
         {user_id, nil}
+
+      instrument ->
+        UserInstruments.add({
+          user_id,
+          Instrument.new(%{component: instrument})
+        })
     end
   end
 end
