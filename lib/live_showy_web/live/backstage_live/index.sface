@@ -46,7 +46,7 @@
             }}
           />
 
-          <Button
+          <!-- <Button
             label="DRUMS"
             kind="primary"
             click="instrument-requested"
@@ -56,7 +56,7 @@
               "phx-value-user-id" => @current_user.id,
               "phx-value-instrument" => "drums"
             }}
-          />
+          /> -->
         </ButtonBar>
       </div>
     </:header>
