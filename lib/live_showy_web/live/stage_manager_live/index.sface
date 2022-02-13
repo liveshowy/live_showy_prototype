@@ -4,7 +4,7 @@
     <:body><p>Manage users, settings, and monitor the system.</p></:body>
   </Card>
 
-  <Card>
+  <!-- <Card>
     <:header><h2>Wifi</h2></:header>
     <:body><WifiCard id="wifi-info-stage-manager" /></:body>
   </Card>
@@ -21,16 +21,16 @@
         <li>System IO</li>
       </ul>
     </:body>
-  </Card>
+  </Card> -->
 
-  <Card>
+  <Card class="col-span-full">
     <:header><h2>MIDI Devices</h2></:header>
     <:body>
-      <MidiDevicesComponent
-        available_inputs={@midi_devices.input}
+      <HostMidiDevicesComponent
+        available_inputs={[]}
         available_outputs={@midi_devices.output}
-        active_input={@midi_input}
-        active_output={@midi_output}
+        active_inputs={@midi_inputs}
+        active_outputs={@midi_outputs}
       />
     </:body>
   </Card>

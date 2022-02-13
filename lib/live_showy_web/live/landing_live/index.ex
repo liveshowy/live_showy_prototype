@@ -10,7 +10,7 @@ defmodule LiveShowyWeb.LandingLive.Index do
   alias LiveShowy.UserInstruments
 
   # COMPONENTS
-  alias LiveShowyWeb.Components.UserCard
+  alias LiveShowyWeb.Components.Logo
 
   @impl true
   def mount(_params, _session, %{assigns: %{current_user: current_user}} = socket) do
@@ -31,7 +31,7 @@ defmodule LiveShowyWeb.LandingLive.Index do
 
   @impl true
   def handle_info(
-        {:user_role_added, {user_id, :performer} = _user_role},
+        {:user_role_added, {user_id, :backstage_performer} = _user_role},
         %{assigns: %{current_user: current_user}} = socket
       )
       when current_user.id == user_id do

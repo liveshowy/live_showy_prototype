@@ -73,12 +73,12 @@ let Hooks = {
 
         const y = e.offsetY
         const velocity = parseInt(parseFloat(y / height) * 127, 10)
-        this.pushEventTo("#client-midi-devices", "midi-message", {message: [144, value, velocity]})
+        this.pushEvent("midi-message", {message: [144, value, velocity]})
       }
 
       const noteoff = e => {
         const value = parseInt(e.target.value, 10)
-        this.pushEventTo("#client-midi-devices", "midi-message", {message: [128, value, 0]})
+        this.pushEvent("midi-message", {message: [128, value, 0]})
       }
 
       if ('ontouchstart' in window) {

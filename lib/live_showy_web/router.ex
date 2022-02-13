@@ -16,11 +16,11 @@ defmodule LiveShowyWeb.Router do
   end
 
   pipeline :authorize_performers do
-    plug LiveShowyWeb.Plugs.AuthorizeAction, :performer
+    plug LiveShowyWeb.Plugs.AuthorizeAction, :backstage_performer
   end
 
   pipeline :authorize_live_performers do
-    plug LiveShowyWeb.Plugs.AuthorizeAction, :live_performer
+    plug LiveShowyWeb.Plugs.AuthorizeAction, :mainstage_performer
   end
 
   pipeline :authorize_stage_managers do
@@ -36,7 +36,6 @@ defmodule LiveShowyWeb.Router do
       pipe_through [:browser, :require_user]
 
       live "/", LandingLive.Index, :index
-      live "/dots", DotsLive.Index, :index
     end
 
     scope "/backstage", LiveShowyWeb do
@@ -51,7 +50,7 @@ defmodule LiveShowyWeb.Router do
       live "/", StageLive.Index, :index
     end
 
-    scope "/admin", LiveShowyWeb do
+    scope "/", LiveShowyWeb do
       pipe_through [:browser, :require_user, :authorize_stage_managers]
 
       live "/stage-manager", StageManagerLive.Index, :index

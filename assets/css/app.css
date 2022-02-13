@@ -59,6 +59,49 @@
 }
 
 @layer utilities {
+  .logo {
+    animation-name: cycle-colors;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes cycle-colors {
+    0% {
+      text-shadow: theme(colors.pink.500) 0px 0.03em 1px,
+        theme(colors.purple.500) 0px 0.06em 1px,
+        theme(colors.blue.500) 0px 0.09em 1px,
+        theme(colors.emerald.500) 0px 0.12em 1px;
+    }
+
+    25% {
+      text-shadow: theme(colors.emerald.500) 0px 0.03em 1px,
+        theme(colors.pink.500) 0px 0.06em 1px,
+        theme(colors.purple.500) 0px 0.09em 1px,
+        theme(colors.blue.500) 0px 0.12em 1px;
+    }
+
+    50% {
+      text-shadow: theme(colors.blue.500) 0px 0.03em 1px,
+        theme(colors.emerald.500) 0px 0.06em 1px,
+        theme(colors.pink.500) 0px 0.09em 1px,
+        theme(colors.purple.500) 0px 0.12em 1px;
+    }
+
+    75% {
+      text-shadow: theme(colors.purple.500) 0px 0.03em 1px,
+        theme(colors.blue.500) 0px 0.06em 1px,
+        theme(colors.emerald.500) 0px 0.09em 1px,
+        theme(colors.pink.500) 0px 0.12em 1px;
+    }
+
+    100% {
+      text-shadow: theme(colors.pink.500) 0px 0.03em 1px,
+        theme(colors.purple.500) 0px 0.06em 1px,
+        theme(colors.blue.500) 0px 0.09em 1px,
+        theme(colors.emerald.500) 0px 0.12em 1px;
+    }
+  }
+
   /* LiveView specific classes for your customization */
   .invalid-feedback {
     color: #a94442;

@@ -1,6 +1,23 @@
-<section class="flex flex-col h-full gap-4 text-lg place-content-center">
-  <div class="flex flex-col col-span-full place-items-center text-brand-500 dark:text-brand-400">
-    <h1 class="text-6xl lg:text-8xl font-logo text-inherit">LiveShowy</h1>
-    <p class="text-3xl font-thin">It's like a live show, but showier.</p>
-  </div>
+<section class="grid content-center justify-center flex-1 h-full grid-cols-[1fr_auto_1fr] gap-4 text-lg place-self-center">
+  <Logo class="col-start-2" />
+
+  <p class="col-start-2 text-3xl font-thin">
+    It's like a live show, but showier.
+  </p>
+
+  <p class="col-start-2">
+    Welcome to LiveShowy.
+  </p>
+
+  <p class="col-start-2">
+    Your randomized username is <strong>{@current_user.username}</strong>.<br/>
+    Your
+    {#if Enum.count(@current_user.roles) == 1} role is {#else} roles are {/if}
+    <strong>{Enum.join(@current_user.roles, ", ")}</strong><br/>
+  </p>
+
+  <p class="col-start-2">
+    You are currently in the <strong>lobby</strong>.<br/>
+    This page will update <strong>automatically</strong> if you receive a new role.
+  </p>
 </section>

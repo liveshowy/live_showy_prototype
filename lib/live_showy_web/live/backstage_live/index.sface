@@ -1,4 +1,4 @@
-<div class="grid h-full max-h-full grid-cols-1 gap-2 lg:grid-cols-4 lg:grid-rows-[min-content_max-content_auto_auto] auto-rows-min">
+<div class="grid h-full grid-cols-1 gap-2 lg:grid-cols-4 lg:grid-rows-[min-content_max-content_auto_auto] auto-rows-min">
   <Card class="col-span-full" compact>
     <:header>
       <h1>Backstage</h1>
@@ -78,7 +78,7 @@
   </Card>
 
   <Card
-    class="lg:col-start-3 lg:row-start-3 lg:row-span-2 lg:col-span-2 max-h-[30rem] lg:max-h-full"
+    class="lg:col-start-3 lg:row-start-3 lg:row-span-2 lg:col-span-2"
   >
     <:header>
       <h2 class="px-4 py-2">Chat</h2>
