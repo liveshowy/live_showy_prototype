@@ -11,8 +11,8 @@ config :live_showy,
   initial_roles: [
     :guest,
     :attendee,
-    :performer,
-    :live_performer,
+    :backstage_performer,
+    :mainstage_performer,
     :stage_manager
   ],
   wifi: [
