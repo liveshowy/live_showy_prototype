@@ -23,7 +23,8 @@ defmodule LiveShowy.Users.Custom do
     %__MODULE__{
       id: UUID.uuid4(),
       username: username,
-      color: "#" <> Faker.Color.rgb_hex()
+      color: "#" <> Faker.Color.rgb_hex(),
+      output_device_name: nil
     }
   end
 
