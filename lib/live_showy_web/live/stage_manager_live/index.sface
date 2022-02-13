@@ -27,34 +27,45 @@
     <:header><h2>Users</h2></:header>
 
     <:body>
-      <form class="grid items-center grid-cols-6 gap-1" phx-change="user-role-changed">
-        <span class="font-bold uppercase text-default-300" />
-        {#for role <- @roles}
-          <span class="self-end text-xs font-bold uppercase lg:text-base justify-self-center text-default-500 dark:text-default-300">{role |> Atom.to_string() |> String.replace(~r/_/, " ")}</span>
-        {/for}
-
-        {#for user <- @users}
-          <fieldset class="contents">
-            <span>{user.username}</span>
-
+      <form phx-change="user-role-changed">
+        <table class="w-full table-fixed">
+          <thead class="text-xs text-left uppercase align-bottom">
+            <th></th>
             {#for role <- @roles}
-              {#if role in user.roles}
-                <Button
-                  click="remove-user-role"
-                  label="YES"
-                  active
-                  attrs={%{"phx-value-user-id": user.id, "phx-value-role": role}}
-                />
-              {#else}
-                <Button
-                  click="add-user-role"
-                  label="ADD"
-                  attrs={%{"phx-value-user-id": user.id, "phx-value-role": role}}
-                />
-              {/if}
+              <th>{Atom.to_string(role) |> String.replace(~r/_/, " ")}</th>
             {/for}
-          </fieldset>
-        {/for}
+          </thead>
+
+          <tbody>
+            {#for user <- @users}
+              <tr>
+                <td>{user.username}</td>
+                {#for role <- @roles}
+                  {#if role in user.roles}
+                    <td>
+                      <Button
+                        click="remove-user-role"
+                        class="w-full"
+                        label="YES"
+                        active
+                        attrs={%{"phx-value-user-id": user.id, "phx-value-role": role}}
+                      />
+                    </td>
+                  {#else}
+                    <td>
+                      <Button
+                        click="add-user-role"
+                        class="w-full"
+                        label="ADD"
+                        attrs={%{"phx-value-user-id": user.id, "phx-value-role": role}}
+                      />
+                    </td>
+                  {/if}
+                {/for}
+              </tr>
+            {/for}
+          </tbody>
+        </table>
       </form>
     </:body>
   </Card>
