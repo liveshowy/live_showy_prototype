@@ -51,8 +51,6 @@ defmodule LiveShowy.Users do
     if Enum.count(list()) == 1 do
       LiveShowy.Roles.list()
       |> Enum.map(&UserRoles.add({user.id, &1}))
-    else
-      UserRoles.add({user.id, :guest})
     end
 
     user
