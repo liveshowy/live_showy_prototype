@@ -19,7 +19,7 @@ defmodule LiveShowyWeb.Components.ChatForm do
         opts={autofocus: true, required: true, placeholder: "Message Backstage"}
       />
 
-      <Button type="submit" click={nil} label="SEND" rounded="rounded-r" />
+      <Button type="submit" click={nil} label="SEND" rounded="rounded-r" shadow={nil} />
     </Form>
     """
   end
