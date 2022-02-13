@@ -104,16 +104,6 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
     {:noreply, socket}
   end
 
-  def handle_event("open-midi-output", %{"device-name" => device_name}, socket) do
-    {:ok, _output_pid} = MidiDevices.open(:output, device_name)
-    {:noreply, update(socket, :midi_outputs, &[device_name | &1])}
-  end
-
-  def handle_event("close-midi-output", %{"device-name" => device_name}, socket) do
-    :ok = MidiDevices.close(:output, device_name)
-    {:noreply, update(socket, :midi_outputs, &(&1 -- [device_name]))}
-  end
-
   def handle_event(event, params, socket) do
     Logger.warning(unknown_event: {__MODULE__, event, params})
     {:noreply, socket}
