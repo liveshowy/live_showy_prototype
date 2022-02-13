@@ -9,8 +9,7 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
   data client_inputs, :map, default: %{}
 
   def mount(socket) do
-    {:ok, midi_output_pid} = PortMidi.open(:output, "IAC Device Bus 1")
-    {:ok, assign(socket, midi_output_pid: midi_output_pid)}
+    {:ok, assign(socket, midi_output_pid: nil)}
   end
 
   def render(assigns) do
@@ -75,7 +74,9 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
         %{"device_id" => device_id, "message" => [status, note, velocity]},
         %{assigns: %{midi_output_pid: midi_output_pid}} = socket
       ) do
-    PortMidi.write(midi_output_pid, {status, note, velocity})
+    if midi_output_pid do
+      PortMidi.write(midi_output_pid, {status, note, velocity})
+    end
 
     cond do
       status in [176, 224] ->
