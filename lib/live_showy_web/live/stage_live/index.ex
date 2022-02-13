@@ -67,6 +67,11 @@ defmodule LiveShowyWeb.StageLive.Index do
     UserInstruments.subscribe()
   end
 
+  def handle_event("midi-message", message, socket) do
+    Logger.warn(unhandled_midi_message: {__MODULE__, message})
+    {:noreply, socket}
+  end
+
   def handle_event(event, params, socket) do
     Logger.warn(unknown_event: {__MODULE__, event, params})
     {:noreply, socket}
