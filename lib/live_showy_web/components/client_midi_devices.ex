@@ -125,7 +125,10 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
         %{"message" => [status, note, velocity]},
         %{assigns: %{midi_output_pid: midi_output_pid}} = socket
       ) do
-    PortMidi.write(midi_output_pid, {status, note, velocity})
+    if midi_output_pid do
+      PortMidi.write(midi_output_pid, {status, note, velocity})
+    end
+
     {:noreply, socket}
   end
 
