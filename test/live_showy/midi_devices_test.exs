@@ -3,36 +3,17 @@ defmodule LiveShowy.MidiDevicesTest do
   alias LiveShowy.MidiDevices
   doctest MidiDevices
 
-  # The following tests depend on a virtual MIDI device enabled in MacOS. Thus, these tests handle possible `:ok` and `:error` tuples.
+  # The following tests depend on a virtual MIDI device enabled in MacOS.
 
-  describe "open/2" do
-    test "a valid output may be opened" do
-      type = :output
-      name = "IAC Device Bus 1"
-
-      case MidiDevices.open(type, name) do
-        {:ok, device_pid} ->
-          assert is_pid(device_pid)
-          MidiDevices.close(type, name)
-
-        {:error, reason} ->
-          assert is_atom(reason)
-      end
+  describe "get_devices/1" do
+    test "get list of input devices" do
+      devices = MidiDevices.get_devices(:input)
+      assert is_list(devices)
     end
-  end
 
-  describe "close/2" do
-    test "an opened output may be closed" do
-      type = :output
-      name = "IAC Device Bus 1"
-
-      case MidiDevices.open(type, name) do
-        {:ok, _device_pid} ->
-          assert :ok == MidiDevices.close(type, name)
-
-        {:error, reason} ->
-          assert is_atom(reason)
-      end
+    test "get list of output devices" do
+      devices = MidiDevices.get_devices(:output)
+      assert is_list(devices)
     end
   end
 
@@ -41,36 +22,26 @@ defmodule LiveShowy.MidiDevicesTest do
       type = :output
       name = "IAC Device Bus 1"
 
-      case MidiDevices.open(type, name) do
-        {:ok, _device_pid} ->
-          assert :ok == MidiDevices.write(type, name, {144, 60, 127})
-          Process.sleep(100)
-          assert :ok == MidiDevices.write(type, name, {128, 60, 0})
-          Process.sleep(100)
+      assert :ok == MidiDevices.write(name, {144, 60, 127})
+      Process.sleep(100)
+      assert :ok == MidiDevices.write(name, {128, 60, 0})
+      Process.sleep(100)
 
-          assert :ok ==
-                   MidiDevices.write(
-                     type,
-                     name,
-                     {{144, 60, 127}, DateTime.to_unix(DateTime.now!("UTC"))}
-                   )
+      assert :ok ==
+               MidiDevices.write(
+                 name,
+                 {{144, 60, 127}, DateTime.to_unix(DateTime.now!("UTC"))}
+               )
 
-          Process.sleep(100)
+      Process.sleep(100)
 
-          assert :ok ==
-                   MidiDevices.write(
-                     type,
-                     name,
-                     {{128, 60, 0}, DateTime.to_unix(DateTime.now!("UTC"))}
-                   )
+      assert :ok ==
+               MidiDevices.write(
+                 name,
+                 {{128, 60, 0}, DateTime.to_unix(DateTime.now!("UTC"))}
+               )
 
-          Process.sleep(100)
-
-          MidiDevices.close(type, name)
-
-        {:error, reason} ->
-          assert is_atom(reason)
-      end
+      Process.sleep(100)
     end
   end
 end

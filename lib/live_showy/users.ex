@@ -80,6 +80,10 @@ defmodule LiveShowy.Users do
     update(id, %{username: username})
   end
 
+  def update_output_device_name(id, device_name) when is_binary(device_name) do
+    update(id, %{output_device_name: device_name})
+  end
+
   def remove(id) do
     :ets.delete(__MODULE__, id)
     PubSub.broadcast(LiveShowy.PubSub, @topic, {:user_removed, id})

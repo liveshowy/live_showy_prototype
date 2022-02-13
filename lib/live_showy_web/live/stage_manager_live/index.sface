@@ -1,4 +1,4 @@
-<div class="grid grid-cols-1 gap-2 lg:grid-cols-4 h-full lg:grid-rows-[min-content_auto_1fr] auto-rows-auto">
+<div class="grid grid-cols-1 gap-2 lg:grid-cols-2 h-full lg:grid-rows-[auto_1fr] auto-rows-auto">
   <Card class="col-span-full" compact>
     <:header><h1>Stage Manager</h1></:header>
     <:body><p>Manage users, settings, and monitor the system.</p></:body>
@@ -23,19 +23,7 @@
     </:body>
   </Card> -->
 
-  <Card class="col-span-full">
-    <:header><h2>MIDI Devices</h2></:header>
-    <:body>
-      <HostMidiDevicesComponent
-        available_inputs={[]}
-        available_outputs={@midi_devices.output}
-        active_inputs={@midi_inputs}
-        active_outputs={@midi_outputs}
-      />
-    </:body>
-  </Card>
-
-  <Card class="lg:col-span-2 min-w-min">
+  <Card class="min-w-min">
     <:header><h2>Users</h2></:header>
 
     <:body>
@@ -71,7 +59,7 @@
     </:body>
   </Card>
 
-  <Card class="lg:col-span-2">
+  <Card>
     <:header><h2>Backstage Chat</h2></:header>
 
     <:body>

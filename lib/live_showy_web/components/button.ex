@@ -26,13 +26,13 @@ defmodule LiveShowyWeb.Components.Button do
       type={@type}
       disabled={@disabled}
       class={
-        "px-2 py-1 uppercase transition select-none font-bold focus:bg-white active:translate-y-px focus:outline-none hover:text-white",
+        "px-2 py-1 uppercase transition select-none ring-4 ring-transparent font-bold active:translate-y-px focus:outline-none focus:z-50 hover:text-white",
         @class,
         @rounded,
         @shadow,
         "text-white": @active,
         "cursor-not-allowed opacity-70": @disabled,
-        "hover:bg-primary-500 dark:hover:bg-primary-600  focus:text-primary-600": @kind == "primary",
+        "hover:bg-primary-500 dark:hover:bg-primary-600 focus:ring-primary-400": @kind == "primary",
         "bg-primary-500 dark:bg-primary-700": @kind == "primary" && @active,
         "bg-primary-200 text-primary-700 dark:bg-primary-900 dark:text-white": @kind == "primary" && !@active
       }

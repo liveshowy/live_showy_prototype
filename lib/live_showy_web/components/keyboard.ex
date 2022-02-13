@@ -11,20 +11,20 @@ defmodule LiveShowyWeb.Components.Keyboard do
 
   @note_names Enum.with_index([
                 "C",
-                "C# | Db",
+                "C♯ | D♭",
                 "D",
-                "D# | Eb",
+                "D♯ | E♭",
                 "E",
                 "F",
-                "F# | Gb",
+                "F♯ | G♭",
                 "G",
-                "G# | Ab",
+                "G♯ | A♭",
                 "A",
-                "A# | Bb",
+                "A♯ | B♭",
                 "B"
               ])
 
-  @default_class "flex flex-col gap-1 items-center justify-end w-20 h-64 p-1 font-bold transition rounded-b-lg rounded-t-sm shadow-md active:shadow-sm"
+  @default_class "flex flex-col gap-1 items-center justify-end w-12 h-32 p-1 font-bold transition rounded-b-lg rounded-t-sm shadow-md active:shadow-sm"
 
   def update(assigns, socket) do
     {notes, _index} = @notes |> Enum.at(assigns.octave, [])
@@ -48,7 +48,7 @@ defmodule LiveShowyWeb.Components.Keyboard do
 
     ~F"""
     <div>
-      <div class="flex justify-center gap-1 p-2 pt-0 select-none">
+      <div class="flex justify-center gap-1 p-2 pt-0 text-xs select-none">
         {#for {note, label, index} <- @notes}
           <.key id={"keyboard-key-#{note}"} color={get_key_color(index)} label={label} note={note} />
         {/for}

@@ -23,18 +23,6 @@
 
         <ButtonBar>
           <Button
-            label="DRUMS"
-            kind="primary"
-            click="instrument-requested"
-            rounded="first:rounded-l last:rounded-r only:rounded"
-            active={@assigned_instrument && @assigned_instrument.component == LiveShowyWeb.Components.DrumPad}
-            attrs={%{
-              "phx-value-user-id" => @current_user.id,
-              "phx-value-instrument" => "drums"
-            }}
-          />
-
-          <Button
             label="KEYS"
             kind="primary"
             click="instrument-requested"
@@ -45,6 +33,30 @@
               "phx-value-instrument" => "keys"
             }}
           />
+
+          <Button
+            label="MIDI"
+            kind="primary"
+            click="instrument-requested"
+            rounded="first:rounded-l last:rounded-r only:rounded"
+            active={@assigned_instrument && @assigned_instrument.component == LiveShowyWeb.Components.MidiIndicator}
+            attrs={%{
+              "phx-value-user-id" => @current_user.id,
+              "phx-value-instrument" => "midi"
+            }}
+          />
+
+          <!-- <Button
+            label="DRUMS"
+            kind="primary"
+            click="instrument-requested"
+            rounded="first:rounded-l last:rounded-r only:rounded"
+            active={@assigned_instrument && @assigned_instrument.component == LiveShowyWeb.Components.DrumPad}
+            attrs={%{
+              "phx-value-user-id" => @current_user.id,
+              "phx-value-instrument" => "drums"
+            }}
+          /> -->
         </ButtonBar>
       </div>
     </:header>
@@ -53,6 +65,7 @@
       <DynamicInstrument
         :if={@assigned_instrument}
         instrument={@assigned_instrument}
+        active={false}
       />
     </:body>
   </Card>
