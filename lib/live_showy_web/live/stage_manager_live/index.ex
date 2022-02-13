@@ -15,7 +15,6 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   alias LiveShowyWeb.Components.Card
   alias LiveShowyWeb.Components.Button
   alias LiveShowyWeb.Components.WifiCard
-  alias LiveShowyWeb.Components.HostMidiDevices, as: HostMidiDevicesComponent
 
   @impl true
   def mount(_params, _session, socket) do
