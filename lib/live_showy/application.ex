@@ -13,8 +13,7 @@ defmodule LiveShowy.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: LiveShowy.PubSub},
       # Start a registry for host midi devices
-      {Registry, keys: :unique, name: HostMidiOutputRegistry},
-      {Registry, keys: :unique, name: HostMidiInputRegistry},
+      LiveShowy.HostMidiDevices.Pool,
       # Start the Wifi ETS table
       LiveShowy.Wifi,
       # Start the Roles ETS table
