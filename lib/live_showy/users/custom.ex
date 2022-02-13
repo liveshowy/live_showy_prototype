@@ -3,8 +3,8 @@ defmodule LiveShowy.Users.Custom do
   The most basic form of a user.
   """
 
-  @enforce_keys [:id, :username, :color]
-  defstruct [:id, :username, :color]
+  @enforce_keys [:id, :username, :color, :output_device_name]
+  defstruct [:id, :username, :color, :output_device_name]
 
   @doc """
   Returns a custom user with a random UUID.
