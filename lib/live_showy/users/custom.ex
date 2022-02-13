@@ -14,7 +14,8 @@ defmodule LiveShowy.Users.Custom do
     %__MODULE__{
       id: UUID.uuid4(),
       username: username,
-      color: color
+      color: color,
+      output_device_name: nil
     }
   end
 
