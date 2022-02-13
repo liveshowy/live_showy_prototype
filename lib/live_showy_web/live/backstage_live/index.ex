@@ -105,6 +105,10 @@ defmodule LiveShowyWeb.BackstageLive.Index do
     {:noreply, assign(socket, assigned_instrument: new_instrument)}
   end
 
+  def handle_event("midi-message", _message, socket) do
+    {:noreply, socket}
+  end
+
   def handle_event(event, value, socket) do
     Logger.warning(unknown_event: {event, value})
     {:noreply, socket}
