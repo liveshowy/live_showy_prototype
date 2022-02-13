@@ -10,6 +10,7 @@ defmodule LiveShowyWeb.LandingLive.Index do
   alias LiveShowy.UserInstruments
 
   # COMPONENTS
+  alias LiveShowyWeb.Components.Logo
   alias LiveShowyWeb.Components.UserCard
 
   @impl true

@@ -14,7 +14,9 @@ defmodule LiveShowyWeb.Components.NavBar do
         <nav class="mx-auto max-w-screen-2xl">
           <ul class="flex flex-wrap items-center gap-4 px-4 py-2">
             <li>
-              <Link to={Routes.landing_index_path(@conn, :index)} class="text-2xl text-brand-500 dark:text-brand-400 font-logo">LiveShowy</Link>
+              <Link to={Routes.landing_index_path(@conn, :index)}>
+                <LiveShowyWeb.Components.Logo text_size="text-2xl" />
+              </Link>
             </li>
 
             <span class="flex-grow" />
