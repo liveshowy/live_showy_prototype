@@ -15,8 +15,7 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   alias LiveShowyWeb.Components.Card
   alias LiveShowyWeb.Components.Button
   alias LiveShowyWeb.Components.WifiCard
-  alias LiveShowyWeb.Components.MidiDevices, as: MidiDevicesComponent
-  alias LiveShowyWeb.ChatLive
+  alias LiveShowyWeb.Components.HostMidiDevices, as: HostMidiDevicesComponent
 
   @impl true
   def mount(_params, _session, socket) do
@@ -27,9 +26,15 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
        users: Users.list_with_roles(),
        roles: Roles.list(),
        midi_devices: PortMidi.devices(),
-       midi_input: nil,
-       midi_output: nil
+       midi_inputs: [],
+       midi_outputs: []
      )}
+  end
+
+  defp subscribe do
+    LiveShowy.Users.subscribe()
+    LiveShowy.UserRoles.subscribe()
+    Wifi.subscribe()
   end
 
   @impl true
@@ -38,8 +43,7 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
              :user_added,
              :user_updated,
              :user_removed,
-             :user_role_added,
-             :user_role_removed
+             :user_role_added
            ] do
     {:noreply, assign(socket, users: Users.list_with_roles())}
   end
@@ -49,7 +53,25 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
     {:noreply, socket}
   end
 
-  def handle_info(_message, socket) do
+  def handle_info(
+        {:user_role_removed, {user_id, :stage_manager}},
+        %{assigns: %{current_user: current_user}} = socket
+      ) do
+    if current_user.id == user_id do
+      {
+        :noreply,
+        socket
+        |> clear_flash()
+        |> put_flash(:error, "Your stage manager role has been removed")
+        |> push_redirect(to: Routes.landing_index_path(socket, :index))
+      }
+    else
+      {:noreply, assign(socket, users: Users.list_with_roles())}
+    end
+  end
+
+  def handle_info(message, socket) do
+    Logger.warn(unknown_message: {__MODULE__, message})
     {:noreply, socket}
   end
 
@@ -82,24 +104,18 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
     {:noreply, socket}
   end
 
-  # def handle_event("set-midi-input", %{"device-name" => device_name}, socket) do
-  #   device = MidiDevices.set_device(:input, device_name)
-  #   {:noreply, assign(socket, midi_input: device)}
-  # end
+  def handle_event("open-midi-output", %{"device-name" => device_name}, socket) do
+    {:ok, _output_pid} = MidiDevices.open(:output, device_name)
+    {:noreply, update(socket, :midi_outputs, &[device_name | &1])}
+  end
 
-  # def handle_event("set-midi-output", %{"device-name" => device_name}, socket) do
-  #   device = MidiDevices.set_device(:output, device_name)
-  #   {:noreply, assign(socket, midi_output: device)}
-  # end
+  def handle_event("close-midi-output", %{"device-name" => device_name}, socket) do
+    :ok = MidiDevices.close(:output, device_name)
+    {:noreply, update(socket, :midi_outputs, &(&1 -- [device_name]))}
+  end
 
   def handle_event(event, params, socket) do
     Logger.warning(unknown_event: {__MODULE__, event, params})
     {:noreply, socket}
-  end
-
-  defp subscribe do
-    LiveShowy.Users.subscribe()
-    LiveShowy.UserRoles.subscribe()
-    Wifi.subscribe()
   end
 end
