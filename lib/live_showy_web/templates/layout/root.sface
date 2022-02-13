@@ -19,10 +19,8 @@
     />
   </head>
   <body class="flex flex-col w-full h-full max-w-full max-h-full gap-0 overflow-auto text-sm leading-normal tracking-wide text-default-800 dark:text-default-100 dark:bg-default-900 bg-default-200">
-    <LiveShowyWeb.Components.NavBar conn={@conn} />
-    {#if @conn.request_path != "/"}
-    <LiveShowyWeb.Components.UserBar user={@current_user} />
-    {/if}
+    <LiveShowyWeb.Components.NavBar :if={:stage_manager in @current_user.roles} conn={@conn} />
+    <LiveShowyWeb.Components.UserBar :if={@conn.request_path != "/"} user={@current_user} />
     <LiveShowyWeb.Components.Alert flash={@flash} class="self-start" />
 
     {@inner_content}
