@@ -1,12 +1,23 @@
 <section class="grid content-center justify-center flex-1 h-full grid-cols-[1fr_auto_1fr] gap-4 text-lg place-self-center">
   <Logo class="col-start-2" />
-  <p class="col-start-2 text-3xl font-thin">It's like a live show, but showier.</p>
+
+  <p class="col-start-2 text-3xl font-thin">
+    It's like a live show, but showier.
+  </p>
+
   <p class="col-start-2">
-    Welcome to LiveShowy.<br/>
+    Welcome to LiveShowy.
+  </p>
+
+  <p class="col-start-2">
     Your randomized username is <strong>{@current_user.username}</strong>.<br/>
     Your
     {#if Enum.count(@current_user.roles) == 1} role is {#else} roles are {/if}
     <strong>{Enum.join(@current_user.roles, ", ")}</strong><br/>
-    This page will update automatically if you are assigned a different role.
+  </p>
+
+  <p class="col-start-2">
+    You are currently in the <strong>lobby</strong>.<br/>
+    This page will update <strong>automatically</strong> if you receive a new role.
   </p>
 </section>
