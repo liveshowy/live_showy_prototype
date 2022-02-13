@@ -65,6 +65,7 @@
       <DynamicInstrument
         :if={@assigned_instrument}
         instrument={@assigned_instrument}
+        active={false}
       />
     </:body>
   </Card>
