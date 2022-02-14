@@ -8,6 +8,8 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   alias LiveShowy.Users
   alias LiveShowy.Roles
   alias LiveShowy.UserRoles
+  alias LiveShowy.UserInstruments
+  alias LiveShowy.Instrument
   alias LiveShowy.Wifi
   alias LiveShowy.MidiDevices
 
@@ -22,7 +24,7 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
 
     {:ok,
      assign(socket,
-       users: Users.list_with_roles(),
+       users: get_users(),
        roles: Roles.list(),
        midi_devices: PortMidi.devices(),
        midi_inputs: [],
@@ -33,7 +35,15 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   defp subscribe do
     LiveShowy.Users.subscribe()
     LiveShowy.UserRoles.subscribe()
+    LiveShowy.UserInstruments.subscribe()
     Wifi.subscribe()
+  end
+
+  def get_users do
+    Users.list(%{
+      roles: UserRoles,
+      instrument: UserInstruments
+    })
   end
 
   @impl true
@@ -44,7 +54,7 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
              :user_removed,
              :user_role_added
            ] do
-    {:noreply, assign(socket, users: Users.list_with_roles())}
+    {:noreply, assign(socket, users: get_users())}
   end
 
   def handle_info({:wifi_credential_updated, {key, value}}, socket) do
@@ -65,8 +75,13 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
         |> push_redirect(to: Routes.landing_index_path(socket, :index))
       }
     else
-      {:noreply, assign(socket, users: Users.list_with_roles())}
+      {:noreply, assign(socket, users: get_users())}
     end
+  end
+
+  def handle_info({tag, {_user_id, _instrument}}, socket)
+      when tag in [:user_instrument_added, :user_instrument_removed] do
+    {:noreply, assign(socket, users: get_users())}
   end
 
   def handle_info(message, socket) do
