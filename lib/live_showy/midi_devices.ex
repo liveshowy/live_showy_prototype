@@ -16,8 +16,6 @@ defmodule LiveShowy.MidiDevices do
   def maybe_write_message(pid, message) do
     if is_pid(pid) && Process.alive?(pid) do
       PortMidi.write(pid, message)
-    else
-      Logger.warn(invalid_midi_pid: pid)
     end
   end
 end
