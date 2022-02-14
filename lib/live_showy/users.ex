@@ -25,9 +25,26 @@ defmodule LiveShowy.Users do
     {:ok, nil}
   end
 
-  def list() do
-    :ets.tab2list(__MODULE__)
-    |> Enum.map(&elem(&1, 1))
+  def list(preloads \\ %{}) when is_map(preloads) do
+    for {user_id, user} <- :ets.tab2list(__MODULE__), {key, module} <- preloads, reduce: %{} do
+      acc ->
+        value =
+          case module.get(user.id) do
+            {_user_id, value} -> value
+            value -> value
+          end
+
+        user = Map.put(user, key, value)
+
+        Map.update(
+          acc,
+          user_id,
+          user,
+          &Map.merge(&1, user, fn _key, val1, val2 -> val2 || val1 end)
+        )
+    end
+    |> Map.values()
+    |> IO.inspect()
   end
 
   def list_with_roles() do
