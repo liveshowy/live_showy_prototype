@@ -5,12 +5,10 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
   alias LiveShowyWeb.Components.ClientMidiDevice
 
   prop current_user_id, :string
+  prop midi_output_pid, :pid, default: nil
+
   data webmidi_supported?, :boolean, default: nil
   data client_inputs, :map, default: %{}
-
-  def mount(socket) do
-    {:ok, assign(socket, midi_output_pid: nil)}
-  end
 
   def render(assigns) do
     ~F"""
@@ -74,7 +72,7 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
         %{"device_id" => device_id, "message" => [status, note, velocity]},
         %{assigns: %{midi_output_pid: midi_output_pid}} = socket
       ) do
-    if midi_output_pid do
+    if is_pid(midi_output_pid) && Process.alive?(midi_output_pid) do
       PortMidi.write(midi_output_pid, {status, note, velocity})
     end
 
