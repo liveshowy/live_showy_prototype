@@ -16,6 +16,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   alias LiveShowyWeb.Components.Button
   alias LiveShowyWeb.Components.ButtonBar
   alias LiveShowyWeb.Components.Card
+  alias LiveShowyWeb.Components.Keyboard
   alias LiveShowyWeb.Components.DynamicInstrument
   alias LiveShowyWeb.Components.ClientMidiDevices
 
@@ -36,13 +37,16 @@ defmodule LiveShowyWeb.BackstageLive.Index do
       Presence.list(@topic)
       |> Enum.map(fn {_user_id, performer} -> List.first(performer[:metas]) end)
 
-    {_user_id, assigned_instrument} = UserInstruments.get(current_user.id)
+    case UserInstruments.get(current_user.id) do
+      {_user_id, nil} ->
+        {_user_id, assigned_instrument} =
+          UserInstruments.add({current_user.id, Instrument.new(%{component: Keyboard})})
 
-    {:ok,
-     assign(socket,
-       performers: performers,
-       assigned_instrument: assigned_instrument
-     )}
+        {:ok, assign(socket, performers: performers, assigned_instrument: assigned_instrument)}
+
+      {_user_id, assigned_instrument} ->
+        {:ok, assign(socket, performers: performers, assigned_instrument: assigned_instrument)}
+    end
   end
 
   defp subscribe do
