@@ -25,11 +25,16 @@ defmodule LiveShowy.Users do
     {:ok, nil}
   end
 
+  @doc """
+  List users, with an optional preloads map.
+
+  Preload keys will be added to each user, and each preload value must be a module with a get/1 function.
+  """
   def list(preloads \\ %{}) when is_map(preloads) do
     for {user_id, user} <- :ets.tab2list(__MODULE__), {key, module} <- preloads, reduce: %{} do
       acc ->
         value =
-          case module.get(user.id) do
+          case apply(module, :get, [user.id]) do
             {_user_id, value} -> value
             value -> value
           end
