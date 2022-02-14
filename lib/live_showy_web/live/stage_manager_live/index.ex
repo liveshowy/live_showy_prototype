@@ -9,9 +9,7 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   alias LiveShowy.Roles
   alias LiveShowy.UserRoles
   alias LiveShowy.UserInstruments
-  alias LiveShowy.Instrument
   alias LiveShowy.Wifi
-  alias LiveShowy.MidiDevices
 
   # COMPONENTS
   alias LiveShowyWeb.Components.Card
@@ -25,10 +23,7 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
     {:ok,
      assign(socket,
        users: get_users(),
-       roles: Roles.list(),
-       midi_devices: PortMidi.devices(),
-       midi_inputs: [],
-       midi_outputs: []
+       roles: Roles.list()
      )}
   end
 

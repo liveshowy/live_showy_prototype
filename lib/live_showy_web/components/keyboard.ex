@@ -82,12 +82,6 @@ defmodule LiveShowyWeb.Components.Keyboard do
     """
   end
 
-  defp get_note_name(int) do
-    @note_names
-    |> Enum.find("TBD", fn {_label, index} -> int == index end)
-    |> elem(0)
-  end
-
   defp get_key_color(index) do
     case index in [1, 3, 6, 8, 10] do
       true -> :black
