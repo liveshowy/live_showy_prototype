@@ -37,7 +37,7 @@ defmodule LiveShowy.Chat.Backstage do
       true ->
         :ets.tab2list(__MODULE__)
         |> Enum.reduce([], &filter_and_match_user(&1, &2, statuses))
-        |> Enum.sort(&(DateTime.compare(&1.created_at, &2.created_at) != :gt))
+        |> Enum.sort(&(DateTime.compare(&1.created_at, &2.created_at) != :lt))
 
       _ ->
         {:error, "statuses must be a list of atoms"}

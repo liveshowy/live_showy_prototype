@@ -16,6 +16,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   alias LiveShowyWeb.Components.Button
   alias LiveShowyWeb.Components.ButtonBar
   alias LiveShowyWeb.Components.Card
+  alias LiveShowyWeb.Components.Keyboard
   alias LiveShowyWeb.Components.DynamicInstrument
   alias LiveShowyWeb.Components.ClientMidiDevices
 
@@ -36,10 +37,21 @@ defmodule LiveShowyWeb.BackstageLive.Index do
       Presence.list(@topic)
       |> Enum.map(fn {_user_id, performer} -> List.first(performer[:metas]) end)
 
-    {_user_id, assigned_instrument} = UserInstruments.get(current_user.id)
+    assigned_instrument =
+      case UserInstruments.get(current_user.id) do
+        {_user_id, nil} ->
+          {_user_id, assigned_instrument} =
+            UserInstruments.add({current_user.id, Instrument.new(%{component: Keyboard})})
+
+          assigned_instrument
+
+        {_user_id, assigned_instrument} ->
+          assigned_instrument
+      end
 
     {:ok,
-     assign(socket,
+     assign(
+       socket,
        performers: performers,
        assigned_instrument: assigned_instrument
      )}
@@ -105,12 +117,8 @@ defmodule LiveShowyWeb.BackstageLive.Index do
     {:noreply, assign(socket, assigned_instrument: new_instrument)}
   end
 
-  def handle_event("midi-message", _message, socket) do
-    {:noreply, socket}
-  end
-
   def handle_event(event, value, socket) do
-    Logger.warning(unknown_event: {event, value})
+    Logger.warning(unknown_event: {__MODULE__, event, value})
     {:noreply, socket}
   end
 

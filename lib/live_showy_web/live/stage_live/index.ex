@@ -9,6 +9,7 @@ defmodule LiveShowyWeb.StageLive.Index do
   alias LiveShowy.Users
   alias LiveShowy.UserRoles
   alias LiveShowy.Instrument
+  alias LiveShowy.MidiDevices
   alias LiveShowy.UserInstruments
 
   # COMPONENTS
@@ -47,7 +48,8 @@ defmodule LiveShowyWeb.StageLive.Index do
     {:ok,
      assign(socket,
        performers: performers,
-       assigned_instrument: assigned_instrument
+       assigned_instrument: assigned_instrument,
+       midi_output_pid: MidiDevices.get_device_pid(:output, "IAC Device Bus 1")
      )}
   end
 
@@ -67,8 +69,12 @@ defmodule LiveShowyWeb.StageLive.Index do
     UserInstruments.subscribe()
   end
 
-  def handle_event("midi-message", message, socket) do
-    Logger.warn(unhandled_midi_message: {__MODULE__, message})
+  def handle_event(
+        "midi-message",
+        %{"message" => [status, note, velocity]},
+        %{assigns: %{midi_output_pid: midi_output_pid}} = socket
+      ) do
+    MidiDevices.maybe_write_message(midi_output_pid, {status, note, velocity})
     {:noreply, socket}
   end
 

@@ -9,7 +9,6 @@ import Config
 
 config :live_showy,
   initial_roles: [
-    :guest,
     :attendee,
     :backstage_performer,
     :mainstage_performer,

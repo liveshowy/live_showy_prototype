@@ -51,5 +51,7 @@ defmodule LiveShowy.UserInstruments do
 
   def remove(user_id) when is_binary(user_id) do
     :ets.delete(__MODULE__, user_id)
+    PubSub.broadcast(LiveShowy.PubSub, @topic, {:user_instrument_removed, {user_id, nil}})
+    Logger.info(user_instrument_removed: {user_id, nil})
   end
 end
