@@ -70,7 +70,7 @@
     </:body>
   </Card>
 
-  <Card class="col-span-2 lg:col-start-1">
+  <!-- <Card class="col-span-2 lg:col-start-1">
     <:header>
       <h2>Your MIDI Devices</h2>
     </:header>
@@ -78,7 +78,7 @@
     <:body>
       <ClientMidiDevices id="backstage-client-midi-devices" current_user_id={@current_user.id} />
     </:body>
-  </Card>
+  </Card> -->
 
   <Card class="col-span-2 lg:col-start-1">
     <:header>

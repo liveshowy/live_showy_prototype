@@ -49,7 +49,6 @@ defmodule LiveShowy.Users do
         )
     end
     |> Map.values()
-    |> IO.inspect()
   end
 
   def list_with_roles() do
