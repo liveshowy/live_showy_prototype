@@ -31,6 +31,7 @@
         <table class="w-full table-fixed">
           <thead class="text-xs text-left uppercase align-bottom">
             <th></th>
+            <th>INSTRUMENT</th>
             {#for role <- @roles}
               <th>{Atom.to_string(role) |> String.replace(~r/_/, " ")}</th>
             {/for}
@@ -40,6 +41,19 @@
             {#for user <- @users}
               <tr>
                 <td>{user.username}</td>
+
+                <td>
+                  {#if user.instrument}
+                    {
+                      Map.get(user.instrument, :component)
+                      |> Atom.to_string()
+                      |> String.replace(~r/.*\.(\w+)$/, "\\1")
+                    }
+                  {#else}
+                    None
+                  {/if}
+                </td>
+
                 {#for role <- @roles}
                   {#if role in user.roles}
                     <td>
