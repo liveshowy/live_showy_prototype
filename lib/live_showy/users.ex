@@ -25,35 +25,27 @@ defmodule LiveShowy.Users do
     {:ok, nil}
   end
 
+  def list do
+    :ets.tab2list(__MODULE__)
+    |> Enum.map(&elem(&1, 1))
+  end
+
   @doc """
   List users, with an optional preloads map.
 
   Preload keys will be added to each user, and each preload value must be a module with a get/1 function.
   """
-  def list(preloads \\ %{}) when is_map(preloads) do
-    for {user_id, user} <- :ets.tab2list(__MODULE__), {key, module} <- preloads, reduce: %{} do
-      acc ->
-        value =
-          case apply(module, :get, [user.id]) do
-            {_user_id, value} -> value
-            value -> value
-          end
-
-        user = Map.put(user, key, value)
-
-        Map.update(
-          acc,
-          user_id,
-          user,
-          &Map.merge(&1, user, fn _key, val1, val2 -> val2 || val1 end)
-        )
-    end
-    |> Map.values()
+  def list(preloads) when is_map(preloads) do
+    Enum.map(list(), &Map.merge(&1, populate_preloads(&1, preloads)))
   end
 
-  def list_with_roles() do
-    list()
-    |> Enum.map(fn user -> Map.put(user, :roles, UserRoles.get(user.id)) end)
+  defp populate_preloads(user, preloads) do
+    for {key, module} <- preloads, into: %{} do
+      case apply(module, :get, [user.id]) do
+        {_user_id, value} -> {key, value}
+        value -> {key, value}
+      end
+    end
   end
 
   def map_usernames do
