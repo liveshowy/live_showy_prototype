@@ -37,7 +37,7 @@
             {/for}
           </thead>
 
-          <tbody>
+          <tbody class="break-all">
             {#for user <- @users}
               <tr>
                 <td>{user.username}</td>
