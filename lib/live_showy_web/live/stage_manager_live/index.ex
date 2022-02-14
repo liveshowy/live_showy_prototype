@@ -63,10 +63,10 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   end
 
   def handle_info(
-        {:user_role_removed, {user_id, :stage_manager}},
+        {:user_role_removed, {user_id, role}},
         %{assigns: %{current_user: current_user}} = socket
       ) do
-    if current_user.id == user_id do
+    if role == :stage_manager && current_user.id == user_id do
       {
         :noreply,
         socket
