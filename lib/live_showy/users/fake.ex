@@ -4,7 +4,7 @@ defmodule LiveShowy.Users.Fake do
   """
 
   @enforce_keys [:id, :username, :color, :output_device_name]
-  defstruct [:id, :username, :color, :output_device_name, :instrument, :roles]
+  defstruct [:id, :username, :color, :output_device_name]
 
   @doc """
   Returns a fake user with a random UUID and username.
@@ -14,9 +14,7 @@ defmodule LiveShowy.Users.Fake do
       id: UUID.uuid4(),
       username: Faker.Internet.user_name(),
       color: "#" <> Faker.Color.rgb_hex(),
-      output_device_name: nil,
-      instrument: nil,
-      roles: []
+      output_device_name: nil
     }
   end
 
