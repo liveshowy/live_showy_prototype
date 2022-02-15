@@ -7,6 +7,8 @@
 # General application configuration
 import Config
 
+config :live_showy, env: config_env()
+
 config :live_showy,
   initial_roles: [
     :attendee,
