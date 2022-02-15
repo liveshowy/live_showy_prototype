@@ -18,6 +18,11 @@ function onMidiFailure(message) {
   console.error("WebMIDI failed to connect:", message)
 }
 
+function onMidiDeviceChange(event, liveView) {
+  const {connection, id, manufacturer, name, state, type} = event.currentTarget
+  liveView.pushEventTo(`#${liveView.el.id}`, "midi-device-change", { connection, id, manufacturer, name, state, type })
+}
+
 function onMidiMessage(event, liveView) {
   const [status, note, velocity] = event.data
   liveView.pushEventTo(
@@ -28,11 +33,6 @@ function onMidiMessage(event, liveView) {
       message: [status, note, velocity],
     }
   )
-}
-
-function onMidiDeviceChange(event, liveView) {
-  const {connection, id, manufacturer, name, state, type} = event.currentTarget
-  liveView.pushEventTo(`#${liveView.el.id}`, "midi-device-change", { connection, id, manufacturer, name, state, type })
 }
 
 module.exports = {
