@@ -33,8 +33,8 @@ defmodule LiveShowyWeb.Components.Button do
         "text-white": @active,
         "cursor-not-allowed opacity-70": @disabled,
         "hover:bg-primary-500 dark:hover:bg-primary-600 focus:ring-primary-400": @kind == "primary",
-        "bg-primary-500 dark:bg-primary-700": @kind == "primary" && @active,
-        "bg-primary-200 text-primary-700 dark:bg-primary-900 dark:text-white": @kind == "primary" && !@active
+        "bg-primary-500 dark:bg-primary-600": @kind == "primary" && @active,
+        "bg-primary-200 text-primary-700 dark:bg-primary-800 dark:text-white": @kind == "primary" && !@active
       }
       :on-click={@click}
       value={@value}
