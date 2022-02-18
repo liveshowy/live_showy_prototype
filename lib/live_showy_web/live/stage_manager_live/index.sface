@@ -1,4 +1,4 @@
-<div class="grid grid-cols-1 gap-2 lg:grid-cols-2 h-full lg:grid-rows-[auto_1fr] auto-rows-auto">
+<div class="grid grid-cols-1 gap-2 lg:grid-cols-4 h-full lg:grid-rows-[auto_1fr] auto-rows-auto">
   <Card class="col-span-full" compact>
     <:header><h1>Stage Manager</h1></:header>
     <:body><p>Manage users, settings, and monitor the system.</p></:body>
@@ -23,7 +23,7 @@
     </:body>
   </Card> -->
 
-  <Card class="min-w-min">
+  <Card class="min-w-min lg:col-span-3">
     <:header><h2>Users</h2></:header>
 
     <:body>
