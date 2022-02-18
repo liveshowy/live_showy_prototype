@@ -1,7 +1,7 @@
 defmodule LiveShowyWeb.Components.UserBar do
   @moduledoc false
   use Surface.Component
-  # alias LiveShowyWeb.Components.LatencyMonitor
+  alias LiveShowyWeb.Components.LatencyMonitor
 
   prop user, :struct, required: true
 
@@ -14,12 +14,11 @@ defmodule LiveShowyWeb.Components.UserBar do
 
         <dt class="font-bold uppercase text-default-500 dark:text-default-400">Instrument</dt>
         <dd class="font-mono text-sm">
-          {if @user.assigned_instrument do
-            Atom.to_string(@user.assigned_instrument.component)
-            |> String.replace(~r/.*\.(\w+)$/, "\\g{1}")
-          else
+          {#if @user.assigned_instrument}
+            {render_instrument_name(@user.assigned_instrument.component)}
+          {#else}
             "None"
-          end}
+          {/if}
         </dd>
 
         <dt class="font-bold uppercase text-default-500 dark:text-default-400">Roles</dt>
@@ -31,14 +30,17 @@ defmodule LiveShowyWeb.Components.UserBar do
           {/if}
         </dd>
 
-        <!--
         <dt class="font-bold uppercase text-default-500 dark:text-default-400">Latency</dt>
         <dd class="font-mono text-sm">
           <LatencyMonitor id="latency-monitor" />
         </dd>
-        -->
       </dl>
     </div>
     """
+  end
+
+  defp render_instrument_name(component) when is_atom(component) do
+    Atom.to_string(component)
+    |> String.replace(~r/.*\.(\w+)$/, "\\g{1}")
   end
 end
