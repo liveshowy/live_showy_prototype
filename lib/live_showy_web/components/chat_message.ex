@@ -15,7 +15,7 @@ defmodule LiveShowyWeb.Components.ChatMessage do
     ~F"""
     <li
       class={
-        "grid items-baseline grid-cols-1 w-5/6 px-4 py-2 rounded-xl shadow-md animate-fade-in-slide-down auto-rows-auto dark:text-white",
+        "grid items-baseline grid-cols-1 w-5/6 px-4 py-2 rounded-xl animate-fade-in-slide-down auto-rows-auto dark:text-white",
         @class,
         hidden: @status != :public,
         "bg-default-200 dark:bg-default-700 rounded-br-none self-end":

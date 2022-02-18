@@ -13,7 +13,7 @@ defmodule LiveShowyWeb.Components.Button do
 
   prop label, :string
   prop rounded, :css_class, default: "rounded"
-  prop shadow, :css_class, default: "shadow"
+  prop shadow, :css_class, default: nil
   prop type, :string, default: "button", values!: ~w(button submit reset)
   prop disabled, :boolean, default: false
   prop value, :any
