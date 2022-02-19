@@ -1,0 +1,32 @@
+<div class="overflow-x-auto bg-black bg-opacity-5">
+  <dl class="flex items-baseline self-end justify-end w-full gap-2 px-4 py-1 mx-auto overflow-x-auto whitespace-nowrap max-w-screen-2xl">
+    <dt class="font-bold uppercase text-default-500 dark:text-default-400">Username</dt>
+    <dd class="font-mono text-sm break-normal">{@current_user.username}</dd>
+
+    <dt class="font-bold uppercase text-default-500 dark:text-default-400">Instrument</dt>
+    <dd class="font-mono text-sm">
+      {#if @assigned_instrument}
+        {render_instrument_name(@assigned_instrument.component)}
+      {#else}
+        None
+      {/if}
+    </dd>
+
+    <dt class="font-bold uppercase text-default-500 dark:text-default-400">Roles</dt>
+    <dd class="font-mono text-sm">
+      {#case Enum.count(@roles)}
+      {#match 0}
+        None
+      {#match 1}
+        {List.first(@roles) |> Atom.to_string()}
+      {#match _}
+        {Enum.count(@roles)}
+      {/case}
+    </dd>
+
+    <dt class="font-bold uppercase text-default-500 dark:text-default-400">Latency</dt>
+    <dd class="font-mono text-sm">
+      <LatencyMonitor id="latency-monitor" />
+    </dd>
+  </dl>
+</div>
