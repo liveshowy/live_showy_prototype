@@ -10,6 +10,7 @@ defmodule LiveShowyWeb.StageLive.Index do
   alias LiveShowy.UserRoles
   alias LiveShowy.Instrument
   alias LiveShowy.MidiDevices
+  alias LiveShowy.SharedMidiState
   alias LiveShowy.UserInstruments
 
   # COMPONENTS
@@ -74,7 +75,7 @@ defmodule LiveShowyWeb.StageLive.Index do
         %{"message" => [status, note, velocity]},
         %{assigns: %{midi_output_pid: midi_output_pid}} = socket
       ) do
-    MidiDevices.maybe_write_message(midi_output_pid, {status, note, velocity})
+    SharedMidiState.write_message(midi_output_pid, {status, note, velocity})
     {:noreply, socket}
   end
 

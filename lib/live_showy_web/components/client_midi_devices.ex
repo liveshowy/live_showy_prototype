@@ -2,7 +2,7 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
   @moduledoc false
   require Logger
   use LiveShowyWeb, :live_component
-  alias LiveShowy.MidiDevices
+  alias LiveShowy.SharedMidiState
   alias LiveShowyWeb.Components.ClientMidiDevice
 
   prop current_user_id, :string
@@ -73,7 +73,7 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
         %{"device_id" => device_id, "message" => [status, note, velocity]},
         %{assigns: %{midi_output_pid: midi_output_pid}} = socket
       ) do
-    MidiDevices.maybe_write_message(midi_output_pid, {status, note, velocity})
+    SharedMidiState.write_message(midi_output_pid, {status, note, velocity})
 
     cond do
       status in [176, 224] ->
@@ -122,7 +122,7 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
         %{"message" => [status, note, velocity]},
         %{assigns: %{midi_output_pid: midi_output_pid}} = socket
       ) do
-    MidiDevices.maybe_write_message(midi_output_pid, {status, note, velocity})
+    SharedMidiState.write_message(midi_output_pid, {status, note, velocity})
 
     {:noreply, socket}
   end
