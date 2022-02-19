@@ -14,6 +14,7 @@ defmodule LiveShowy.Application do
       {Phoenix.PubSub, name: LiveShowy.PubSub},
       # Start a registry for host midi devices
       LiveShowy.HostMidiDevices.Pool,
+      LiveShowy.SharedMidiState,
       # Start the Wifi ETS table
       LiveShowy.Wifi,
       # Start the Roles ETS table
