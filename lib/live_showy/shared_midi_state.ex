@@ -4,17 +4,17 @@ defmodule LiveShowy.SharedMidiState do
 
   - As users pass note-on events, call increment_key/1 to indicate users playing a note.
   - As users pass note-off events, call decrement_key/1 to indicate users releasing a note.
+  - PortMidi will be called by MidiDevices.maybe_write_message/2 if the output PID is alive.
   """
   use GenServer
   alias LiveShowy.MidiDevices
+
+  # API
 
   def start_link(_state) do
     GenServer.start_link(__MODULE__, nil, name: __MODULE__)
   end
 
-  @doc """
-  Handle note-off messages
-  """
   def write_message(output, {status, note, _velocity} = message) when status >= 144 do
     increment_key(note)
     MidiDevices.maybe_write_message(output, message)
@@ -35,10 +35,6 @@ defmodule LiveShowy.SharedMidiState do
     end
   end
 
-  def inspect do
-    GenServer.call(__MODULE__, :inspect)
-  end
-
   def list() do
     GenServer.call(__MODULE__, :list)
   end
@@ -57,11 +53,6 @@ defmodule LiveShowy.SharedMidiState do
     key
   end
 
-  def delete_key(key) when is_integer(key) do
-    GenServer.cast(__MODULE__, {:delete, key})
-    key
-  end
-
   # SERVER
 
   @impl true
@@ -72,10 +63,6 @@ defmodule LiveShowy.SharedMidiState do
   end
 
   @impl true
-  def handle_call(:inspect, _from, state) do
-    {:reply, state, state}
-  end
-
   def handle_call(:list, _from, state) do
     {:reply, :ets.tab2list(__MODULE__), state}
   end
@@ -98,11 +85,6 @@ defmodule LiveShowy.SharedMidiState do
 
   def handle_cast({:decrement, key}, state) do
     :ets.update_counter(__MODULE__, key, {2, -1, 0, 0}, {key, 0})
-    {:noreply, state}
-  end
-
-  def handle_cast({:delete, key}, state) do
-    :ets.delete(__MODULE__, key)
     {:noreply, state}
   end
 end
