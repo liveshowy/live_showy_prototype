@@ -12,7 +12,7 @@ defmodule LiveShowyWeb.Components.Alert do
       :if={@flash != %{}}
       id="alert"
       class={
-        "animate-fade-in-slide-down w-full 2xl:rounded shadow-md text-white text-lg p-4 mx-auto max-w-screen-2xl",
+        "animate-fade-in-slide-down w-full lg:rounded shadow-md text-white text-lg p-4 mx-auto max-w-screen-2xl",
         @class,
         "bg-danger-500 dark:bg-danger-700": @flash["error"],
         "bg-info-500 dark:bg-info-700": @flash["info"]
