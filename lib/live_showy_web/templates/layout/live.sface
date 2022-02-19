@@ -1,4 +1,4 @@
-<LiveShowyWeb.Components.UserBar user={@current_user} />
+{live_render(@socket, LiveShowyWeb.UserBarLive.Index, id: "user-bar")}
 
 <main class="flex-1 w-full p-4 mx-auto overflow-auto max-w-screen-2xl">
   <LiveShowyWeb.Components.Alert flash={@flash} class="self-start mb-2" />
