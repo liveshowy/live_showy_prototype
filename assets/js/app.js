@@ -22,7 +22,8 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import latency from './latency'
-import {init as initMidi, onMidiSuccess, onMidiFailure, onMidiMessage, onMidiDeviceChange} from './midi'
+import { init as initMidi, onMidiSuccess, onMidiFailure, onMidiMessage, onMidiDeviceChange } from './midi'
+import * as Tone from 'tone'
 
 let Hooks = {
   TrackTouchEvents: {
