@@ -4,7 +4,7 @@ defmodule LiveShowyWeb.Components.ChatForm do
   alias Surface.Components.Form
   alias Surface.Components.Form.TextInput
   alias LiveShowy.Chat.Message
-  alias LiveShowyWeb.Components.Button
+  alias LiveShowyWeb.Components.Forms.Button
 
   prop submit, :event, required: true
   prop message, :struct, default: Message.new()
@@ -16,7 +16,7 @@ defmodule LiveShowyWeb.Components.ChatForm do
         name="body"
         value={@message.body}
         class="flex-grow px-4 py-2 transition rounded-l bg-default-200 focus:bg-white dark:focus:bg-default-600 focus:outline-none dark:bg-default-700 dark:placeholder:text-default-300"
-        opts={autofocus: true, required: true, placeholder: "Message Backstage"}
+        opts={required: true, placeholder: "Message Backstage"}
       />
 
       <Button type="submit" click={nil} label="SEND" rounded="rounded-r" shadow={nil} />

@@ -13,8 +13,8 @@ defmodule LiveShowyWeb.BackstageLive.Index do
 
   # COMPONENTS
   alias LiveShowyWeb.Components.Users, as: UsersComponent
-  alias LiveShowyWeb.Components.Button
-  alias LiveShowyWeb.Components.ButtonBar
+  alias LiveShowyWeb.Components.Forms.Button
+  alias LiveShowyWeb.Components.Forms.ButtonBar
   alias LiveShowyWeb.Components.Card
   alias LiveShowyWeb.Components.Keyboard
   alias LiveShowyWeb.Components.DynamicInstrument
