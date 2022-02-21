@@ -140,6 +140,14 @@ let Hooks = {
       })
     },
   },
+
+  HandleToneJS: {
+    mounted() {
+      console.info(`HandleToneJS mounted`)
+      const synth = new Tone.Synth().toDestination()
+      synth.triggerAttackRelease("C4", "8n")
+    }
+  },
 }
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")

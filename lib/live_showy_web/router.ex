@@ -36,6 +36,7 @@ defmodule LiveShowyWeb.Router do
       pipe_through [:browser, :require_user]
 
       live "/", LandingLive.Index, :index
+      live "/tone", ToneLive.Index, :index
     end
 
     scope "/backstage", LiveShowyWeb do
