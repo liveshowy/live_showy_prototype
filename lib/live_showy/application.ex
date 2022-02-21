@@ -15,6 +15,7 @@ defmodule LiveShowy.Application do
       # Start a registry for host midi devices
       LiveShowy.HostMidiDevices.Pool,
       LiveShowy.SharedMidiState,
+      {LiveShowy.Music.Metronome, %LiveShowy.Music.Metronome{}},
       # Start the Wifi ETS table
       LiveShowy.Wifi,
       # Start the Roles ETS table
