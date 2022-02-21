@@ -13,8 +13,9 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
 
   # COMPONENTS
   alias LiveShowyWeb.Components.Card
-  alias LiveShowyWeb.Components.Button
+  alias LiveShowyWeb.Components.Forms.Button
   alias LiveShowyWeb.Components.WifiCard
+  alias LiveShowyWeb.Components.Music.Metronome
 
   @impl true
   def mount(_params, _session, socket) do
@@ -31,6 +32,7 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
     LiveShowy.Users.subscribe()
     LiveShowy.UserRoles.subscribe()
     LiveShowy.UserInstruments.subscribe()
+    LiveShowy.Music.Metronome.subscribe()
     Wifi.subscribe()
   end
 
@@ -77,6 +79,17 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   def handle_info({tag, {_user_id, _instrument}}, socket)
       when tag in [:user_instrument_added, :user_instrument_removed] do
     {:noreply, assign(socket, users: get_users())}
+  end
+
+  def handle_info(message, socket)
+      when message in [:metronome_running, :metronome_stopped, :metronome_updated] do
+    Metronome.refresh("metronome-form")
+    {:noreply, socket}
+  end
+
+  def handle_info(:metronome_tick, socket) do
+    Metronome.show_tick("metronome-form")
+    {:noreply, socket}
   end
 
   def handle_info(message, socket) do

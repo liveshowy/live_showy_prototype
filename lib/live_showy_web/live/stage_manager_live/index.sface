@@ -1,7 +1,17 @@
-<div class="grid grid-cols-1 gap-2 lg:grid-cols-4 h-full lg:grid-rows-[auto_1fr] auto-rows-auto">
+<div class="grid grid-cols-1 gap-2 lg:grid-cols-4 h-full lg:grid-rows-[min-content_min-content_minmax(20rem,_auto)] auto-rows-auto">
   <Card class="col-span-full" compact>
     <:header><h1>Stage Manager</h1></:header>
     <:body><p>Manage users, settings, and monitor the system.</p></:body>
+  </Card>
+
+  <Card class="col-span-full" compact={true}>
+    <:header>
+      <h2>Metronome</h2>
+    </:header>
+
+    <:body>
+      <Metronome id="metronome-form" />
+    </:body>
   </Card>
 
   <!-- <Card>
