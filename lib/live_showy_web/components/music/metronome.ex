@@ -7,6 +7,7 @@ defmodule LiveShowyWeb.Components.Music.Metronome do
   alias LiveShowyWeb.Components.Forms.Button
 
   data metronome, :struct
+  data tick, :string
 
   def mount(socket) do
     {:ok, assign(socket, metronome: Metronome.get(), tick: nil)}
@@ -14,32 +15,35 @@ defmodule LiveShowyWeb.Components.Music.Metronome do
 
   def render(assigns) do
     ~F"""
-    <form id={@id} phx-change="update-metronome" phx-target={@myself} phx-debounce class="flex flex-wrap items-baseline justify-end gap-1 p-1">
-      <label class="font-bold uppercase">Tick</label>
-      <Input type="text" name="tick" value={@tick} />
-
-      <span class="flex-grow"></span>
-
-      {#if @metronome.running}
-        <Button type="button" name="running" click="stop-metronome">STOP</Button>
-      {#else}
-        <Button type="button" name="running" click="start-metronome">START</Button>
-      {/if}
-
-      <span class="flex-grow"></span>
-
-      <label class="font-bold uppercase" title="Beats Per Minute">BPM</label>
-      <Input type="number" name="bpm" value={@metronome.bpm} min="50" max="200" />
-
-      <label class="font-bold uppercase">Running</label>
+    <form id={@id} phx-change="update-metronome" phx-target={@myself} phx-debounce class="flex flex-wrap items-baseline justify-end gap-1 p-1 text-xs">
       <Input type="hidden" name="running" value={@metronome.running} />
 
-      <label class="font-bold uppercase" title="Time Signature">TS</label>
-      <Input type="number" name="time_signature_top" value={@metronome.time_signature_top} min="2" max="12" />
-      <Input type="number" name="time_signature_bottom" value={@metronome.time_signature_bottom} min="4" max="12" />
+      <div>
+        <label class="font-bold uppercase">Tick</label>
+        <Input type="text" readonly placeholder="PAUSED" name="tick" value={@tick} class="w-[30ch]" />
+      </div>
 
-      <label class="font-bold uppercase" class="Subdivision">SUB</label>
-      <Input type="number" name="subdivision" value={@metronome.subdivision} />
+      <div>
+        <label class="font-bold uppercase" title="Beats Per Minute">BPM</label>
+        <Input type="number" name="bpm" value={@metronome.bpm} min="50" max="200" class="w-12" />
+      </div>
+
+      <div>
+        <label class="font-bold uppercase" title="Time Signature">TS</label>
+        <Input type="number" name="time_signature_top" value={@metronome.time_signature_top} min="2" max="12" class="w-8" />
+        <Input type="number" name="time_signature_bottom" value={@metronome.time_signature_bottom} min="4" max="12" class="w-8" />
+      </div>
+
+      <div>
+        <label class="font-bold uppercase" title="Subdivision">SUB</label>
+        <Input type="number" name="subdivision" value={@metronome.subdivision} class="w-8" />
+      </div>
+
+      {#if @metronome.running}
+        <Button type="button" name="running" click="stop-metronome" size="sm" class="w-16">STOP</Button>
+      {#else}
+        <Button type="button" name="running" click="start-metronome" size="sm" class="w-16">START</Button>
+      {/if}
     </form>
     """
   end
