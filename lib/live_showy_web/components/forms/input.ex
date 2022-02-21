@@ -26,7 +26,7 @@ defmodule LiveShowyWeb.Components.Forms.Input do
       {=@type}
       {=@value}
       class={
-        "bg-transparent transition placeholder:text-default-500 focus:bg-white read-only:text-default-500 disabled:text-default-500 read-only:cursor-not-allowed disabled:cursor-not-allowed dark:focus:bg-default-900 rounded-sm w-auto flex-grow font-mono px-1 py-0.5",
+        "bg-transparent transition placeholder:text-default-500 focus:bg-white read-only:text-default-500 disabled:text-default-500 read-only:cursor-not-allowed disabled:cursor-not-allowed dark:focus:bg-default-900 rounded-sm flex-grow font-mono px-1 py-0.5",
         @class
       }
       />
