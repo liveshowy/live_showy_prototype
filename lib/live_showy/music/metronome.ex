@@ -7,17 +7,19 @@ defmodule LiveShowy.Music.Metronome do
 
   defstruct bpm: 120,
             running: false,
-            subdivision: 4,
+            subdivision: 1,
             time_signature_top: 4,
             time_signature_bottom: 4,
-            timer_ref: nil
+            timer_ref: nil,
+            current_beat: 1
 
   @type t :: %__MODULE__{
           bpm: non_neg_integer(),
           running: boolean(),
           subdivision: non_neg_integer(),
           time_signature_top: list(non_neg_integer()),
-          time_signature_bottom: list(non_neg_integer())
+          time_signature_bottom: list(non_neg_integer()),
+          current_beat: non_neg_integer()
         }
 
   @topic "music.metronome"
@@ -101,7 +103,7 @@ defmodule LiveShowy.Music.Metronome do
   @impl true
   def handle_cast(:run, state) do
     state = Map.put(state, :running, true)
-    GenServer.cast(__MODULE__, :broadcast_tick)
+    GenServer.cast(__MODULE__, :broadcast_beat)
     PubSub.broadcast!(LiveShowy.PubSub, @topic, :metronome_running)
     Logger.info(metronome: :running)
     {:noreply, state}
@@ -116,15 +118,22 @@ defmodule LiveShowy.Music.Metronome do
 
     PubSub.broadcast!(LiveShowy.PubSub, @topic, :metronome_stopped)
     Logger.info(metronome: :stopped)
-    {:noreply, Map.put(state, :timer_ref, nil)}
+
+    {
+      :noreply,
+      state
+      |> Map.put(:timer_ref, nil)
+      |> Map.put(:current_beat, 1)
+    }
   end
 
-  def handle_cast(:broadcast_tick, %{running: true} = state) do
-    PubSub.broadcast!(LiveShowy.PubSub, @topic, :metronome_tick)
+  def handle_cast(:broadcast_beat, %{running: true} = state) do
+    PubSub.broadcast!(LiveShowy.PubSub, @topic, {:metronome_beat, state.current_beat})
     interval_ms = round(60_000 / state.bpm / state.subdivision)
-    state = Map.put(state, :timer_ref, Process.send_after(self(), :broadcast_tick, interval_ms))
+    state = Map.put(state, :timer_ref, Process.send_after(self(), :broadcast_beat, interval_ms))
 
-    {:noreply, state}
+    {:noreply,
+     Map.update!(state, :current_beat, &if(&1 == state.time_signature_top, do: 1, else: &1 + 1))}
   end
 
   def handle_cast({:update, params}, state) do
@@ -135,8 +144,8 @@ defmodule LiveShowy.Music.Metronome do
   end
 
   @impl true
-  def handle_info(:broadcast_tick, state) do
-    GenServer.cast(__MODULE__, :broadcast_tick)
+  def handle_info(:broadcast_beat, state) do
+    GenServer.cast(__MODULE__, :broadcast_beat)
     {:noreply, state}
   end
 
