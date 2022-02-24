@@ -87,8 +87,8 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
     {:noreply, socket}
   end
 
-  def handle_info(:metronome_tick, socket) do
-    Metronome.show_tick("metronome-form")
+  def handle_info({:metronome_beat, beat}, socket) do
+    Metronome.show_beat("metronome-form", beat)
     {:noreply, socket}
   end
 

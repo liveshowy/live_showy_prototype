@@ -1,27 +1,57 @@
 defmodule LiveShowyWeb.Components.Music.Metronome do
   @moduledoc false
+
+  # FRAMEWORK / APP
   require Logger
+  alias Phoenix.LiveView.JS
   use LiveShowyWeb, :live_component
+
+  # CORE
   alias LiveShowy.Music.Metronome
+
+  # COMPONENTS
   alias LiveShowyWeb.Components.Forms.Input
   alias LiveShowyWeb.Components.Forms.Button
 
   data metronome, :struct
-  data tick, :string
+  data beat, :string
 
   def mount(socket) do
-    {:ok, assign(socket, metronome: Metronome.get(), tick: nil)}
+    {:ok, assign(socket, metronome: Metronome.get(), beat: 1)}
+  end
+
+  def update(%{beat: beat} = assigns, socket) do
+    JS.transition("bg-success-500", to: "#metronome-beat-indicator", time: 100)
+
+    {
+      :ok,
+      socket
+      |> push_event("metronome-beat", %{beat: beat})
+      |> assign(assigns)
+    }
+  end
+
+  def update(assigns, socket) do
+    {:ok, assign(socket, assigns)}
   end
 
   def render(assigns) do
     ~F"""
-    <form id={@id} phx-change="update-metronome" phx-target={@myself} phx-debounce class="flex flex-wrap items-baseline justify-end gap-1 p-1 text-xs">
+    <form id={@id} phx-change="update-metronome" phx-target={@myself} phx-throttle="500" class="flex flex-wrap items-baseline justify-end gap-1 p-1 text-xs">
       <Input type="hidden" name="running" value={@metronome.running} />
 
-      <div>
-        <label class="font-bold uppercase">Tick</label>
-        <Input type="text" readonly placeholder="PAUSED" name="tick" value={@tick} class="w-[30ch]" />
-      </div>
+      <span id="metronome-beat-indicator" class="self-center w-2 h-2 rounded-full"></span>
+
+      <label class="font-bold uppercase" title="Current Beat">BEAT</label>
+      <span id="metronome-beat" phx-hook="HandleMetronomeBeats" class="font-mono font-bold">{@beat}</span>
+
+      <span class="w-24 text-center">
+        {#if @metronome.running}
+          <span class="text-success-500">RUNNING</span>
+        {#else}
+          <span class="text-default-500">PAUSED</span>
+        {/if}
+      </span>
 
       <div>
         <label class="font-bold uppercase" title="Beats Per Minute">BPM</label>
@@ -36,7 +66,7 @@ defmodule LiveShowyWeb.Components.Music.Metronome do
 
       <div>
         <label class="font-bold uppercase" title="Subdivision">SUB</label>
-        <Input type="number" name="subdivision" value={@metronome.subdivision} class="w-8" />
+        <Input type="number" name="subdivision" min="1" max="4" value={@metronome.subdivision} class="w-8" />
       </div>
 
       {#if @metronome.running}
@@ -48,8 +78,8 @@ defmodule LiveShowyWeb.Components.Music.Metronome do
     """
   end
 
-  def show_tick(id) do
-    send_update(__MODULE__, id: id, tick: Timex.now())
+  def show_beat(id, beat) do
+    send_update(__MODULE__, id: id, beat: beat)
   end
 
   def refresh(id) do
@@ -68,7 +98,7 @@ defmodule LiveShowyWeb.Components.Music.Metronome do
 
   def handle_event("stop-metronome", _params, socket) do
     Metronome.stop()
-    {:noreply, assign(socket, metronome: Metronome.get(), tick: nil)}
+    {:noreply, assign(socket, metronome: Metronome.get(), beat: 1)}
   end
 
   def handle_event("update-metronome", params, socket) do
