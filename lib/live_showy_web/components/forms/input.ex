@@ -10,6 +10,7 @@ defmodule LiveShowyWeb.Components.Forms.Input do
   prop name, :string, required: true
   prop placeholder, :string
   prop readonly, :boolean
+  prop step, :integer
   prop type, :string, default: "text"
   prop value, :any, required: true
 
@@ -23,6 +24,7 @@ defmodule LiveShowyWeb.Components.Forms.Input do
       {=@name}
       {=@placeholder}
       {=@readonly}
+      {=@step}
       {=@type}
       {=@value}
       class={
