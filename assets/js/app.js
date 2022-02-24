@@ -148,6 +148,24 @@ let Hooks = {
       synth.triggerAttackRelease("C4", "8n")
     }
   },
+
+  HandleMetronomeBeats: {
+    mounted() {
+      console.info(`HandleMetronomeBeats mounted`)
+      const tone = new Tone.Synth({
+        envelope: {
+          attack: 0.02,
+          decay: 0.05,
+          sustain: 0,
+          release: 0.2
+        }
+      }).toDestination()
+      this.handleEvent("metronome-beat", ({ _beat }) => {
+        tone.triggerAttackRelease("C5", "16n")
+        }
+      )
+    },
+  },
 }
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
