@@ -118,6 +118,11 @@ defmodule LiveShowyWeb.BackstageLive.Index do
     {:noreply, assign(socket, assigned_instrument: new_instrument)}
   end
 
+  def handle_event("midi-message", %{"message" => [status, note, velocity]}, socket) do
+    Synth.send_message([status, note, velocity], "backstage-synth")
+    {:noreply, socket}
+  end
+
   def handle_event(event, value, socket) do
     Logger.warning(unknown_event: {__MODULE__, event, value})
     {:noreply, socket}
