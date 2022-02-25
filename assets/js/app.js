@@ -167,6 +167,16 @@ let Hooks = {
       )
     },
   },
+
+  HandleSynth: {
+    mounted() {
+      console.info(`HandleSynth mounted`)
+      const tone = new Tone.Synth().toDestination()
+      this.handleEvent("update-tone-envelope", ({attack, decay, sustain, release}) => {
+        tone.envelope = {attack, decay, sustain, release}
+      })
+    },
+  },
 }
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
