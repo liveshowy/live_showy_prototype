@@ -19,6 +19,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   alias LiveShowyWeb.Components.Keyboard
   alias LiveShowyWeb.Components.DynamicInstrument
   alias LiveShowyWeb.Components.ClientMidiDevices
+  alias LiveShowyWeb.Components.Music.Synth
 
   @topic "backstage"
 
