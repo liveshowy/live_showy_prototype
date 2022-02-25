@@ -74,6 +74,7 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
         %{assigns: %{midi_output_pid: midi_output_pid}} = socket
       ) do
     SharedMidiState.write_message(midi_output_pid, {status, note, velocity})
+    socket = push_event(socket, "midi-message", %{message: [status, note, velocity]})
 
     cond do
       status in [176, 224] ->
