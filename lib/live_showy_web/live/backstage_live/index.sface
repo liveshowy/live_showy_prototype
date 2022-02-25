@@ -11,9 +11,25 @@
     </:body>
   </Card>
 
+  <Card class="col-span-2">
+    <:header>
+        <h2>Synth Preview</h2>
+    </:header>
+
+    <:body>
+      <div class="flex flex-col gap-2">
+        <p class="opacity-70">
+          Backstage synth sounds are local only, and may vary significantly from main stage sounds.
+        </p>
+
+        <Synth id="backstage-synth" />
+      </div>
+    </:body>
+  </Card>
+
   <Card
     attrs={%{id: "backstage-instrument-preview"}}
-    class="col-span-full"
+    class="col-span-2"
   >
     <:header>
       <div class="flex flex-wrap gap-2">

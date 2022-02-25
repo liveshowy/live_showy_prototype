@@ -1,4 +1,4 @@
-defmodule LiveShowyWeb.Components.ButtonBar do
+defmodule LiveShowyWeb.Components.Forms.ButtonBar do
   @moduledoc false
   use Surface.Component
 

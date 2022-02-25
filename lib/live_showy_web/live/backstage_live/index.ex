@@ -13,12 +13,13 @@ defmodule LiveShowyWeb.BackstageLive.Index do
 
   # COMPONENTS
   alias LiveShowyWeb.Components.Users, as: UsersComponent
-  alias LiveShowyWeb.Components.Button
-  alias LiveShowyWeb.Components.ButtonBar
+  alias LiveShowyWeb.Components.Forms.Button
+  alias LiveShowyWeb.Components.Forms.ButtonBar
   alias LiveShowyWeb.Components.Card
   alias LiveShowyWeb.Components.Keyboard
   alias LiveShowyWeb.Components.DynamicInstrument
   alias LiveShowyWeb.Components.ClientMidiDevices
+  alias LiveShowyWeb.Components.Music.Synth
 
   @topic "backstage"
 
@@ -115,6 +116,11 @@ defmodule LiveShowyWeb.BackstageLive.Index do
     Logger.info(instrument_requested: {user_id, instrument})
     {_user_id, new_instrument} = set_instrument(user_id, instrument)
     {:noreply, assign(socket, assigned_instrument: new_instrument)}
+  end
+
+  def handle_event("midi-message", %{"message" => [status, note, velocity]}, socket) do
+    Synth.send_message([status, note, velocity], "backstage-synth")
+    {:noreply, socket}
   end
 
   def handle_event(event, value, socket) do

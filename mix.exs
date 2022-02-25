@@ -51,6 +51,7 @@ defmodule LiveShowy.MixProject do
       {:portmidi, git: "https://github.com/thbar/ex-portmidi.git"},
       {:surface, "~> 0.7.0"},
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
+      {:timex, "~> 3.7"},
       {:tzdata, "~> 1.1"},
       {:credo, "~> 1.5.6"}
     ]
