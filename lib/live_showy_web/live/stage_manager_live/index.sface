@@ -70,7 +70,7 @@
                       <Button
                         click="remove-user-role"
                         class="w-full"
-                        label="YES"
+                        label="REMOVE"
                         active
                         attrs={%{"phx-value-user-id": user.id, "phx-value-role": role}}
                       />
