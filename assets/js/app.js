@@ -154,14 +154,15 @@ let Hooks = {
       console.info(`HandleMetronomeBeats mounted`)
       const tone = new Tone.Synth({
         envelope: {
-          attack: 0.02,
+          attack: 0.005,
           decay: 0.05,
           sustain: 0,
-          release: 0.2
+          release: 0.5
         }
       }).toDestination()
-      this.handleEvent("metronome-beat", ({ _beat }) => {
-        tone.triggerAttackRelease("C5", "16n")
+      this.handleEvent("metronome-beat", ({ beat }) => {
+        const note = beat == 1 ? "C6" : "C5"
+        tone.triggerAttack(note)
         }
       )
     },
