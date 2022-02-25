@@ -386,7 +386,10 @@ let Hooks = {
 
       this.handleEvent("midi-message", ({ message }) => {
         const [status, note, velocity] = message
-        if (velocity == 0 || (status >= 128 && status <= 143)) {
+        if ([176, 224].includes(status)) {
+          return
+        }
+        else if (velocity == 0 || (status >= 128 && status <= 143)) {
           return tone.triggerRelease()
         }
         return tone.triggerAttack(midi_note_map[note])
