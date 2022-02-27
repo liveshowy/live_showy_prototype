@@ -8,25 +8,33 @@ on:
 
 jobs:
   build:
-    name: Build and test
-    runs-on: ubuntu-latest
-
+    name: Install Elixir ${{ matrix.elixir }} OTP ${{ matrix.otp }}
+    strategy:
+      matrix:
+        otp: ["24.2.1"]
+        elixir: ["1.13.3-otp-24"]
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Elixir
-        uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
-        with:
-          elixir-version: "1.12.3" # Define the elixir version [required]
-          otp-version: "24.1" # Define the OTP version [required]
-      - name: Install PortMidi & Deps
-        run: sudo apt-get install -y libportmidi-dev gcc make
-      - name: Restore dependencies cache
+      - name: asdf setup
+        uses: asdf-vm/actions/setup@v1.1.0
+      - name: asdf cache
         uses: actions/cache@v2
         with:
-          path: deps
-          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-          restore-keys: ${{ runner.os }}-mix-
-      - name: Install dependencies
-        run: mix deps.get
-      - name: Run tests
-        run: mix test
+          path: ${{ env.ASDF_DIR }}
+          key: ${{ runner.os }}-asdf-v3-otp-${{ matrix.otp }}-elixir-${{ matrix.elixir }}
+          restore-keys: |
+            ${{ runner.os }}-asdf-v3-otp-${{ matrix.otp }}-elixir-${{ matrix.elixir }}
+            ${{ runner.os }}-asdf-v3-otp-${{ matrix.otp }}-
+            ${{ runner.os }}-asdf-v3-
+      - name: install asdf plugins
+        uses: asdf-vm/actions/plugins-add@v1.1.0
+      - name: asdf install
+        uses: asdf-vm/actions/install@v1.1.0
+
+      - run: elixir --version
+      - run: brew install portmidi
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+      - run: mix deps.get
+      - run: mix test
