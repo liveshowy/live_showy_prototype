@@ -8,7 +8,9 @@ defmodule LiveShowy.RolesTest do
   end
 
   test "roles list contains required roles", state do
-    expected_roles = Enum.sort([:attendee, :backstage_performer, :stage_manager])
+    expected_roles =
+      Enum.sort([:attendee, :backstage_performer, :mainstage_performer, :stage_manager])
+
     actual_roles = Enum.sort(state.roles)
     assert expected_roles == actual_roles
   end
