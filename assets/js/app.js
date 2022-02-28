@@ -27,8 +27,7 @@ let liveSocket = new LiveSocket("/live", Socket, {
   dom: {},
 })
 
-// Show progress bar on live navigation and form submits
-topbar.config({ barColors: { 0: "#29d" }, shadowColor: "rgba(0, 0, 0, .3)" })
+topbar.config({ barColors: { 0: "#8b5cf6" }, shadowColor: "rgba(139, 92, 246, .3)" })
 
 let topBarScheduled = undefined
 
