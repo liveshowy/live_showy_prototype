@@ -22,7 +22,7 @@ defmodule LiveShowyWeb.Components.LatencyMonitor do
         {@latency}ms
       </span>
       {#else}
-      <span class="text-default-500">unknown</span>
+      <span class="text-default-500">?ms</span>
       {/if}
     </div>
     """

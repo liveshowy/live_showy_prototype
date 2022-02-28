@@ -9,23 +9,26 @@ defmodule LiveShowyWeb.SessionHooks.InitAssigns do
   def on_mount(:user, _params, %{"current_user_id" => current_user_id} = _session, socket) do
     case LiveShowy.Users.get(current_user_id) do
       nil ->
-        {:halt, socket}
+        {:halt, push_redirect(socket, to: "/")}
 
       user ->
-        {:cont,
-         assign(socket,
-           current_user:
-             user
-             |> Map.put_new(:roles, UserRoles.get(current_user_id))
-             |> Map.put_new(
-               :assigned_instrument,
-               UserInstruments.get(current_user_id) |> elem(1)
-             )
-         )}
+        {:cont, assign_user(socket, user)}
     end
   end
 
   def on_mount(:default, _params, _session, socket) do
     {:cont, socket}
+  end
+
+  defp assign_user(socket, user) do
+    current_user =
+      user
+      |> Map.put_new(:roles, UserRoles.get(user.id))
+      |> Map.put_new(
+        :assigned_instrument,
+        UserInstruments.get(user.id) |> elem(1)
+      )
+
+    assign(socket, current_user: current_user)
   end
 end
