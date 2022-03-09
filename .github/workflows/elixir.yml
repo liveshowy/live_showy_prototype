@@ -36,5 +36,24 @@ jobs:
       - run: brew install portmidi
       - run: mix local.hex --force
       - run: mix local.rebar --force
+      - name: hex cache
+        uses: actions/cache@v2
+        with:
+          path: deps
+          key: hex-deps-{{ github.ref_name }}-{{ hashFiles("mix.lock") }}
+          restore-keys: |
+            hex-deps-{{ github.ref_name }}-{{ hashFiles("mix.lock") }}
+            hex-deps-{{ github.ref_name }}-
+            hex-deps-
       - run: mix deps.get
+      - name: npm cache
+        uses: actions/cache@v2
+        with:
+          path: assets/node_modules
+          key: npm-deps-{{ github.ref_name }}-{{ hashFiles('assets/package-lock.json') }}
+          restore_keys: |
+            npm-deps-{{ github.ref_name }}-{{ hashFiles('assets/package-lock.json') }}
+            npm-deps-{{ github.ref_name }}-
+            npm-deps-
+      - run: npm install --prefix assets
       - run: mix test
