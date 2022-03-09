@@ -31,6 +31,12 @@ defmodule LiveShowyWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/", LiveShowyWeb do
+    pipe_through [:browser]
+
+    get "/ping", PingController, :ping
+  end
+
   live_session :default, on_mount: {LiveShowyWeb.SessionHooks.InitAssigns, :user} do
     scope "/", LiveShowyWeb do
       pipe_through [:browser, :require_user]
