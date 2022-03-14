@@ -1,4 +1,4 @@
-<div class="overflow-x-auto bg-black bg-opacity-5">
+<div class="sticky top-0 overflow-x-auto bg-black bg-opacity-5">
   <dl class="flex items-baseline self-end justify-end w-full gap-2 px-4 py-1 mx-auto overflow-x-auto whitespace-nowrap max-w-screen-2xl">
     <dt class="font-bold uppercase text-default-500 dark:text-default-400">Username</dt>
     <dd class="font-mono text-sm break-normal">{@current_user.username}</dd>
@@ -12,7 +12,7 @@
       {/if}
     </dd>
 
-    <dt class="font-bold uppercase text-default-500 dark:text-default-400">Roles</dt>
+    <!-- <dt class="font-bold uppercase text-default-500 dark:text-default-400">Roles</dt>
     <dd class="font-mono text-sm">
       {#case Enum.count(@roles)}
       {#match 0}
@@ -22,7 +22,7 @@
       {#match _}
         {Enum.count(@roles)}
       {/case}
-    </dd>
+    </dd> -->
 
     <dt class="font-bold uppercase text-default-500 dark:text-default-400">Latency</dt>
     <dd class="font-mono text-sm">

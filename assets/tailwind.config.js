@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        default: colors.violet,
+        default: colors.stone,
         brand: colors.violet,
         primary: colors.violet,
         success: colors.emerald,

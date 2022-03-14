@@ -39,7 +39,7 @@ defmodule LiveShowy.Users do
     Enum.map(list(), &Map.merge(&1, populate_preloads(&1, preloads)))
   end
 
-  defp populate_preloads(user, preloads) do
+  def populate_preloads(user, preloads) do
     for {key, module} <- preloads, into: %{} do
       case apply(module, :get, [user.id]) do
         {_user_id, value} -> {key, value}

@@ -4,6 +4,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   require Logger
   use LiveShowyWeb, :live_view
   alias LiveShowyWeb.Presence
+  alias LiveShowyWeb.Router.Helpers, as: Routes
 
   # CORE
   alias LiveShowy.Users
@@ -20,6 +21,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   alias LiveShowyWeb.Components.DynamicInstrument
   alias LiveShowyWeb.Components.ClientMidiDevices
   alias LiveShowyWeb.Components.Music.Synth
+  alias Surface.Components.Link
 
   @topic "backstage"
 
@@ -100,6 +102,32 @@ defmodule LiveShowyWeb.BackstageLive.Index do
       |> put_flash(:error, "Your performer role has been removed")
       |> push_redirect(to: Routes.landing_index_path(socket, :index))
     }
+  end
+
+  def handle_info(
+        {role_event, {user_id, role}},
+        %{assigns: %{current_user: current_user}} = socket
+      )
+      when role_event in [:user_role_added, :user_role_removed] and
+             current_user.id == user_id do
+    user = Users.get(user_id)
+
+    preloads =
+      Users.populate_preloads(user, %{
+        roles: UserRoles,
+        instrument: UserInstruments
+      })
+
+    user = Map.merge(user, preloads)
+
+    socket =
+      if role_event == :user_role_added && role == :mainstage_performer do
+        put_flash(socket, :info, "You are ready to go to the main stage!")
+      else
+        clear_flash(socket)
+      end
+
+    {:noreply, assign(socket, current_user: user)}
   end
 
   def handle_info(message, socket) do
