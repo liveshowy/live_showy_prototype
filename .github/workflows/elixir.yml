@@ -44,7 +44,6 @@ jobs:
           restore-keys: |
             hex-deps-${{ hashFiles('./mix.lock') }}
             hex-deps-
-            hex-deps-
       - run: mix deps.get
       - name: npm cache
         uses: actions/cache@v2
@@ -53,7 +52,6 @@ jobs:
           key: npm-deps-${{ hashFiles('./assets/package-lock.json') }}
           restore-keys: |
             npm-deps-${{ hashFiles('./assets/package-lock.json') }}
-            npm-deps-
             npm-deps-
       - run: npm install --prefix assets
       - run: mix test
