@@ -4,6 +4,7 @@ defmodule LiveShowyWeb.StageLive.Index do
   require Logger
   use LiveShowyWeb, :live_view
   alias LiveShowyWeb.Presence
+  alias LiveShowyWeb.Router.Helpers, as: Routes
 
   # CORE
   alias LiveShowy.Users
@@ -18,6 +19,7 @@ defmodule LiveShowyWeb.StageLive.Index do
   alias LiveShowyWeb.Components.ClientMidiDevices
   alias LiveShowyWeb.Components.Users, as: UsersComponent
   alias LiveShowyWeb.Components.DynamicInstrument
+  alias Surface.Components.Link
 
   @topic "stage"
 

@@ -1,9 +1,13 @@
 <div class="grid grid-cols-1 gap-2 lg:grid-cols-4 auto-rows-auto">
-  <Card class="col-span-full" compact={true}>
+  <Card class="col-span-full" compact>
     <:header><h1>Stage</h1></:header>
 
     <:body>
-      <p>You are live! This is where the fun stuff happens.</p>
+      <p class="py-2">
+        <Link to={Routes.backstage_index_path(@socket, :index)} class="px-2 py-1 text-xl font-bold uppercase rounded bg-success-300 dark:bg-success-700 text-success-800 dark:text-success-200">
+          BackStage
+        </Link>
+      </p>
     </:body>
   </Card>
 
