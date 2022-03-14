@@ -9,7 +9,10 @@ defmodule LiveShowyWeb.Components.NavBar do
 
   def render(assigns) do
     ~F"""
-    <header class="sticky top-0 z-50 self-start w-full shadow-md select-none col-span-full text-default-800 dark:text-default-200">
+    <header
+      :if={:stage_manager in @conn.assigns.current_user.roles}
+      class="sticky top-0 z-50 self-start w-full shadow-md select-none col-span-full text-default-800 dark:text-default-200"
+    >
       <section class="bg-gradient-to-br from-white to-default-300 dark:from-default-700 dark:to-default-900">
         <nav class="mx-auto max-w-screen-2xl">
           <ul class="flex flex-wrap items-center gap-4 px-4 py-2">
