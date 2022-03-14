@@ -54,5 +54,5 @@ jobs:
           path: |
             _build/test
             !_build/test/live_showy
-          key: hex-deps-${{ hashFiles('./mix.lock') }}
+          key: compiled-deps-${{ hashFiles('./mix.lock') }}
       - run: mix test
