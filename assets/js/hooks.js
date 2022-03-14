@@ -1,4 +1,4 @@
-import { Synth } from 'tone'
+import * as Tone from 'tone'
 import latency from './latency'
 import { init as initMidi, onMidiSuccess, onMidiFailure, onMidiMessage, onMidiDeviceChange } from './midi'
 
@@ -218,7 +218,7 @@ const HandleSynth = {
       131: 15804,
       132: 16744,
       }
-    const tone = new Synth().toDestination()
+    const tone = new Tone.PolySynth({volume: -6}).toDestination()
 
     this.handleEvent("update-tone-envelope", ({ attack, decay, sustain, release }) => {
       tone.set({
@@ -228,13 +228,14 @@ const HandleSynth = {
 
     this.handleEvent("midi-message", ({ message }) => {
       const [status, note, velocity] = message
+      const mapped_note = midi_note_map[note]
       if ([176, 224].includes(status)) {
         return
       }
       else if (velocity == 0 || (status >= 128 && status <= 143)) {
-        return tone.triggerRelease()
+        return tone.triggerRelease(mapped_note)
       }
-      return tone.triggerAttack(midi_note_map[note])
+      return tone.triggerAttack(mapped_note, Tone.now(), velocity / 127)
     })
   },
 }
