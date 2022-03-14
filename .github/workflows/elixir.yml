@@ -48,4 +48,11 @@ jobs:
           path: assets/node_modules
           key: npm-deps-${{ hashFiles('./assets/package-lock.json') }}
       - run: npm install --prefix assets
+      - name: compiled deps cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            _build/test
+            !_build/test/live_showy
+          key: hex-deps-${{ hashFiles('./mix.lock') }}
       - run: mix test
