@@ -15,13 +15,7 @@ defmodule LiveShowyWeb.LandingLive.Index do
   @impl true
   def mount(_params, _session, %{assigns: %{current_user: current_user}} = socket) do
     if connected?(socket), do: subscribe()
-
-    user =
-      current_user
-      |> Map.put_new(:roles, UserRoles.get(current_user.id))
-      |> Map.put_new(:assigned_instrument, UserInstruments.get(current_user.id) |> elem(1))
-
-    {:ok, assign(socket, current_user: user)}
+    {:ok, assign(socket, current_user: current_user)}
   end
 
   defp subscribe do
