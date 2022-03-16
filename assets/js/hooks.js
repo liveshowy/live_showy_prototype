@@ -358,7 +358,7 @@ const HandleWebMidiDevices = {
 const HandleMetronomeBeats = {
   mounted() {
     console.info(`HandleMetronomeBeats mounted`)
-    const tone = new Synth({
+    const tone = new Tone.Synth({
       envelope: {
         attack: 0.005,
         decay: 0.05,
