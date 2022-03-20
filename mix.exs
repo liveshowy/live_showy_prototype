@@ -70,6 +70,10 @@ defmodule LiveShowy.MixProject do
         "tailwind default --minify",
         "esbuild default --minify",
         "phx.digest"
+      ],
+      run: [
+        "phx.digest",
+        "phx.server"
       ]
     ]
   end

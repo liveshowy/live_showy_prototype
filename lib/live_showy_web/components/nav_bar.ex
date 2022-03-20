@@ -6,11 +6,12 @@ defmodule LiveShowyWeb.Components.NavBar do
   alias Surface.Components.Link
 
   prop conn, :struct
+  prop current_user, :struct, default: %{roles: []}
 
   def render(assigns) do
     ~F"""
     <header
-      :if={:stage_manager in @conn.assigns.current_user.roles}
+      :if={:stage_manager in @current_user.roles}
       class="sticky top-0 z-50 self-start w-full shadow-md select-none col-span-full text-default-800 dark:text-default-200"
     >
       <section class="bg-gradient-to-br from-white to-default-300 dark:from-default-700 dark:to-default-900">

@@ -69,6 +69,9 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :plug_cowboy,
+  log_exceptions_with_status_code: [400..599]
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
