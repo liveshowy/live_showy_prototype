@@ -19,7 +19,7 @@
     />
   </head>
   <body class="flex flex-col w-full h-full max-w-full gap-0 overflow-auto text-sm leading-normal tracking-wide text-default-800 dark:text-default-100 dark:bg-default-900 bg-default-200">
-    <LiveShowyWeb.Components.NavBar conn={@conn} />
+    <LiveShowyWeb.Components.NavBar conn={@conn} current_user={@current_user} />
 
     {@inner_content}
   </body>
