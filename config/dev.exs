@@ -11,7 +11,7 @@ config :live_showy, LiveShowyWeb.Endpoint,
   http: [ip: {0, 0, 0, 0}, port: 80],
   check_origin: false,
   code_reloader: true,
-  debug_errors: true,
+  debug_errors: false,
   secret_key_base: "RyT41RNP/3tj3j9N3+4neGWbfWn+NwkUEGNkImcIJx47xQkH2ms0TeCOQHhekrHg",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
