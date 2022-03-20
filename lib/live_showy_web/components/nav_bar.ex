@@ -5,7 +5,7 @@ defmodule LiveShowyWeb.Components.NavBar do
   alias LiveShowyWeb.Router.Helpers, as: Routes
   alias Surface.Components.Link
 
-  prop conn, :struct
+  prop conn, :struct, default: %Plug.Conn{}
   prop current_user, :struct, default: %{roles: []}
 
   def render(assigns) do
