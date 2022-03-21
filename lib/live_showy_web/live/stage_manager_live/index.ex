@@ -16,15 +16,29 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   alias LiveShowyWeb.Components.Forms.Button
   alias LiveShowyWeb.Components.WifiCard
   alias LiveShowyWeb.Components.Music.Metronome
+  alias Surface.Components.Form.Checkbox
+  alias Surface.Components.Form.Select
 
   @impl true
   def mount(_params, _session, socket) do
     if connected?(socket), do: subscribe()
 
+    roles = Roles.list()
+
+    role_options =
+      for role <- roles, role != :stage_manager, into: %{} do
+        role_string = Atom.to_string(role)
+        pretty_role_string = role_string |> String.upcase() |> String.replace(~r/_/, " ")
+        {pretty_role_string, role_string}
+      end
+
     {:ok,
      assign(socket,
        users: get_users(),
-       roles: Roles.list()
+       roles: roles,
+       role_options: role_options,
+       selected_role: "backstage_performer",
+       selected_user_ids: []
      )}
   end
 
@@ -59,6 +73,7 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
     {:noreply, socket}
   end
 
+  # KICK OUT REVOKED STAGE MANAGER
   def handle_info(
         {:user_role_removed, {user_id, role}},
         %{assigns: %{current_user: current_user}} = socket
@@ -74,6 +89,11 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
     else
       {:noreply, assign(socket, users: get_users())}
     end
+  end
+
+  def handle_info({tag, {_user_id, _role}}, socket)
+      when tag in [:user_role_added, :user_role_removed] do
+    {:noreply, assign(socket, :users, get_users())}
   end
 
   def handle_info({tag, {_user_id, _instrument}}, socket)
@@ -98,6 +118,59 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   end
 
   @impl true
+  def handle_event(
+        "handle-change",
+        %{"_target" => ["selected_role"], "selected_role" => selected_role},
+        socket
+      ) do
+    {:noreply, assign(socket, :selected_role, selected_role)}
+  end
+
+  def handle_event(
+        "handle-change",
+        %{"_target" => ["selected_user_ids"], "selected_user_ids" => selected_user_ids},
+        socket
+      ) do
+    {:noreply, assign(socket, :selected_user_ids, Enum.uniq(selected_user_ids))}
+  end
+
+  def handle_event("select-all", _params, %{assigns: %{users: users}} = socket) do
+    user_ids = Enum.map(users, & &1.id) |> Enum.uniq()
+    {:noreply, assign(socket, :selected_user_ids, user_ids)}
+  end
+
+  def handle_event("deselect-all", _params, socket) do
+    {:noreply, assign(socket, :selected_user_ids, [])}
+  end
+
+  def handle_event(
+        "batch-add-role",
+        _params,
+        %{assigns: %{selected_role: selected_role, selected_user_ids: selected_user_ids}} = socket
+      ) do
+    selected_role = String.to_existing_atom(selected_role)
+
+    for user_id <- selected_user_ids do
+      UserRoles.add({user_id, selected_role})
+    end
+
+    {:noreply, socket}
+  end
+
+  def handle_event(
+        "batch-remove-role",
+        _params,
+        %{assigns: %{selected_role: selected_role, selected_user_ids: selected_user_ids}} = socket
+      ) do
+    selected_role = String.to_existing_atom(selected_role)
+
+    for user_id <- selected_user_ids do
+      UserRoles.remove({user_id, selected_role})
+    end
+
+    {:noreply, socket}
+  end
+
   def handle_event("user-role-changed", %{"_target" => [user_id]} = params, socket) do
     roles = params[user_id] |> Enum.map(&String.to_existing_atom/1)
     UserRoles.set({user_id, roles})
