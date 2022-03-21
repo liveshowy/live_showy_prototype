@@ -37,10 +37,27 @@
     <:header><h2>Users</h2></:header>
 
     <:body>
-      <form phx-change="user-role-changed">
-        <table class="w-full table-fixed">
+      <form phx-change="handle-change">
+        <fieldset class="flex flex-wrap items-stretch gap-1 p-1">
+          <Button click="select-all" kind="default" size="sm">SELECT ALL</Button>
+          <Button click="deselect-all" kind="default" size="sm">DESELECT ALL</Button>
+
+          <Select
+            name="selected_role"
+            selected={@selected_role}
+            options={@role_options}
+            opts={[title: "Stage managers must be assigned individually."]}
+            class="p-1 text-xs font-semibold rounded bg-default-200 dark:bg-default-700 outline-default-400"
+          />
+
+          <Button click="batch-add-role" kind="success" size="sm">ADD</Button>
+          <Button click="batch-remove-role" kind="danger" size="sm">REMOVE</Button>
+        </fieldset>
+
+        <table class="w-full">
           <thead class="text-xs text-left uppercase align-bottom">
             <th></th>
+            <th>USERNAME</th>
             <th>INSTRUMENT</th>
             {#for role <- @roles}
               <th>{Atom.to_string(role) |> String.replace(~r/_/, " ")}</th>
@@ -50,7 +67,18 @@
           <tbody class="break-all">
             {#for user <- @users}
               <tr>
-                <td>{user.username}</td>
+                <td>
+                  <Checkbox
+                    id={"#checkbox-#{user.id}"}
+                    name="selected_user_ids[]"
+                    checked_value={user.id}
+                    class="w-4 h-4 rounded-full accent-brand-500"
+                    opts={[checked: user.id in @selected_user_ids]}
+                  />
+                </td>
+                <td>
+                  <label for={"#checkbox-#{user.id}"} class="cursor-pointer">{user.username}</label>
+                </td>
 
                 <td>
                   {#if user.instrument}
@@ -71,7 +99,7 @@
                         click="remove-user-role"
                         class="w-full"
                         label="REMOVE"
-                        active
+                        kind="danger"
                         attrs={%{"phx-value-user-id": user.id, "phx-value-role": role}}
                       />
                     </td>
@@ -81,6 +109,7 @@
                         click="add-user-role"
                         class="w-full"
                         label="ADD"
+                        kind="success"
                         attrs={%{"phx-value-user-id": user.id, "phx-value-role": role}}
                       />
                     </td>

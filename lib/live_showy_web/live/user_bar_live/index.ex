@@ -52,6 +52,11 @@ defmodule LiveShowyWeb.UserBarLive.Index do
     {:noreply, update(socket, :roles, &(&1 -- [role]))}
   end
 
+  def handle_info({event, _message}, socket)
+      when event in [:user_role_added, :user_role_removed] do
+    {:noreply, socket}
+  end
+
   def handle_info(
         {:user_instrument_added, {user_id, instrument}},
         %{assigns: %{current_user: current_user}} = socket
