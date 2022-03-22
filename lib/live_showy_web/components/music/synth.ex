@@ -37,10 +37,26 @@ defmodule LiveShowyWeb.Components.Music.Synth do
 
   def render(assigns) do
     ~F"""
-    <form id={@id} phx-change="update-envelope" phx-throttle="2000" phx-debounce="2000" phx-target={@myself} phx-hook="HandleSynth" class="grid grid-cols-[auto_auto_1fr] gap-x-4 auto-rows-auto items-center">
+    <form
+      id={@id}
+      phx-change="update-envelope"
+      phx-throttle="2000"
+      phx-debounce="2000"
+      phx-target={@myself}
+      phx-hook="HandleSynth"
+      class="grid grid-cols-[auto_auto_1fr] gap-x-4 auto-rows-auto items-center"
+    >
       <label for="attack-number">Attack</label>
       <span class="font-mono text-xs">{@attack}</span>
-      <Input type="range" min="0" max="1" step="0.001" id="attack-range" name="attack" value={@attack} />
+      <Input
+        type="range"
+        min="0"
+        max="1"
+        step="0.001"
+        id="attack-range"
+        name="attack"
+        value={@attack}
+      />
 
       <label for="decay-number">Decay</label>
       <span class="font-mono text-xs">{@decay}</span>
@@ -48,11 +64,27 @@ defmodule LiveShowyWeb.Components.Music.Synth do
 
       <label for="sustain-number">Sustain</label>
       <span class="font-mono text-xs">{@sustain}</span>
-      <Input type="range" min="0" max="1" step="0.001" id="sustain-range" name="sustain" value={@sustain} />
+      <Input
+        type="range"
+        min="0"
+        max="1"
+        step="0.001"
+        id="sustain-range"
+        name="sustain"
+        value={@sustain}
+      />
 
       <label for="release-number">Release</label>
       <span class="font-mono text-xs">{@release}</span>
-      <Input type="range" min="0" max="1" step="0.001" id="release-range" name="release" value={@release} />
+      <Input
+        type="range"
+        min="0"
+        max="1"
+        step="0.001"
+        id="release-range"
+        name="release"
+        value={@release}
+      />
     </form>
     """
   end

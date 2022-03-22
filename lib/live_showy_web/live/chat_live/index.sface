@@ -1,11 +1,7 @@
 <div class="grid gap-1 content-end overscroll-none h-full max-h-full grid-cols-1 grid-rows-[auto_1fr] overflow-hidden">
   <ChatForm submit="submit-message" message={@new_message} />
 
-  <ul
-    phx-update="prepend"
-    id="chat-messages"
-    class="flex flex-col gap-2 px-1 py-2 overflow-y-auto"
-  >
+  <ul phx-update="prepend" id="chat-messages" class="flex flex-col gap-2 px-1 py-2 overflow-y-auto">
     {#for message <- @messages}
       <ChatMessageComponent
         status={message.status}

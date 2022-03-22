@@ -6,6 +6,7 @@ defmodule LiveShowyWeb.Components.DynamicInstrument do
 
   def render(%{instrument: instrument} = assigns) do
     instrument = Map.from_struct(instrument)
+    # FIXME: THIS BREAKS THE CHILD COMPONENTS' ASSIGNS
     assigns = Map.merge(assigns, instrument) |> Map.drop([:instrument])
     component(&instrument.component.render/1, assigns)
   end

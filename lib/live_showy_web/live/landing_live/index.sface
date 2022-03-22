@@ -10,14 +10,18 @@
   </p>
 
   <p class="col-start-2">
-    Your randomized username is <strong>{@current_user.username}</strong>.<br/>
+    Your randomized username is <strong>{@current_user.username}</strong>.<br>
     Your
-    {#if Enum.count(@current_user.roles) == 1} role is {#else} roles are {/if}
-    <strong>{Enum.join(@current_user.roles, ", ")}</strong><br/>
+    {#if Enum.count(@current_user.roles) == 1}
+      role is
+    {#else}
+      roles are
+    {/if}
+    <strong>{Enum.join(@current_user.roles, ", ")}</strong><br>
   </p>
 
   <p class="col-start-2">
-    You are currently in the <strong>lobby</strong>.<br/>
+    You are currently in the <strong>lobby</strong>.<br>
     This page will update <strong>automatically</strong> if you receive a new role.
   </p>
 </section>

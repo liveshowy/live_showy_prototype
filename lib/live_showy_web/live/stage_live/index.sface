@@ -4,7 +4,10 @@
 
     <:body>
       <p class="py-2">
-        <Link to={Routes.backstage_index_path(@socket, :index)} class="px-2 py-1 text-xl font-bold uppercase rounded bg-success-300 dark:bg-success-700 text-success-800 dark:text-success-200">
+        <Link
+          to={Routes.backstage_index_path(@socket, :index)}
+          class="px-2 py-1 text-xl font-bold uppercase rounded bg-success-300 dark:bg-success-700 text-success-800 dark:text-success-200"
+        >
           BackStage
         </Link>
       </p>
@@ -20,7 +23,8 @@
     </:header>
 
     <:body>
-      <DynamicInstrument instrument={@assigned_instrument} />
+      <!-- <DynamicInstrument instrument={@assigned_instrument} /> -->
+      <SvgKeyboard octave={5} class="snap-center" />
     </:body>
   </Card>
 
@@ -28,7 +32,11 @@
     <:header><h2>Your MIDI Devices</h2></:header>
 
     <:body>
-      <ClientMidiDevices id="client-midi-devices" current_user_id={@current_user.id} midi_output_pid={@midi_output_pid} />
+      <ClientMidiDevices
+        id="client-midi-devices"
+        current_user_id={@current_user.id}
+        midi_output_pid={@midi_output_pid}
+      />
     </:body>
   </Card>
 

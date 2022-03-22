@@ -1,4 +1,4 @@
-<div class="grid h-full grid-cols-1 gap-2 lg:grid-cols-4 auto-rows-min">
+<div class="grid w-full h-full grid-cols-1 gap-2 lg:grid-cols-4 auto-rows-min">
   <Card class="col-span-full" compact>
     <:header>
       <h1>Backstage</h1>
@@ -9,34 +9,34 @@
         You are awaiting entry to the live stage. You may coordinate with other backstage members via chat.
       </p>
 
-    <p :if={:mainstage_performer in @current_user.roles} class="py-2">
-      <Link to={Routes.stage_index_path(@socket, :index)} class="px-2 py-1 text-xl font-bold uppercase rounded bg-success-300 dark:bg-success-700 text-success-800 dark:text-success-200">
-        Main Stage
-      </Link>
-    </p>
+      <p :if={:mainstage_performer in @current_user.roles} class="py-2">
+        <Link
+          to={Routes.stage_index_path(@socket, :index)}
+          class="px-2 py-1 text-xl font-bold uppercase rounded bg-success-300 dark:bg-success-700 text-success-800 dark:text-success-200"
+        >
+          Main Stage
+        </Link>
+      </p>
     </:body>
   </Card>
 
-  <Card
-    attrs={%{id: "backstage-instrument-preview"}}
-    class="col-span-full"
-  >
+  <Card attrs={%{id: "backstage-instrument-preview"}} class="col-span-full">
     <:header>
       <h2>Your Instrument</h2>
     </:header>
 
     <:body>
-      <DynamicInstrument
+      <!-- <DynamicInstrument
         :if={@assigned_instrument}
         instrument={@assigned_instrument}
-        active={false}
-      />
+      /> -->
+      <SvgKeyboard octave={5} class="snap-center" />
     </:body>
   </Card>
 
   <Card class="col-span-full">
     <:header>
-        <h2>Synth Preview</h2>
+      <h2>Synth Preview</h2>
     </:header>
 
     <:body>
@@ -70,9 +70,7 @@
     </:body>
   </Card>
 
-  <Card
-    class="lg:col-start-3 lg:row-start-4 lg:row-span-2 lg:col-span-2"
-  >
+  <Card class="lg:col-start-3 lg:row-start-4 lg:row-span-2 lg:col-span-2">
     <:header>
       <h2 class="px-4 py-2">Chat</h2>
     </:header>

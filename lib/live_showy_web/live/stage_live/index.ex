@@ -19,6 +19,7 @@ defmodule LiveShowyWeb.StageLive.Index do
   alias LiveShowyWeb.Components.ClientMidiDevices
   alias LiveShowyWeb.Components.Users, as: UsersComponent
   alias LiveShowyWeb.Components.DynamicInstrument
+  alias LiveShowyWeb.Components.SvgKeyboard
   alias Surface.Components.Link
 
   @topic "stage"

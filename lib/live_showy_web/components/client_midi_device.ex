@@ -18,7 +18,7 @@ defmodule LiveShowyWeb.Components.ClientMidiDevice do
           "w-4 h-4 aspect-square rounded-full shadow-sm",
           "bg-default-500": Enum.empty?(@active_notes),
           "bg-success-500 shadow-success-500": !Enum.empty?(@active_notes)
-        }></div>
+        } />
         {"#{@manufacturer} #{@name}"}
       </div>
     </div>

@@ -4,7 +4,7 @@
     <:body><p>Manage users, settings, and monitor the system.</p></:body>
   </Card>
 
-  <Card class="col-span-full" compact={true}>
+  <Card class="col-span-full" compact>
     <:header>
       <h2>Metronome</h2>
     </:header>
@@ -56,7 +56,7 @@
 
         <table class="w-full">
           <thead class="text-xs text-left uppercase align-bottom">
-            <th></th>
+            <th />
             <th>USERNAME</th>
             <th>INSTRUMENT</th>
             {#for role <- @roles}
@@ -82,11 +82,9 @@
 
                 <td>
                   {#if user.instrument}
-                    {
-                      Map.get(user.instrument, :component)
-                      |> Atom.to_string()
-                      |> String.replace(~r/.*\.(\w+)$/, "\\1")
-                    }
+                    {Map.get(user.instrument, :component)
+                    |> Atom.to_string()
+                    |> String.replace(~r/.*\.(\w+)$/, "\\1")}
                   {#else}
                     None
                   {/if}

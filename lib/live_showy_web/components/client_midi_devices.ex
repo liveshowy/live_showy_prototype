@@ -15,11 +15,11 @@ defmodule LiveShowyWeb.Components.ClientMidiDevices do
     ~F"""
     <div id="client-midi-devices" phx-hook="HandleWebMidiDevices">
       {#case @webmidi_supported?}
-      {#match false}
-        <span>WebMIDI is NOT supported</span>
-      {#match nil}
-        <span class="font-mono text-xs text-default-400">Awaiting WebMIDI support...</span>
-      {#match true}
+        {#match false}
+          <span>WebMIDI is NOT supported</span>
+        {#match nil}
+          <span class="font-mono text-xs text-default-400">Awaiting WebMIDI support...</span>
+        {#match true}
       {/case}
 
       <h3>Inputs</h3>
