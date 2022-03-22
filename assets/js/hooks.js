@@ -309,6 +309,40 @@ const HandleKeyboardPresses = {
   },
 }
 
+const HandleSvgKeyboardPresses = {
+  mounted() {
+    console.info(`HandleSvgKeyboardPresses mounted`)
+
+    const noteon = e => {
+      if (e.target.dataset.note) {
+        let note = parseInt(e.target.dataset.note, 10)
+        const velocity = (e.offsetY / 384) * 127
+        e.target.classList.add('active')
+        this.pushEvent("midi-message", {message: [144, note, velocity]})
+      }
+    }
+
+    const noteoff = e => {
+      if (e.target.dataset.note) {
+        let note = parseInt(e.target.dataset.note, 10)
+        e.target.classList.remove('active')
+        this.pushEvent("midi-message", {message: [128, note, 0]})
+      }
+    }
+
+    if ('ontouchstart' in window) {
+      this.el.addEventListener('touchstart', noteon)
+      this.el.addEventListener('touchend', noteoff)
+      this.el.addEventListener('touchcancel', noteoff)
+    } else {
+      this.el.addEventListener('mousedown', noteon)
+      this.el.addEventListener('mouseup', noteoff)
+      this.el.addEventListener('mouseout', noteoff)
+    }
+
+  },
+}
+
 const HandleDrumPadPresses = {
   mounted() {
     console.info(`HandleDrumPadPresses mounted`)
@@ -379,7 +413,7 @@ module.exports = {
   TrackTouchEvents,
   MonitorLatency,
   HandleKeyboardPresses,
-  HandleDrumPadPresses,
+  HandleSvgKeyboardPresses,
   HandleWebMidiDevices,
   HandleMetronomeBeats,
 }
