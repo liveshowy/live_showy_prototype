@@ -14,33 +14,33 @@
     </:body>
   </Card>
 
-  <!-- <Card>
-    <:header><h2>Wifi</h2></:header>
-    <:body><WifiCard id="wifi-info-stage-manager" /></:body>
-  </Card>
-
-  <Card class="lg:col-span-2">
-    <:header><h2>Performance Metrics</h2></:header>
-    <:body>
-      <ul>
-        <li>App CPU</li>
-        <li>System CPU</li>
-        <li>App RAM</li>
-        <li>System RAM</li>
-        <li>App IO</li>
-        <li>System IO</li>
-      </ul>
-    </:body>
-  </Card> -->
-
   <Card class="min-w-min lg:col-span-3">
     <:header><h2>Users</h2></:header>
 
     <:body>
+      <form
+        :if={@edit_user}
+        phx-change="update-edit-user"
+        phx-submit="save-edit-user"
+        class="flex justify-center w-full p-1"
+      >
+        <Input
+          value={@edit_user.username}
+          type="search"
+          name="username"
+          class="w-auto px-2 rounded-l bg-default-300 dark:bg-default-700"
+        />
+
+        <Button type="submit" kind="primary" class="rounded-none">SAVE</Button>
+        <Button click="clear-edit-user" kind="default" class="rounded-l-none">CANCEL</Button>
+      </form>
+
       <form phx-change="handle-change">
         <fieldset class="flex flex-wrap items-stretch gap-1 p-1">
           <Button click="select-all" kind="default" size="sm">SELECT ALL</Button>
           <Button click="deselect-all" kind="default" size="sm">DESELECT ALL</Button>
+
+          <span class="flex-grow" />
 
           <Select
             name="selected_role"
@@ -57,7 +57,8 @@
         <table class="w-full">
           <thead class="text-xs text-left uppercase align-bottom">
             <th />
-            <th>USERNAME</th>
+            <th />
+            <th>USER</th>
             <th>INSTRUMENT</th>
             {#for role <- @roles}
               <th>{Atom.to_string(role) |> String.replace(~r/_/, " ")}</th>
@@ -68,26 +69,31 @@
             {#for user <- @users}
               <tr>
                 <td>
-                  <Checkbox
-                    id={"#checkbox-#{user.id}"}
-                    name="selected_user_ids[]"
-                    checked_value={user.id}
-                    class="w-4 h-4 rounded-full accent-brand-500"
-                    opts={[checked: user.id in @selected_user_ids]}
-                  />
+                  <span class={
+                    "w-4 h-4 block rounded-full transition",
+                    "bg-primary-500": user.id in @selected_user_ids,
+                    "bg-default-200 dark:bg-default-700": user.id not in @selected_user_ids
+                  } />
                 </td>
                 <td>
-                  <label for={"#checkbox-#{user.id}"} class="cursor-pointer">{user.username}</label>
+                  <Button click="edit-user" value={user.id} kind="default" class="w-full">EDIT</Button>
+                </td>
+                <td>
+                  <Button click="toggle-user-selection" value={user.id} kind="primary" class="w-full">
+                    {user.username}
+                  </Button>
                 </td>
 
                 <td>
-                  {#if user.instrument}
-                    {Map.get(user.instrument, :component)
-                    |> Atom.to_string()
-                    |> String.replace(~r/.*\.(\w+)$/, "\\1")}
-                  {#else}
-                    None
-                  {/if}
+                  <Button click="assign-instrument" kind="info" disabled class="w-full">
+                    {#if user.instrument}
+                      {Map.get(user.instrument, :component)
+                      |> Atom.to_string()
+                      |> String.replace(~r/.*\.(\w+)$/, "\\1")}
+                    {#else}
+                      None
+                    {/if}
+                  </Button>
                 </td>
 
                 {#for role <- @roles}
