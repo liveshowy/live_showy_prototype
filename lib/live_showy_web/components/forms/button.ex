@@ -5,7 +5,7 @@ defmodule LiveShowyWeb.Components.Forms.Button do
   prop active, :boolean, default: false
   prop attrs, :map, default: %{}
   prop class, :css_class, default: ""
-  prop click, :event, required: true
+  prop click, :event
   prop disabled, :boolean, default: false
 
   prop kind, :string,
