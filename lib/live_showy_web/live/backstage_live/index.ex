@@ -18,6 +18,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
   alias LiveShowyWeb.Components.Forms.ButtonBar
   alias LiveShowyWeb.Components.Card
   alias LiveShowyWeb.Components.Keyboard
+  alias LiveShowyWeb.Components.SvgKeyboard
   alias LiveShowyWeb.Components.DynamicInstrument
   alias LiveShowyWeb.Components.ClientMidiDevices
   alias LiveShowyWeb.Components.Music.Synth
@@ -44,7 +45,7 @@ defmodule LiveShowyWeb.BackstageLive.Index do
       case UserInstruments.get(current_user.id) do
         {_user_id, nil} ->
           {_user_id, assigned_instrument} =
-            UserInstruments.add({current_user.id, Instrument.new(%{component: Keyboard})})
+            UserInstruments.add({current_user.id, Instrument.new(%{component: SvgKeyboard})})
 
           assigned_instrument
 
