@@ -35,7 +35,7 @@ defmodule LiveShowyWeb.Components.Forms.Input do
         @class,
         @accent_class
       }
-      />
+    />
     """
   end
 end

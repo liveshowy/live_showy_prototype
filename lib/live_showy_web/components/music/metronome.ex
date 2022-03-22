@@ -37,10 +37,16 @@ defmodule LiveShowyWeb.Components.Music.Metronome do
 
   def render(assigns) do
     ~F"""
-    <form id={@id} phx-change="update-metronome" phx-target={@myself} phx-throttle="500" class="flex flex-wrap items-baseline justify-end gap-1 p-1 text-xs">
+    <form
+      id={@id}
+      phx-change="update-metronome"
+      phx-target={@myself}
+      phx-throttle="500"
+      class="flex flex-wrap items-baseline justify-end gap-1 p-1 text-xs"
+    >
       <Input type="hidden" name="running" value={@metronome.running} />
 
-      <span id="metronome-beat-indicator" class="self-center w-2 h-2 rounded-full"></span>
+      <span id="metronome-beat-indicator" class="self-center w-2 h-2 rounded-full" />
 
       <label class="font-bold uppercase" title="Current Beat">BEAT</label>
       <span id="metronome-beat" phx-hook="HandleMetronomeBeats" class="font-mono font-bold">{@beat}</span>
@@ -60,13 +66,34 @@ defmodule LiveShowyWeb.Components.Music.Metronome do
 
       <div>
         <label class="font-bold uppercase" title="Time Signature">TS</label>
-        <Input type="number" name="time_signature_top" value={@metronome.time_signature_top} min="2" max="12" class="w-8" />
-        <Input type="number" name="time_signature_bottom" value={@metronome.time_signature_bottom} min="4" max="12" class="w-8" />
+        <Input
+          type="number"
+          name="time_signature_top"
+          value={@metronome.time_signature_top}
+          min="2"
+          max="12"
+          class="w-8"
+        />
+        <Input
+          type="number"
+          name="time_signature_bottom"
+          value={@metronome.time_signature_bottom}
+          min="4"
+          max="12"
+          class="w-8"
+        />
       </div>
 
       <div>
         <label class="font-bold uppercase" title="Subdivision">SUB</label>
-        <Input type="number" name="subdivision" min="1" max="4" value={@metronome.subdivision} class="w-8" />
+        <Input
+          type="number"
+          name="subdivision"
+          min="1"
+          max="4"
+          value={@metronome.subdivision}
+          class="w-8"
+        />
       </div>
 
       {#if @metronome.running}

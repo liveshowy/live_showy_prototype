@@ -33,10 +33,8 @@ defmodule LiveShowyWeb.Components.UserCard do
           <dd>
             {#if @user.assigned_instrument}
               <Tag>
-                {
-                  Atom.to_string(@user.assigned_instrument.component)
-                  |> String.replace(~r/.*\.(\w+)$/, "\\g{1}")
-                }
+                {Atom.to_string(@user.assigned_instrument.component)
+                |> String.replace(~r/.*\.(\w+)$/, "\\g{1}")}
               </Tag>
             {#else}
               <Tag>None</Tag>
@@ -45,14 +43,12 @@ defmodule LiveShowyWeb.Components.UserCard do
 
           <dt class="font-bold uppercase text-default-500 dark:text-default-400">Roles</dt>
           <dd class="flex flex-wrap gap-2">
-          {#for role <- @user.roles || []}
-            <Tag class="capitalize">
-              {
-                Atom.to_string(role)
-                |> String.replace(~r/_/, " ")
-              }
-            </Tag>
-          {/for}
+            {#for role <- @user.roles || []}
+              <Tag class="capitalize">
+                {Atom.to_string(role)
+                |> String.replace(~r/_/, " ")}
+              </Tag>
+            {/for}
           </dd>
         </dl>
       </:body>

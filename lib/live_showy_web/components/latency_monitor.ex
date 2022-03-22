@@ -18,11 +18,11 @@ defmodule LiveShowyWeb.Components.LatencyMonitor do
     ~F"""
     <div id={@id} phx-hook="MonitorLatency">
       {#if @latency}
-      <span>
-        {@latency}ms
-      </span>
+        <span>
+          {@latency}ms
+        </span>
       {#else}
-      <span class="text-default-500">?ms</span>
+        <span class="text-default-500">?ms</span>
       {/if}
     </div>
     """
