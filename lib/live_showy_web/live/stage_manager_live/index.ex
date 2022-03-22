@@ -14,9 +14,9 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
   # COMPONENTS
   alias LiveShowyWeb.Components.Card
   alias LiveShowyWeb.Components.Forms.Button
+  alias LiveShowyWeb.Components.Forms.Input
   alias LiveShowyWeb.Components.WifiCard
   alias LiveShowyWeb.Components.Music.Metronome
-  alias Surface.Components.Form.Checkbox
   alias Surface.Components.Form.Select
 
   @impl true
@@ -34,6 +34,7 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
 
     {:ok,
      assign(socket,
+       edit_user: nil,
        users: get_users(),
        roles: roles,
        role_options: role_options,
@@ -132,6 +133,39 @@ defmodule LiveShowyWeb.StageManagerLive.Index do
         socket
       ) do
     {:noreply, assign(socket, :selected_user_ids, Enum.uniq(selected_user_ids))}
+  end
+
+  def handle_event(
+        "toggle-user-selection",
+        %{"value" => user_id},
+        %{assigns: %{selected_user_ids: selected_user_ids}} = socket
+      ) do
+    if user_id in selected_user_ids do
+      {:noreply, update(socket, :selected_user_ids, &(&1 -- [user_id]))}
+    else
+      {:noreply, update(socket, :selected_user_ids, &(&1 ++ [user_id]))}
+    end
+  end
+
+  def handle_event("edit-user", %{"value" => user_id}, socket) do
+    {:noreply, assign(socket, :edit_user, Users.get(user_id))}
+  end
+
+  def handle_event("update-edit-user", %{"username" => username}, socket) do
+    {:noreply, update(socket, :edit_user, &Map.put(&1, :username, username))}
+  end
+
+  def handle_event(
+        "save-edit-user",
+        %{"username" => username},
+        %{assigns: %{edit_user: edit_user}} = socket
+      ) do
+    Users.update(edit_user.id, %{username: username})
+    {:noreply, assign(socket, :edit_user, nil)}
+  end
+
+  def handle_event("clear-edit-user", _params, socket) do
+    {:noreply, assign(socket, :edit_user, nil)}
   end
 
   def handle_event("select-all", _params, %{assigns: %{users: users}} = socket) do
