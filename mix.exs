@@ -53,6 +53,7 @@ defmodule LiveShowy.MixProject do
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
       {:timex, "~> 3.7"},
       {:tzdata, "~> 1.1"},
+      {:logger_file_backend, "~> 0.0.13"},
       {:credo, "~> 1.5.6"}
     ]
   end

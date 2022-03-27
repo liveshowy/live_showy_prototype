@@ -56,7 +56,24 @@ config :live_showy, LiveShowyWeb.Endpoint,
   ]
 
 # Do not include metadata nor timestamps in development logs
-config :logger, :console, format: "[$level] $message\n"
+config :logger,
+  backends: [
+    {LoggerFileBackend, :error_log},
+    {LoggerFileBackend, :info_log}
+  ]
+
+config :logger, :error_log,
+  path: "logs/errors.log",
+  metadata: [:mfa],
+  format: "[$level] $message $metadata\n",
+  level: :error
+
+config :logger, :info_log,
+  path: "logs/info.log",
+  metadata: [:mfa],
+  format: "[$level] $message $metadata\n",
+  level: :info,
+  metadata_filter: [application: :live_showy]
 
 # Set a higher stacktrace during development. Avoid configuring such
 # in production as building large stacktraces may be expensive.
