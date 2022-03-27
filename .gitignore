@@ -41,3 +41,4 @@ assets/js/_hooks/
 *.wav
 *.reapeaks
 /priv/static/**/*.gz
+/logs/*.log
