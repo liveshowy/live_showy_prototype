@@ -1,10 +1,46 @@
 [![Elixir CI](https://github.com/type1fool/live_showy/actions/workflows/elixir.yml/badge.svg?branch=main)](https://github.com/type1fool/live_showy/actions/workflows/elixir.yml)
 
-# LiveShowy
+# LiveShowy Prototype
 
-\* This application is a work in progress. Some of the features below are not yet implemented.
+\* This repo is an archive of the prototype demonstrated at The Big Elixir 2022 in New Orleans. The application, LiveShowy, is a proof of concept for allowing several people to play music together in realtime on a local network.
 
-LiveShowy allows multiple people in a phyiscal or virtual space to join a live performance.
+The repo is publicly visible so that inquiring Elixirists may review its code for inspiration and discussion about the next version of the app, which will be geared toward web-based music collaboration.
+
+Feel free to clone the repo, tinker, and [discuss](https://github.com/liveshowy/live_showy_prototype/discussions). Not sure where to start? The [`Users`](lib/live_showy/users.ex) module may be interesting.
+
+**CAUTION**
+
+This application is not intended to be deployed in a typical web environment, and has been operated in a live environment only once. Documentation is minimal, and implimentations in the source code may not be sufficiently robust for your application. This code is offered with no warranty.
+
+## A Proscenium-Level View
+
+The LiveShowy prototype was designed and developed in the lead up to The Big Elixir 2022, where I gave a talk about doing fun and novel stuff with Phoenix LiveView. The dependencies for this app are minimal (1 JS pkg, 21 Hex pkgs), including no external database dependency; ETS is used for local-only persistence in this version of LiveShowy.
+
+## Roles
+
+LiveShowy uses four pre-defined, primitive roles to allow access to areas of the UI.
+
+| Role                | Abilities                       |
+| ------------------- | ------------------------------- |
+| Attendee            | May access the landing page     |
+| Backstage Performer | May access the backstage        |
+| Mainstage Performer | May access the mainstage        |
+| Stage Manager       | May assign roles to other users |
+
+## Areas
+
+LiveShowy has four areas where users may be directed.
+
+| Area                                                            | Description                                                                                     |
+| --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| [LandingLive](lib/live_showy_web/live/landing_live/)            | The first view a user sees. Contains general information.                                       |
+| [BackstageLive](lib/live_showy_web/live/backstage_live/)        | A user may prepare for a performance by connecting a MIDI device or using the on-page keyboard. |
+| [MainstageLive](lib/live_showy_web/live/stage_live/)            | A user may perform music through the host machine's DAW.                                        |
+| [StageManagerLive](lib/live_showy_web/live/stage_manager_live/) | A stage manager may grant and revoke roles, and communicate with performers.                    |
+
+An `attendee` who is viewing the landing page will be automatically redirected to the backstage immediately after receiving a `backstage performer` role. In the backstage, a link to the mainstage will appear immediately after the user receives a `mainstage performer` role. These redirects and magically-appearing links are backed by Phoenix PubSub.
+
+In backstage, mainstage, and stage manager live views, a chat panel is rendered to allow users to communicate in realtime - hypothetically about an ongoing performance, possibly about what's for dinner.
 
 ## Requirements
 
