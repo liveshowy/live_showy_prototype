@@ -44,6 +44,12 @@ In backstage, mainstage, and stage manager live views, a chat panel is rendered 
 
 ## Requirements
 
+You may install system dependencies using [ASDF](https://asdf-vm.com/).
+
+```bash
+asdf install
+```
+
 For Stage Managers, PortMidi is required for musical performances. PortMidi is a system library for MacOS and Linux which can receive and broadcast MIDI events.
 
 ```bash
